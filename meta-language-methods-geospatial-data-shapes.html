@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Geospatial Data | Shapes</title>
+  <meta name="description" content="Find out how to extract shapes for OSM relations.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, geospatial">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-geospatial-data-shapes.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-geospatial-data-shapes.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-geodannye-poligony.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Geospatial Data | Shapes">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Geospatial Data | Shapes"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-geospatial-data-shapes.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="Find out how to extract shapes for OSM relations."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+  
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Geospatial Data</h1>
+
+      <div>
+        <h2>Shapes</h2>
+
+        <p class="flow-text">
+            Sometimes it is necessary to obtain a shape for the boundaries of some OSM relation. For example for a city or a region. To do it, there are 
+            two commands available: <span class = "hlt2">wkt</span> to get this data in the "WKT (Well-Known-Text)" format or <span class = "hlt2">geojson</span>
+            to get the data in GeoJSON format.
+        </p>
+
+        <p class="flow-text">
+            In both commands you can use following parameters:
+        </p>
+
+        <table class="responsive-table highlight">
+            <thead>
+                <tr>
+                    <th data-field="parameter">Parameter</th>
+                    <th data-field="description">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>relation</td>
+                    <td>Relation ID.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs excdark">
+                    <li class="tab col s1">
+                        <a class="active" href="#code">Digger code</a>
+                    </li>
+                    <li class="tab col s1">
+                        <a class="active" href="#log">Log</a>
+                    </li>
+                    <li class="tab col s1">
+                        <a class="active" href="#data">Data source</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="code" class="col s12">
+                <pre class="language-yaml">
+    <code class="language-yaml"># SWITCHING TO THE GEO CONTEXT
+- geo:
+    provider: osm
+    do:
+    # Get shape in WKT format for specific OSM relation
+    - wkt:
+        relation: 62366
+        do:</code>
+</pre>
+            </div>
+            <div id="log" class="col s12">
+                <table id="datatable_logs" class="striped responsive-table debug-log" role="grid" aria-describedby="datatable_logs_info">
+                    <thead>
+                        <tr role="row">
+                            <th width="11%" class="sorting_desc" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending"
+                                aria-sort="descending">Time</th>
+                            <th width="4%" class="sorting" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Level: activate to sort column ascending">Level</th>
+                            <th class="word-wrapper sorting_disabled" rowspan="1" colspan="1" aria-label="Message">Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">2018-05-29 22:02:08:751</td>
+                            <td>info</td>
+                            <td class=" word-wrapper">Stopped by exit command</td>
+                        </tr>
+                        <tr role="row" class="even">
+                            <td class="sorting_1">2018-05-29 22:02:08:283</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">
+                                <span data-cr="less" data-full="">Page content: ...</span>
+                            </td>
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">2018-05-29 22:02:06:761</td>
+                            <td>info</td>
+                            <td class=" word-wrapper">Retrieving page (GET): http://polygons.openstreetmap.fr/get_wkt.py?id=62366&amp;params=0</td>
+                        </tr>
+                        <tr role="row" class="even">
+                            <td class="sorting_1">2018-05-29 22:02:06:752</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">Relation ID: 62366</td>
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">2018-05-29 22:02:06:744</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">Getting WKT geom for relation</td>
+                        </tr>
+                        <tr role="row" class="even">
+                            <td class="sorting_1">2018-05-29 22:02:06:736</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">Setting up geo provider: osm</td>
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">2018-05-29 22:02:06:728</td>
+                            <td>info</td>
+                            <td class=" word-wrapper">Starting scrape</td>
+                        </tr>
+                        <tr role="row" class="even">
+                            <td class="sorting_1">2018-05-29 22:02:06:704</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">Setting up default proxy</td>
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">2018-05-29 22:02:06:689</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">Setting up surf</td>
+                        </tr>
+                        <tr role="row" class="even">
+                            <td class="sorting_1">2018-05-29 22:02:06:657</td>
+                            <td>info</td>
+                            <td class=" word-wrapper">Starting digger: 1 [2158]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="data" class="col s12">
+                <pre class="language-html">
+            <code class="language-html">
+&lt;html&gt;
+&lt;head&gt;&lt;/head&gt;
+&lt;body&gt;
+SRID=4326;MULTIPOLYGON(((9.8810213 50.6734643,9.8815143 50.6732013,9.8819651 50.6730224,9.8822352 50.6727284,9.8822992 50.6725263,9.8814952
+50.6723014,9.8814672 50.6720035,9.8814852 50.6716374,9.8819762 50.6712976,9.8820642 50.6710996,9.8816722 50.6708135,9.8811134
+50.6706495,9.8802725 50.6703745,9.8797026 50.6705086,9.8790646 50.6704696,9.8788107 50.6703326,9.8787177 50.6701307,9.8788256
+...
+51.1987095,11.4417495 51.1986705,11.4422248 51.1983985,11.4429123 51.1983543,11.4434331 51.1984848,11.443604 51.1983687,11.4438274
+51.1983813,11.4455993 51.1942559,11.4460681 51.1944058,11.4464906 51.1946146,11.4466948 51.1948431,11.4470651 51.1950529,11.4471149
+51.1955349,11.447471 51.1959901,11.4478215 51.1962274)))
+&lt;/body&gt;
+&lt;/html&gt;
+                </code></pre>
+            </div>
+        </div>
+
+        <p class="flow-text">
+            in next chapter we will learn how you can do geocoding for some specific place.
+        </p>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-methods-geospatial-data-geocoding.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

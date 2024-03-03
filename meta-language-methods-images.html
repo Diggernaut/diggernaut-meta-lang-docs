@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Diggernaut: Documentation for Meta-Language | Images | Working with images</title>
+    <meta name="description" content="We work with the image: refactoring and saving files.">
+    <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, images">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Alternatives -->
+    <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-images.html" />
+    <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-images.html" />
+    <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-izobrazheniya.html" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@diggernautcom">
+    <meta name="twitter:site" content="@diggernautcom">
+    <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Images | Working with images">
+    <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+    <!-- OG -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Diggernaut" />
+    <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Images | Working with images" />
+    <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-images.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="We work with the image: refactoring and saving files." />
+    <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png" />
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <script>
+        (function () {
+            var cx = '017044341280497706869:0g3mtgyp2is';
+            var gcse = document.createElement('script');
+            gcse.type = 'text/javascript';
+            gcse.async = true;
+            gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(gcse, s);
+        })();
+    </script>
+</head>
+
+<body>
+    <header>
+        <nav class="teal darken-1" role="navigation" id="menu">
+            <div class="container-gcse">
+                <gcse:search></gcse:search>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="lessons-container" id="main">
+            <div class="container">
+                <h1>Images</h1>
+
+                <div>
+                    <h2>Switch to Image Context</h2>
+
+                    <p class="flow-text">
+                        Sometimes there is a need to process an image from a website and save the result to the cloud storage or a local drive.
+                        To do it, you must switch to image context using the <span class="hlt">image</span> command. This command only works in
+                        block context and requires a base64 encoded image in the register. The following image types are currently supported:
+                        <span class="hlt2">jpg</span>, <span class="hlt2">png</span>, <span class="hlt2">gif</span>, <span class="hlt2">webp</span>, <span class="hlt2">tif</span>, <span class="hlt2">bmp</span>.
+                    </p>
+                    <p class="flow-text">
+                        As a rule, the transition to the context is fairly standard. You need to load the image, go to the block with the encoded image,
+                        scrape the contents of the block to the register and switch to the <span class="hlt">image</span> context:
+                    </p>
+
+                    <pre class="language-yaml">
+                        <code class="language-yaml"># LOAD IMAGE
+- walk:
+    to: https://www.diggernaut.com/static/site/images/logo_light_beta.png
+    do:
+    # FIND THE BLOCK WITH THE BASE64 ENCODED IMAGE
+    - find:
+        path: imgbase64
+        do:
+        # SCRAPE THE CONTENT
+        - parse
+        # SWITCH TO THE IMAGE CONTEXT
+        - image:
+            do:
+            # PROCESS THE IMAGE
+                        </code>
+                    </pre>
+
+                    <h2>Process the Image</h2>
+
+                    <p class="flow-text">
+                        While you are in the image context, you can process the image. For example, you can resize and crop the image.
+                        The list of available commands and their description is given below:
+                    </p>
+
+                    <table class="responsive-table highlight">
+                        <thead>
+                            <tr>
+                                <th data-field="parameter">Command</th>
+                                <th data-field="description">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="centered">resize</td>
+                                <td>resize an image to given size, using given resampling algorithm.</td>
+                            </tr>
+                            <tr><td>
+                                </td>
+                                <td>
+                                <table class="responsive-table highlight">
+                                    <thead>
+                                        <tr>
+                                            <th data-field="parameter">Parameter</th>
+                                            <th data-field="description">Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="centered">width</td>
+                                            <td>The width of the new image, in pixels (if omitted, is set to 0). If 0, then scaling is performed at a given height, keeping the aspect ratio.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="centered">height</td>
+                                            <td>The height of the new image, in pixels (if omitted, is set to 0). If 0, then scaling is done for a given width, keeping the aspect ratio.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="centered">resampling</td>
+                                            <td>algorithm:<br>
+                                                <span class="hlt">lanczos</span> Lanczos (used by default if omitted)<br>
+                                                <span class="hlt">bicubic</span> Bicubic<br>
+                                                <span class="hlt">bilinear</span> Bilinear<br>
+                                                <span class="hlt">box</span> Box<br>
+                                                <span class="hlt">nn</span> Nearest Neighbor<br>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td></tr>
+                            <tr>
+                                <td class="centered">resize_to_fit</td>
+                                <td>Resizes the image by fitting it into the specified rectangle, using the specified algorithm, keeping the aspect ratio.</td>
+                            </tr>
+                            <tr><td>
+                                </td>
+                                <td>
+                                <table class="responsive-table highlight">
+                                    <thead>
+                                        <tr>
+                                            <th data-field="parameter">Parameter</th>
+                                            <th data-field="description">Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="centered">width</td>
+                                            <td>The width of the new image, in pixels (if omitted, is set to 0).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="centered">height</td>
+                                            <td>The height of the new image, in pixels (if omitted, is set to 0).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="centered">resampling</td>
+                                            <td>algorithm:<br>
+                                                <span class="hlt">lanczos</span> Lanczos (used by default if omitted)<br>
+                                                <span class="hlt">bicubic</span> Bicubic<br>
+                                                <span class="hlt">bilinear</span> Bilinear<br>
+                                                <span class="hlt">box</span> Box<br>
+                                                <span class="hlt">nn</span> Nearest Neighbor<br>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td></tr>
+                            <tr>
+                                <td class="centered">crop</td>
+                                <td>Crops the image to a new image with a given width and height.</td>
+                            </tr>
+                            <tr><td>
+                                </td>
+                                <td>
+                                <table class="responsive-table highlight">
+                                    <thead>
+                                        <tr>
+                                            <th data-field="parameter">Parameter</th>
+                                            <th data-field="description">Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="centered">x</td>
+                                            <td>The coordinate of the origin point for cropping along the X-axis (if omitted, it is set to 0).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="centered">y</td>
+                                            <td>The coordinate of the origin point for cropping along the Y-axis (if omitted, it is set to 0).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="centered">width</td>
+                                            <td>Frame width, in pixels.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="centered">height</td>
+                                            <td>Frame height, in pixels.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td></tr>
+                        </tbody>
+                    </table>
+
+                    <p class="flow-text">
+                        Below is an example of how to make a thumbnail of the image with the preservation of the aspect ratio:
+                    </p>
+
+                    <pre class="language-yaml">
+                        <code class="language-yaml"># LOAD IMAGE
+- walk:
+    to: https://www.diggernaut.com/static/site/images/logo_light_beta.png
+    do:
+    # FIND THE BLOCK WITH THE BASE64 ENCODED IMAGE
+    - find:
+        path: imgbase64
+        do:
+        # SCRAPE THE CONTENT
+        - parse
+        # SWITCH TO THE IMAGE CONTEXT
+        - image:
+            do:
+            # RESIZE IMAGE TO THE THUMBNAIL WITH WIDTH OF 50 PX
+            - resize:
+                width: 50
+                        </code>
+                    </pre>
+
+                    <h2>Save the Image</h2>
+
+                    <p class="flow-text">
+                        After processing, we need to save the image. You can save the image back to the register, to a local file on the computer (available
+                        only in the compiled digger), to the cloud storage (currently supported: Amazon S3, Yandex Object Storage) or FTP server.  
+                        <span class="hlt">Save</span> command is used to save the image.
+                    </p>
+                    <p class="flow-text">
+                        The command supports following parameters:
+                    </p>
+
+                    <table class="responsive-table highlight">
+                        <thead>
+                            <tr>
+                                <th data-field="parameter">Parameter</th>
+                                <th data-field="description">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="centered">ext</td>
+                                <td>An extension that defines the type of file being saved. If omitted, the original type and extension are used.
+                                    The following extensions are currently supported for saving:
+                                    <span class="hlt2">jpg</span>, <span class="hlt2">png</span>, <span class="hlt2">gif</span>, <span class="hlt2">tif</span> and <span class="hlt2">bmp</span>.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">to</td>
+                                <td>The type of storage. The following types are currently supported: <span class="hlt2">register</span>, <span class="hlt2">file</span>, <span class="hlt2">s3</span>, <span class="hlt2">yandex</span> and <span class="hlt2">ftp</span>.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="flow-text">
+                        The <span class="hlt2">register</span> type does not use any additional parameters. The image is encoded to Base64 and saved to
+                        register.
+                    </p>
+
+                    <pre class="language-yaml">
+                        <code class="language-yaml"># LOAD IMAGE
+- walk:
+    to: https://www.diggernaut.com/static/site/images/logo_light_beta.png
+    do:
+    # FIND THE BLOCK WITH THE BASE64 ENCODED IMAGE
+    - find:
+        path: imgbase64
+        do:
+        # SCRAPE THE CONTENT
+        - parse
+        # SWITCH TO THE IMAGE CONTEXT
+        - image:
+            do:
+            # SAVE IMAGE AS JPG TO THE REGISTER
+            - save:
+                ext: jpg
+                to: register
+        # NOW WE HAVE AN IMAGE IN THE REGISTER
+        # SAVE IT TO THE VARIABLE
+        - variable_set: newimage
+                        </code>
+                    </pre>
+
+                    <p class="flow-text">
+                        The <span class="hlt2">file</span> type saves the image to a local drive. This type will work only in compiled scrapers. When using storage
+                        of this type, the following parameters are required:
+                    </p>
+
+                    <table class="responsive-table highlight">
+                        <thead>
+                            <tr>
+                                <th data-field="parameter">Parameter</th>
+                                <th data-field="description">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="centered">name</td>
+                                <td>Filename without an extension. If not specified, a unique name will be generated.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">path</td>
+                                <td>A path to the directory where you want to save the file. If not specified, the file will be saved to the current directory.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <pre class="language-yaml">
+                        <code class="language-yaml"># LOAD IMAGE
+- walk:
+    to: https://www.diggernaut.com/static/site/images/logo_light_beta.png
+    do:
+    # FIND THE BLOCK WITH THE BASE64 ENCODED IMAGE
+    - find:
+        path: imgbase64
+        do:
+        # SCRAPE THE CONTENT
+        - parse
+        # SWITCH TO THE IMAGE CONTEXT
+        - image:
+            do:
+            # SAVE IMAGE TO THE FILE (e://myimages/mylogo.png)
+            - save:
+                to: file
+                name: mylogo
+                path: 'e://myimages'
+                        </code>
+                    </pre>
+
+                    <p class="flow-text">
+                        The <span class="hlt2">s3</span> type saves the image to the Amazon S3 cloud storage. When using storage
+                        of this type, the following parameters are required:
+                    </p>
+
+                    <table class="responsive-table highlight">
+                        <thead>
+                            <tr>
+                                <th data-field="parameter">Parameter</th>
+                                <th data-field="description">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="centered">key</td>
+                                <td>AWS S3 access key. Mandatory.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">secret</td>
+                                <td>AWS S3 secret. Mandatory.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">region</td>
+                                <td>AWS S3 region. Mandatory.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">bucket</td>
+                                <td>AWS S3 bucket name. Mandatory.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">token</td>
+                                <td>AWS S3 token. Optional.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">name</td>
+                                <td>Filename without an extension. If not specified, a unique name will be generated.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">path</td>
+                                <td>A path to the directory where you want to save the file. If not specified, the file will be saved to the root of the bucket.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <pre class="language-yaml">
+                        <code class="language-yaml"># LOAD IMAGE
+- walk:
+    to: https://www.diggernaut.com/static/site/images/logo_light_beta.png
+    do:
+    # FIND THE BLOCK WITH THE BASE64 ENCODED IMAGE
+    - find:
+        path: imgbase64
+        do:
+        # SCRAPE THE CONTENT
+        - parse
+        # SWITCH TO THE IMAGE CONTEXT
+        - image:
+            do:
+            # SAVE IMAGE TO THE S3 STORAGE (/logos/mylogo.png)
+            - save:
+                to: s3
+                key: AWSAJJDJJSJDJDJFK
+                secret: AWSSERETTDHFJJJDJSKFJFJSJJFJJGKRI
+                region: us-east-1
+                bucket: mybucket
+                name: mylogo
+                path: '/logos'
+                        </code>
+                    </pre>
+
+                    <p class="flow-text">
+                        The <span class="hlt2">yandex</span> type saves the image to the Yandex Object Storage. When using storage
+                        of this type, the following parameters are required:
+                    </p>
+
+                    <table class="responsive-table highlight">
+                        <thead>
+                            <tr>
+                                <th data-field="parameter">Parameter</th>
+                                <th data-field="description">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="centered">key</td>
+                                <td>Yandex Object Storage access key. Mandatory.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">secret</td>
+                                <td>Yandex Object Storage secret. Mandatory.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">region</td>
+                                <td>Yandex Object Storage region. Mandatory.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">bucket</td>
+                                <td>Yandex Object Storage bucket name. Mandatory.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">token</td>
+                                <td>Yandex Object Storage token. Optional.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">name</td>
+                                <td>Filename without an extension. If not specified, a unique name will be generated.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">path</td>
+                                <td>A path to the directory where you want to save the file. If not specified, the file will be saved to the root of the bucket.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <pre class="language-yaml">
+                        <code class="language-yaml"># LOAD IMAGE
+- walk:
+    to: https://www.diggernaut.com/static/site/images/logo_light_beta.png
+    do:
+    # FIND THE BLOCK WITH THE BASE64 ENCODED IMAGE
+    - find:
+        path: imgbase64
+        do:
+        # SCRAPE THE CONTENT
+        - parse
+        # SWITCH TO THE IMAGE CONTEXT
+        - image:
+            do:
+            # SAVE IMAGE TO THE YANDEX STORAGE (/logos/mylogo.png)
+            - save:
+                to: yandex
+                key: AWSAJJDJJSJDJDJFK
+                secret: AWSSERETTDHFJJJDJSKFJFJSJJFJJGKRI
+                region: ru-central1
+                bucket: mybucket
+                name: mylogo
+                path: '/logos'
+                        </code>
+                    </pre>
+
+                    <p class="flow-text">
+                        The <span class="hlt2">ftp</span> type saves the image to the FTP server. When using storage
+                        of this type, the following parameters are required:
+                    </p>
+
+                    <table class="responsive-table highlight">
+                        <thead>
+                            <tr>
+                                <th data-field="parameter">Parameter</th>
+                                <th data-field="description">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="centered">host</td>
+                                <td>IP address or hostname of the FTP server. Mandatory.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">port</td>
+                                <td>Port of the FTP server, if omitted, default port 21 is used. Optional.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">username</td>
+                                <td>FTP server username, if omitted empty username will be used. Optional.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">password</td>
+                                <td>FTP server password, if omitted empty password will be used. Optional.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">name</td>
+                                <td>Filename without an extension. If not specified, a unique name will be generated.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">path</td>
+                                <td>A path to the directory where you want to save the image. If not specified, the image will be saved to the current directory after user is logged in to the FTP server.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <pre class="language-yaml">
+                        <code class="language-yaml"># LOAD IMAGE
+- walk:
+    to: https://www.diggernaut.com/static/site/images/logo_light_beta.png
+    do:
+    # FIND THE BLOCK WITH THE BASE64 ENCODED IMAGE
+    - find:
+        path: imgbase64
+        do:
+        # SCRAPE THE CONTENT
+        - parse
+        # SWITCH TO THE IMAGE CONTEXT
+        - image:
+            do:
+            # SAVE IMAGE TO THE FTP SERVER (logos/mylogo.png)
+            - save:
+                to: ftp
+                host: ftp.mywebsite.com
+                port: 21
+                username: mylogin
+                password: mypassword
+                name: mylogo
+                path: 'logos'
+                        </code>
+                    </pre>
+
+                    <p class="flow-text">
+                        Please note that when you run digger in the cloud and save images to cloud storages or FTP server, a bandwidth quota is used that corresponds to your subscription plan.
+                        For example, on a free plan, the quota is 10 megabytes per month. Upon reaching the quota, the images will no longer be stored in the cloud storage / FTP.
+                        Also, the images will not be saved if your digger is in debug mode.
+                    </p>
+
+                    <span class="spacer"></span>
+
+                    <p class="flow-text">
+                        Now its time to find out how to work with binary files.
+                    </p>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+                            <div class="pagination">
+                                <a href="meta-language-methods-files.html" class="btn goto teal z-depth-2">Next</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="page-footer teal darken-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="social">
+                        <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/" target="_blank">
+                            <i class="fa fa-wordpress"></i>
+                        </a>
+                        <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank">
+                            <i class="fa fa-vk"></i>
+                        </a>
+                        <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                        <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!--  Scripts-->
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/prism.js"></script>
+    <script src="js/meta-language-init.js"></script>
+
+    <!-- Google analytics -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-80717561-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <!-- /Google analytics -->
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (d, w, c) {
+            (w[c] = w[c] || []).push(function () {
+                try {
+                    w.yaCounter47560513 = new Ya.Metrika({
+                        id: 47560513,
+                        clickmap: true,
+                        trackLinks: true,
+                        accurateTrackBounce: true
+                    });
+                } catch (e) {}
+            });
+
+            var n = d.getElementsByTagName("script")[0],
+                s = d.createElement("script"),
+                f = function () {
+                    n.parentNode.insertBefore(s, n);
+                };
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+            if (w.opera == "[object Opera]") {
+                d.addEventListener("DOMContentLoaded", f, false);
+            } else {
+                f();
+            }
+        })(document, window, "yandex_metrika_callbacks");
+    </script>
+    <noscript>
+        <div>
+            <img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" />
+        </div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
+
+</body>
+
+</html>

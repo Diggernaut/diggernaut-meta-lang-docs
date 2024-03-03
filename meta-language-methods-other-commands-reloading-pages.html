@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Other Commands | Reloading Pages</title>
+  <meta name="description" content="Learning to reload and reread pages in the client.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, reload page">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-other-commands-reloading-pages.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-other-commands-reloading-pages.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-vspomogatelnye-komandy-perezagruzka-stranits.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Other Commands | Reloading Pages">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Other Commands | Reloading Pages"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-other-commands-reloading-pages.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="Learning to reload and reread pages in the client."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Other Commands</h1>
+
+      <div>
+        <h2>Reloading Pages</h2>
+
+        <p class="flow-text">
+          In the process of fetching pages from the site, there may be a situation where the server does not return you the page
+          completely, or for example, block your proxy if you fetch pages too fast. In order to work through such situations, we added
+          the <span class = "hlt2">page_reload</span> command. It reloads the current page and works in block and page contexts.
+        </p>
+
+        <p class="flow-text">
+          Or you might need to reread the content of the page in the client, for example,
+          when using a headless browser as a client, when you need to wait until all scripts on page finish page rendering.
+          To do it, you can use the command <span class = "hlt2">page_reread</span>.
+        </p>
+
+        <p class="flow-text">
+          Usage example:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s2"><a class="active" href="#page_reload">Bypass proxy blocking</a></li>
+              <li class="tab col s2"><a href="#page_reread">Rereading page content</a></li>
+            </ul>
+          </div>
+
+          <div id="page_reload" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">- find:
+    path: body
+    do:
+    # CHECK IF PROXY IS BLOCKED
+    - parse
+    - if:
+        # PLEASE NOTE THAT TEXT "request has been blocked" MAY BE DIFFERENT
+        # IN YOUR CASE, AS IT DEPENDS ON SOURCE SITE
+        # IN SUCH CASES YOU JUST NEED TO USE TEXT YOUR WEBSITE USES
+        # TO TELL CLIENT THAT REQUEST HAS BEEN BLOCKED
+        match: "request has been blocked"
+        do:
+        # SWITCHING PROXY
+        - proxy_switch
+        # RELOADING PAGE
+        - page_reload
+              </code></pre>
+          </div>
+
+          <div id="page_reread" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">- walk:
+    to: http://somesite.com/page.html
+    do:
+    # OUR PAGE IS RENDERED WITH JS IN A FEW SECONDS AFTER LOADING, SO LET'S WAIT FOR 5 SEC
+    - sleep: 5
+    # REREAD PAGE CONTENT
+    - page_reread
+                </code></pre>
+          </div>
+        </div>
+
+        <span class="spacer"></span>
+
+        <p class="flow-text">
+          In the next chapter, you'll learn how to remove the URL from the cache of the loaded pages.
+        </p>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-methods-other-commands-clearing-cache.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

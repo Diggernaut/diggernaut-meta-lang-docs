@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Geospatial Data | Relations</title>
+  <meta name="description" content="What is OSM relations and how you can work with them.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, geospatial">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-geospatial-data-relations.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-geospatial-data-relations.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-geodannye-otnosheniya.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Geospatial Data | Relations">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Geospatial Data | Relations"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-geospatial-data-relations.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="What is OSM relations and how you can work with them."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+  
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Geospatial Data</h1>
+
+      <div>
+        <h2>Relations</h2>
+
+        <p class="flow-text">
+            A relation is a collection of points, lines, and other relations that are united into a single object. For example, the relation could be: country, region, region, city, street, etc.
+            Relations have a different administrative level. For example, level 2 corresponds to the country, other levels vary depending on the country.
+            More detailed information about administrative levels in different countries can be found <a href="https://wiki.openstreetmap.org/wiki/Tag:boundary=administrative" target="_blank">here</a>.
+        </p>
+
+        <p class="flow-text">
+            To work with relations there is a command <span class = "hlt2">relation</span>. It allows you to search for a relation by name, ID, administrative level
+            and the country. Thus, you can get, for example, all the cities or regions in a certain country, or find a certain city.
+        </p>
+        <p class="flow-text">
+            The following parameters are used in the command:
+        </p>
+
+        <table class="responsive-table highlight">
+        <thead>
+        <tr>
+            <th data-field="parameter">Parameter</th>
+            <th data-field="description">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="centered">country_name</td>
+            <td>English name of the country where you want to search for a relation. Optional parameter.</td>
+        </tr>
+        <tr>
+            <td>admin_level</td>
+            <td>Administrative level. Optional parameter.</td>
+        </tr>
+        <tr>
+            <td>name</td>
+            <td>English relation name, eg name of city. Optional parameter.</td>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>Relation ID. If used, system will search by given ID regardless of other parameters sent. Optional parameter.</td>
+        </tr>
+        </tbody>
+        </table>
+        
+        <div class="row">
+            <div class="col s12">
+            <ul class="tabs excdark">
+                <li class="tab col s1"><a class="active" href="#code">Digger code</a></li>
+                <li class="tab col s1"><a class="active" href="#log">Log</a></li>
+                <li class="tab col s1"><a class="active" href="#data">Data source</a></li>
+            </ul>
+            </div>
+            <div id="code" class="col s12">
+            <pre class="language-yaml">
+                <code class="language-yaml"># SWITCHING TO THE GEO CONTEXT
+- geo:
+    provider: osm
+    do:
+    # Find all regions in Italy
+    - relation:
+        country_name: Italy
+        admin_level: 4
+        do:</code>
+            </pre>
+            </div>
+            <div id="log" class="col s12">
+                <table id="datatable_logs" class="striped responsive-table debug-log" role="grid" aria-describedby="datatable_logs_info">
+                    <thead>
+                        <tr role="row"><th width="11%" class="sorting_desc" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending" aria-sort="descending">Time</th><th width="4%" class="sorting" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Level: activate to sort column ascending">Level</th><th class="word-wrapper sorting_disabled" rowspan="1" colspan="1" aria-label="Message">Message</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row" class="odd"><td class="sorting_1">2018-05-29 11:01:55:891</td><td>info</td><td class=" word-wrapper">Scrape is done</td></tr>
+                        <tr role="row" class="even"><td class="sorting_1">2018-05-29 11:01:55:465</td><td><span class="log-debug">debug</span></td><td class=" word-wrapper"><span data-cr="less" data-full="">Page content: ...</span></td></tr>
+                        <tr role="row" class="odd"><td class="sorting_1">2018-05-29 11:01:42:570</td><td>info</td><td class=" word-wrapper">Retrieving page (POST/JSON): https://lz4.overpass-api.de/api/interpreter</td></tr>
+                        <tr role="row" class="even"><td class="sorting_1">2018-05-29 11:01:42:562</td><td><span class="log-debug">debug</span></td><td class=" word-wrapper">Country name: Italy</td></tr>
+                        <tr role="row" class="odd"><td class="sorting_1">2018-05-29 11:01:42:554</td><td><span class="log-debug">debug</span></td><td class=" word-wrapper">Admin level: 4</td></tr>
+                        <tr role="row" class="even"><td class="sorting_1">2018-05-29 11:01:42:545</td><td><span class="log-debug">debug</span></td><td class=" word-wrapper">Getting geo information about relation</td></tr>
+                        <tr role="row" class="odd"><td class="sorting_1">2018-05-29 11:01:42:534</td><td><span class="log-debug">debug</span></td><td class=" word-wrapper">Setting up geo provider: osm</td></tr>
+                        <tr role="row" class="even"><td class="sorting_1">2018-05-29 11:01:42:521</td><td>info</td><td class=" word-wrapper">Starting scrape</td></tr>
+                        <tr role="row" class="odd"><td class="sorting_1">2018-05-29 11:01:42:498</td><td><span class="log-debug">debug</span></td><td class=" word-wrapper">Setting up default proxy</td></tr>
+                        <tr role="row" class="even"><td class="sorting_1">2018-05-29 11:01:42:488</td><td><span class="log-debug">debug</span></td><td class=" word-wrapper">Setting up surf</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="data" class="col s12">
+                    <pre class="language-html">
+                        <code class="language-html">&lt;html&gt;
+&lt;head&gt;&lt;/head&gt;
+&lt;body&gt;
+    &lt;body_safe&gt;
+        ...
+        &lt;elements&gt;
+            &lt;id&gt;301482&lt;/id&gt;
+            &lt;members&gt;
+                &lt;ref&gt;137109092&lt;/ref&gt;
+                &lt;role&gt;outer&lt;/role&gt;
+                &lt;type&gt;way&lt;/type&gt;
+            &lt;/members&gt;
+            ...
+            &lt;members&gt;
+                &lt;ref&gt;236848961&lt;/ref&gt;
+                &lt;role&gt;outer&lt;/role&gt;
+                &lt;type&gt;way&lt;/type&gt;
+            &lt;/members&gt;
+            &lt;tags&gt;
+                &lt;iso3166-2&gt;IT-42&lt;/iso3166-2&gt;
+                &lt;admin_level&gt;4&lt;/admin_level&gt;
+                &lt;boundary&gt;administrative&lt;/boundary&gt;
+                &lt;name&gt;Liguria&lt;/name&gt;
+                &lt;name_ca&gt;Lig&#250;ria&lt;/name_ca&gt;
+                &lt;name_cs&gt;Ligurie&lt;/name_cs&gt;
+                &lt;name_de&gt;Ligurien&lt;/name_de&gt;
+                &lt;name_en&gt;Liguria&lt;/name_en&gt;
+                &lt;name_eo&gt;Ligurio&lt;/name_eo&gt;
+                &lt;name_fi&gt;Liguria&lt;/name_fi&gt;
+                &lt;name_fr&gt;Ligurie&lt;/name_fr&gt;
+                &lt;name_nl&gt;Liguri&#235;&lt;/name_nl&gt;
+                &lt;name_pl&gt;Liguria&lt;/name_pl&gt;
+                &lt;name_pt&gt;Lig&#250;ria&lt;/name_pt&gt;
+                &lt;name_ru&gt;Лигурия&lt;/name_ru&gt;
+                &lt;name_sk&gt;Lig&#250;ria&lt;/name_sk&gt;
+                &lt;name_sl&gt;Ligurija&lt;/name_sl&gt;
+                &lt;name_sv&gt;Ligurien&lt;/name_sv&gt;
+                &lt;ref_istat&gt;07&lt;/ref_istat&gt;
+                &lt;short_name&gt;LIG&lt;/short_name&gt;
+                &lt;type&gt;boundary&lt;/type&gt;
+                &lt;wikidata&gt;Q1256&lt;/wikidata&gt;
+                &lt;wikipedia&gt;it:Liguria&lt;/wikipedia&gt;
+            &lt;/tags&gt;
+            &lt;type&gt;relation&lt;/type&gt;
+        &lt;/elements&gt;
+        &lt;elements&gt;
+            &lt;id&gt;1405743&lt;/id&gt;
+            &lt;members&gt;
+                &lt;ref&gt;106370194&lt;/ref&gt;
+                &lt;role&gt;outer&lt;/role&gt;
+                &lt;type&gt;way&lt;/type&gt;
+            &lt;/members&gt;
+            ...
+            &lt;members&gt;
+                &lt;ref&gt;106369499&lt;/ref&gt;
+                &lt;role&gt;outer&lt;/role&gt;
+                &lt;type&gt;way&lt;/type&gt;
+            &lt;/members&gt;
+            &lt;tags&gt;
+                &lt;admin_level&gt;4&lt;/admin_level&gt;
+                &lt;boundary&gt;administrative&lt;/boundary&gt;
+                &lt;city_left&gt;Favignana&lt;/city_left&gt;
+                &lt;name&gt;Marettimo&lt;/name&gt;
+                &lt;name_ar&gt;مليطمة&lt;/name_ar&gt;
+                &lt;name_da&gt;Marettimo&lt;/name_da&gt;
+                &lt;name_el&gt;Μαρέττιμο&lt;/name_el&gt;
+                &lt;place&gt;island&lt;/place&gt;
+                &lt;province_left&gt;Trapani&lt;/province_left&gt;
+                &lt;region_left&gt;Sicilia&lt;/region_left&gt;
+                &lt;type&gt;boundary&lt;/type&gt;
+                &lt;wikidata&gt;Q497339&lt;/wikidata&gt;
+                &lt;wikipedia&gt;it:Isola di Marettimo&lt;/wikipedia&gt;
+            &lt;/tags&gt;
+            &lt;type&gt;relation&lt;/type&gt;
+        &lt;/elements&gt;
+        &lt;elements&gt;
+            &lt;id&gt;1783980&lt;/id&gt;
+            &lt;members&gt;
+                &lt;ref&gt;67273291&lt;/ref&gt;
+                &lt;role&gt;admin_centre&lt;/role&gt;
+                &lt;type&gt;node&lt;/type&gt;
+            &lt;/members&gt;
+            ...
+            &lt;members&gt;
+                &lt;ref&gt;243585592&lt;/ref&gt;
+                &lt;role&gt;outer&lt;/role&gt;
+                &lt;type&gt;way&lt;/type&gt;
+            &lt;/members&gt;
+            &lt;tags&gt;
+                &lt;iso3166-2&gt;IT-78&lt;/iso3166-2&gt;
+                &lt;admin_level&gt;4&lt;/admin_level&gt;
+                &lt;boundary&gt;administrative&lt;/boundary&gt;
+                &lt;name&gt;Calabria&lt;/name&gt;
+                &lt;name_ar&gt;كالابريا&lt;/name_ar&gt;
+                &lt;name_ca&gt;Cal&#224;bria&lt;/name_ca&gt;
+                &lt;name_cs&gt;Kal&#225;brie&lt;/name_cs&gt;
+                &lt;name_de&gt;Kalabrien&lt;/name_de&gt;
+                &lt;name_en&gt;Calabria&lt;/name_en&gt;
+                &lt;name_eo&gt;Kalabrio&lt;/name_eo&gt;
+                &lt;name_fr&gt;Calabre&lt;/name_fr&gt;
+                &lt;name_fur&gt;Calabrie&lt;/name_fur&gt;
+                &lt;name_lt&gt;Kalabrija&lt;/name_lt&gt;
+                &lt;name_nl&gt;Calabri&#235;&lt;/name_nl&gt;
+                &lt;name_pl&gt;Kalabria&lt;/name_pl&gt;
+                &lt;name_pt&gt;Cal&#225;bria&lt;/name_pt&gt;
+                &lt;name_ru&gt;Калабрия&lt;/name_ru&gt;
+                &lt;name_scn&gt;Calabbr&#238;&lt;/name_scn&gt;
+                &lt;name_sk&gt;Kal&#225;bria&lt;/name_sk&gt;
+                &lt;name_sl&gt;Kalabrija&lt;/name_sl&gt;
+                &lt;ref_istat&gt;18&lt;/ref_istat&gt;
+                &lt;short_name&gt;CAL&lt;/short_name&gt;
+                &lt;type&gt;boundary&lt;/type&gt;
+                &lt;wikidata&gt;Q1458&lt;/wikidata&gt;
+                &lt;wikipedia&gt;it:Calabria&lt;/wikipedia&gt;
+            &lt;/tags&gt;
+            &lt;type&gt;relation&lt;/type&gt;
+        &lt;/elements&gt;
+        &lt;elements&gt;
+            &lt;id&gt;3792877&lt;/id&gt;
+            &lt;members&gt;
+                &lt;ref&gt;362103016&lt;/ref&gt;
+                &lt;role&gt;outer&lt;/role&gt;
+                &lt;type&gt;way&lt;/type&gt;
+            &lt;/members&gt;
+            ...
+            &lt;members&gt;
+                &lt;ref&gt;551224923&lt;/ref&gt;
+                &lt;role&gt;outer&lt;/role&gt;
+                &lt;type&gt;way&lt;/type&gt;
+            &lt;/members&gt;
+            &lt;tags&gt;
+                &lt;iso3166-2&gt;FR-ARA&lt;/iso3166-2&gt;
+                &lt;admin_level&gt;4&lt;/admin_level&gt;
+                &lt;boundary&gt;administrative&lt;/boundary&gt;
+                &lt;name&gt;Auvergne-Rh&#244;ne-Alpes&lt;/name&gt;
+                &lt;name_ar&gt;أوفرن-رون ألب&lt;/name_ar&gt;
+                &lt;name_ca&gt;Alv&#232;rnia-Roine-Alps&lt;/name_ca&gt;
+                &lt;name_de&gt;Auvergne-Rhone-Alpen&lt;/name_de&gt;
+                &lt;note&gt;nouvelle r&#233;gion au 1/1/2016&lt;/note&gt;
+                &lt;ref_insee&gt;84&lt;/ref_insee&gt;
+                &lt;ref_nuts&gt;FR71&lt;/ref_nuts&gt;
+                &lt;safe_source&gt;http://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000030109622&lt;/safe_source&gt;
+                &lt;start_date&gt;2016-01-01&lt;/start_date&gt;
+                &lt;type&gt;boundary&lt;/type&gt;
+                &lt;wikidata&gt;Q18338206&lt;/wikidata&gt;
+                &lt;wikipedia&gt;fr:Auvergne-Rh&#244;ne-Alpes&lt;/wikipedia&gt;
+            &lt;/tags&gt;
+            &lt;type&gt;relation&lt;/type&gt;
+        &lt;/elements&gt;
+        &lt;elements&gt;
+            &lt;id&gt;6921447&lt;/id&gt;
+            &lt;members&gt;
+                &lt;ref&gt;108546409&lt;/ref&gt;
+                &lt;role&gt;outer&lt;/role&gt;
+                &lt;type&gt;way&lt;/type&gt;
+            &lt;/members&gt;
+            &lt;members&gt;
+                &lt;ref&gt;108546403&lt;/ref&gt;
+                &lt;role&gt;outer&lt;/role&gt;
+                &lt;type&gt;way&lt;/type&gt;
+            &lt;/members&gt;
+            &lt;tags&gt;
+                &lt;admin_level&gt;4&lt;/admin_level&gt;
+                &lt;boundary&gt;administrative&lt;/boundary&gt;
+                &lt;city_left&gt;Trapani&lt;/city_left&gt;
+                &lt;name&gt;Scoglio Palumbo&lt;/name&gt;
+                &lt;place&gt;islet&lt;/place&gt;
+                &lt;province_left&gt;Trapani&lt;/province_left&gt;
+                &lt;region_left&gt;Sicilia&lt;/region_left&gt;
+                &lt;type&gt;boundary&lt;/type&gt;
+                &lt;wikidata&gt;Q3952571&lt;/wikidata&gt;
+                &lt;wikipedia&gt;it:Scoglio Palumbo (Trapani)&lt;/wikipedia&gt;
+            &lt;/tags&gt;
+            &lt;type&gt;relation&lt;/type&gt;
+        &lt;/elements&gt;
+        &lt;elements&gt;
+            &lt;id&gt;7361997&lt;/id&gt;
+            &lt;members&gt;
+                &lt;ref&gt;10276966&lt;/ref&gt;
+                &lt;role&gt;outer&lt;/role&gt;
+                &lt;type&gt;way&lt;/type&gt;
+            &lt;/members&gt;
+            ...
+            &lt;members&gt;
+                &lt;ref&gt;438952407&lt;/ref&gt;
+                &lt;role&gt;outer&lt;/role&gt;
+                &lt;type&gt;way&lt;/type&gt;
+            &lt;/members&gt;
+            &lt;tags&gt;
+                &lt;iso3166-2&gt;IT-88&lt;/iso3166-2&gt;
+                &lt;admin_level&gt;4&lt;/admin_level&gt;
+                &lt;boundary&gt;administrative&lt;/boundary&gt;
+                &lt;name&gt;Sardegna&lt;/name&gt;
+                &lt;name_ar&gt;سردينيا&lt;/name_ar&gt;
+                &lt;name_ca&gt;Sardenya&lt;/name_ca&gt;
+                &lt;name_cs&gt;Sardinie&lt;/name_cs&gt;
+                &lt;name_de&gt;Sardinien&lt;/name_de&gt;
+                &lt;name_el&gt;Σαρδηνία&lt;/name_el&gt;
+                &lt;name_en&gt;Sardinia&lt;/name_en&gt;
+                &lt;name_eo&gt;Sardio&lt;/name_eo&gt;
+                &lt;name_es&gt;Cerde&#241;a&lt;/name_es&gt;
+                &lt;name_eu&gt;Sardinia&lt;/name_eu&gt;
+                &lt;name_fi&gt;Sardinia&lt;/name_fi&gt;
+                &lt;name_fr&gt;Sardaigne&lt;/name_fr&gt;
+                &lt;name_fur&gt;Sardegne&lt;/name_fur&gt;
+                &lt;name_hsb&gt;Sardinska&lt;/name_hsb&gt;
+                &lt;name_hu&gt;Szard&#237;nia&lt;/name_hu&gt;
+                &lt;name_it&gt;Sardegna&lt;/name_it&gt;
+                &lt;name_kn&gt;ಸಾರ್ಡಿನ್ಯ&lt;/name_kn&gt;
+                &lt;name_ku&gt;Sard&#238;nya&lt;/name_ku&gt;
+                &lt;name_la&gt;Sardinia&lt;/name_la&gt;
+                &lt;name_nl&gt;Sardini&#235;&lt;/name_nl&gt;
+                &lt;name_pl&gt;Sardynia&lt;/name_pl&gt;
+                &lt;name_pt&gt;Sardenha&lt;/name_pt&gt;
+                &lt;name_ro&gt;Sardinia&lt;/name_ro&gt;
+                &lt;name_ru&gt;Сардиния&lt;/name_ru&gt;
+                &lt;name_sc&gt;Sardigna&lt;/name_sc&gt;
+                &lt;name_scn&gt;Sardigna&lt;/name_scn&gt;
+                &lt;name_sk&gt;Sard&#237;nia&lt;/name_sk&gt;
+                &lt;name_sl&gt;Sardinija&lt;/name_sl&gt;
+                &lt;ref_istat&gt;20&lt;/ref_istat&gt;
+                &lt;short_name&gt;SAR&lt;/short_name&gt;
+                &lt;type&gt;boundary&lt;/type&gt;
+                &lt;wikidata&gt;Q1462&lt;/wikidata&gt;
+                &lt;wikipedia&gt;it:Sardegna&lt;/wikipedia&gt;
+            &lt;/tags&gt;
+            &lt;type&gt;relation&lt;/type&gt;
+        &lt;/elements&gt;
+        &lt;generator&gt;Overpass API 0.7.55.2 3ab0d275&lt;/generator&gt;
+        &lt;osm3s&gt;
+            &lt;copyright&gt;The data included in this document is from www.openstreetmap.org.
+                        The data is made available under ODbL.&lt;/copyright&gt;
+            &lt;timestamp_areas_base&gt;2018-05-29T14:22:02Z&lt;/timestamp_areas_base&gt;
+            &lt;timestamp_osm_base&gt;2018-05-29T15:26:02Z&lt;/timestamp_osm_base&gt;
+        &lt;/osm3s&gt;
+        &lt;version&gt;0.6&lt;/version&gt;
+    &lt;/body_safe&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                    </code></pre>
+            </div>
+        </div>
+
+        <p class="flow-text">
+            In the next chapter we will know more about OSM nodes.
+        </p>
+        
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-methods-geospatial-data-nodes.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

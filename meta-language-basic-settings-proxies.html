@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Basic Settings | Proxies</title>
+  <meta name="description" content="How to configure the scraper to use your proxy server or proxy server list correctly.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, proxy">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-basic-settings-proxies.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-basic-settings-proxies.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-bazovye-nastroyki-nastroyka-proksi-serverov.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Basic Settings | Proxies">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Basic Settings | Proxies"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-basic-settings-proxies.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="How to configure the scraper to use your proxy server or proxy server list correctly."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+  
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Basic Settings</h1>
+
+      <div>
+        <h2>Proxies</h2>
+
+        <p class="flow-text">
+          All requests that a digger makes are done through a network of proxy servers. By default we provide
+          you with our network of proxy servers for free use. Free users can use only TOR based proxy network, while users with paid accounts can use our
+          premium proxy network pools.
+        </p>
+
+        <p class="flow-text">
+          Users using a paid subscription can take advantage of geographic targeting by country and (or) city. In this case,
+          when starting the digger, only proxies from the specified country or city are selected. If geotargeting is not used,
+          or user is on the free plan, then all proxies from our pool from all countries of the world are selected. Paid users also have access to the residential pool of proxies.
+        </p>
+        <p class="flow-text">
+          You can use <span class="hlt2">geo</span> parameter to set the geo-zone. You can specify single or multiple countries (separated by comma) and/or cities. You can also specify NOT city/county if you set name with preceding <span class="hlt2">!</span> character:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+          <pre class="language-yaml">
+            <code class="language-yaml"># SELECT ONLY USA PROXIES
+- config:
+    geo:
+        country: US
+
+# SELECT PROXIES ONLY US AND CANADA PROXIES
+- config:
+    geo:
+        country: 'US,CA'
+
+# SELECT PROXIES FROM ALL COUNTRIES BUT US
+- config:
+    geo:
+        country: '!US'
+                
+# SELECT PROXIES ONLY FROM CHICAGO
+- config:
+    geo:
+        city: Chicago
+
+# SELECT PROXIES ONLY FROM CHICAGO AND MIAMI
+- config:
+    geo:
+        city: "Chicago,Miami"
+
+# SELECT PROXIES FROM US, ANY CITY BUT HONOLULU
+- config:
+    geo:
+        country: US
+        city: "!Honolulu"
+                
+# SELECT PROXIES ONLY FROM MOSCOW, USA
+- config:
+    geo:
+        country: US
+        city: Moscow
+            </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          Note that if no proxy is found for the specified geo-zone, the execution will fail.
+          Currently, the following cities and countries are supported:
+        </p>
+
+        <table class="responsive-table highlight">
+          <thead>
+          <tr>
+            <th data-field="parameter">Country</th>
+            <th data-field="description">Cities</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>US</td>
+            <td>Anchorage, Atlanta, Chicago, Dallas, Denver, Des Moines, Honolulu, Los Angeles,<br>Miami, New York City, Omaha, Phoenix, Salem, San Jose, Seattle</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <p class="flow-text">
+          Also, there may be situations when you need to use your own proxy server or a list of proxy servers
+          with rotation inside the digger. To install your proxy server or list of proxy servers,
+          you can use the <span class = "hlt2">proxy</span> parameter. Also this parameter can be used to select type of proxy pool you want to use:
+        </p>
+        <div class="row">
+          <div class="col s12">
+          <pre class="language-yaml">
+            <code class="language-yaml"># SETTING UP YOUR OWN PROXY SERVER FOR REQUESTS
+- config:
+    proxy: 1.1.1.1:8080
+
+# SETTING UP YOUR OWN SOCKS5 PROXY
+- config:
+    proxy: SOCKS5://1.1.1.1:8085
+    
+    
+# SETTING UP YOUR OWN PROXY SERVER WITH BASIC AUTH
+- config:
+    proxy: username:password@1.1.1.1:8080
+    
+# SETTING UP LIST OF PROXIES
+- config:
+    proxy:
+    - 1.1.1.1:8080
+    - 1.1.1.2:8080
+
+# SELECT PROXY POOL BY TYPE
+# Select TOR proxy pool
+- config:
+    proxy:
+        type: tor
+# Select datacenter proxy pool (only for paid subscribers)
+- config:
+    proxy:
+        type: datacenter
+# Select residential proxy pool (only for paid subscribers)
+- config:
+    proxy:
+        type: residential
+# Select IPV6 proxy pool (only for paid subscribers)
+- config:
+    proxy:
+        type: ipv6
+            </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          As you can see, your proxies should be written in the IPADDRESS: PORT notation. We do not provide IP addresses
+          of our servers, so if your proxies require authorization, make sure that you can
+          use login and password for authorization, not IP address. You can use HTTP, SOCKS4 or SOCKS5 proxy. For socks proxies
+          you need to specify protocol explicitly, as shown in the example above.
+        </p>
+        <p class="flow-text">
+          We also integrate with various services for the automated provision of proxy servers.
+          At the moment you can easily use the <a href="https://luminati.io/" target="_blank">Luminati</a> service within your diggers,
+          if you have an account in their service. In this case, you should use the <span class = "hlt2">proxy</span> parameter as follows:
+        </p>
+        <div class="row">
+          <div class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># USING LUMINATI SERVICE AS PROXY-PROVIDER
+- config:
+    proxy:
+        provider: luminati
+        username: your_luminati_login
+        password: your_luminati_password
+        zone: geo_zone_you_want_to_use
+              </code></pre>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-basic-settings-setting-up-cookies.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

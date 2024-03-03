@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Runtime Entities | Basic Concepts</title>
+  <meta name="description" content="This chapter discusses the digger runtime and its contexts.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, scraper runtime">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-runtime-entities.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-runtime-entities.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-obyekty-sredy-vypolneniya.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Runtime Entities | Basic Concepts">
+  <meta name="twitter:image" content="https://www.diggernaut.ru/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Runtime Entities | Basic Concepts"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-runtime-entities.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="This chapter discusses the digger runtime and its contexts."/>
+  <meta property="og:image" content="https://www.diggernaut.ru/static/dev/images/og_img_devml_en.png"/>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Runtime Entities</h1>
+
+      <h2>Basic Concepts</h2>
+
+      <p class="flow-text">
+        The runtime is software environment available during the digger run. This environment consists of several contexts,
+        and a digger, being started, is always in one of them at any time:
+      </p>
+      <p class="flow-text">
+        <i>Digger Context</i> - The digger has not yet loaded the page or has already left the scope of the previously loaded page.<br/>
+        <span class="spacer-10"></span>
+        <i>Page Context</i> - The digger has loaded the page and is in the scope of this page.<br/>
+        <span class="spacer-10"></span>
+        <i>Block Context</i> - The digger has loaded the page, moved to a specific block on the page and is in the scope of this block.<br/>
+        <span class="spacer-10"></span>
+        <i>Form Context</i> - The digger has loaded the page, has moved to a specific form on the page and is in the scope of this form.<br/>
+      </p>
+      <p class="flow-text">
+        <strong>A digger can be in a few contexts at the same time.</strong> So, for example, while the digger is running,
+        it is always in a Digger Context, and as soon as it loads any page it goes into a Page Context
+        and at the same time it is still in a Digger Context. Next, the scraper algorithm goes into the HTML node and falls into the Block Context,
+        remaining at the same time in a Page and Digger Context. Depending on the context digger can interact with different entities and execute
+        different commands with various options, selection of which may also depends on the context. Entities can be context-sensitive
+        and context-independent. Context-independent entities does not change values when context is changed and remains intact until its changed manually.
+      </p>
+
+      <p class="flow-text">
+        To better understanding, please take a look at the picture below.
+      </p>
+
+      <img src="img/meta-language/scope_en.png" class="responsive-img materialboxed z-depth-2" alt="">
+      <span class="spacer"></span>
+
+      <blockquote class="warning darken-1">
+        <p class="flow-text">
+          You can not change the configuration while the digger is running. <br/>
+          It is necessary to stop the digger, make the required changes and start again.
+        </p>
+      </blockquote>
+
+      <div class="row">
+        <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+          <div class="pagination">
+            <a href="meta-language-runtime-entities-register.html" class="btn goto teal z-depth-2">Next</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

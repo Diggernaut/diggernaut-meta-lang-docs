@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | OCR | Extracting Text from Images</title>
+  <meta name="description" content="Trying to extract text from images using OCR.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, ocr">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-ocr-extracting-text-from-images.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-ocr-extracting-text-from-images.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-opticheskoe-raspoznavanie-izvlekaem-tekst-iz-izobrazheniy.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | OCR | Extracting Text from Images">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | OCR | Extracting Text from Images"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-ocr-extracting-text-from-images.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="Trying to extract text from images using OCR."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+  
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>OCR</h1>
+
+      <div>
+        <h2>Extracting Text from Images</h2>
+
+        <p class="flow-text">
+          To extract text from images, a method called optical character recognition (OCR) is used.
+          To process images on the Diggernaut platform, the digger needs to load the image first (digger will automatically converts
+          all images to XML with element where you can extract binary content encoded as base64), then extract base64
+          encoded image contents from XML to the register. And after it you can use the <span class="hlt2">ocr</span> command.
+        </p>
+
+        <p class="flow-text">
+          You can use following parameters:
+        </p>
+
+        <table class="responsive-table highlight">
+          <thead>
+          <tr>
+            <th data-field="parameter">Parameter</th>
+            <th data-field="description">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="centered">resize</td>
+            <td>An optional parameter that can contain a positive integer value, indicating the percent of change
+              in the size of the image from the original. This parameter is used to improve the quality of recognition,
+              if the original size is recognized badly.
+            </td>
+          </tr>
+          <tr>
+            <td class="centered">do</td>
+            <td>Commands that should be run in the OCR context.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <p class="flow-text">
+          The command expects image encoded as base64 in the register. After using the command, digger switches to the OCR context. In this context you can
+          use the <span class = "hlt2">text</span> command to transfer recognized text to the register.
+        </p>
+
+        <p class="flow-text">
+          Let's see example when page has some image that is embedded into HTML:
+        </p>
+
+        <pre class="language-markup">
+          <code class="language-markup">&lt;img src="data:image/png;base64,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"&gt;
+          </code></pre>
+
+        <p class="flow-text">
+          Following image is encoded in this base64 image:
+        </p>
+
+        <p class="flow-text">
+          <img src="https://www.diggernaut.com/sandbox/hello_world.png" class="responsive-img materialboxed z-depth-2">
+        </p>
+
+        <p class="flow-text">
+          To extract text, digger code will looks like:
+        </p>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># FIND ELEMENT WITH EMBEDDED IMAGE
+- find:
+    path: img
+    do:
+    # PARSE ATTR `src` AND EXTRACT ONLY BASE64 ENCODED PART
+    - parse:
+        attr: src
+        filter: data\:image\/png\;base64\,(.+)
+
+    # REGISTER NOW HAS IMAGE ENCODED IN BASE64
+    # SWITCHING TO OCR CONTEXT
+    - ocr:
+        do:
+        # GET RECOGNIZED TEXT TO THE REGISTER
+        - text
+        # REGISTER VALUE: Hello world
+            </code></pre>
+
+        <span class="spacer"></span>
+
+        <p class="flow-text">
+          Now let's see how we would do if there is link to image file:
+        </p>
+
+        <pre class="language-yaml">
+          <code class="language-yaml">---
+config:
+    debug: 2
+    agent: Firefox
+do:
+# LOAD IMAGE (SAME AS WE LOADING ANY PAGE)
+- walk:
+    to: https://www.diggernaut.com/sandbox/captcha_3.jpg
+    do:
+    # DIGGER WILL CONVERT BINARY IMAGE TO XML DOCUMENT WITH IMAGE ENCODED AS BASE64
+    # IMAGE WILL BE KEPT IN THE `imgbase64` TAG
+    - find:
+        path: imgbase64
+        do:
+        - parse
+        - ocr:
+            resize: 40
+            do:
+            - text
+            - variable_set: imgtext
+            # AS RESULT WE WILL GET THIS EXTRACTED TEXT: W68HP
+          </code></pre>
+
+        <span class="spacer"></span>
+
+        <p class="flow-text">
+          Captcha on source website doesnt let you scrape the data? Learn how to bypass it.
+        </p>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-methods-captcha-bypassing-captcha.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

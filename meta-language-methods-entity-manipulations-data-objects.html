@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Methods for Entity Manipulations | Data Objects</title>
+  <meta name="description" content="Learning how to use objects to store collected data, which commands are purposed to work with them.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, entity manipulation, link pool">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-entity-manipulations-data-objects.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-entity-manipulations-data-objects.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-manipuliruem-obyektami-obyekty-dannyh.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Methods for Entity Manipulations | Data Objects">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Methods for Entity Manipulations | Data Objects"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-entity-manipulations-data-objects.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="Learning how to use objects to store collected data, which commands are purposed to work with them."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Entity Manipulations</h1>
+
+      <div>
+        <h2>Data Objects</h2>
+
+        <p class="flow-text">
+          Data objects are used to organize the structure of the stored data. Before you can save data to an object,
+          you must create an object. This is done with the <span class = "hlt2">object_new</span>command, which takes a single
+          argument - the name of the object. After the object is created and until it is saved with the <span class = "hlt2">object_save</span> command,
+          you can work with the fields of the object. You can write values and a list of values ​to the fields with the command
+          <span class = "hlt2">object_field_set</span>. You can also save other object to the object field using a special parameter
+          in the <span class = "hlt2">object_save</span> command. If you use the JSON validation scheme in your digger, the <span class = "hlt2">object_save</span> command
+          object will check your object for validity. If there are validation errors, the object will not be saved. Also for checking an object without saving
+          object to the DB, there is a command <span class = "hlt2">object_check</span>, which simply checks the object for validity and in the case of a positive
+          result it executes commands from the <span class = "hlt">do</span> block, and in the case of a negative one, from the <span class = "hlt">else</span> block.
+        </p>
+
+        <p class="flow-text">
+          Allowed commands:
+        </p>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># CREATE OBJECT
+- object_new: item
+          </code></pre>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># SET VALUE OF THE FIELD OF THE OBJECT
+- object_field_set:
+    # OBJECT NAME
+    object: item
+    # FIELD NAME
+    # CAN BE SET AS STRING: somefield
+    # OR WITH USING VARIABLES/ARGUMENTS/COUNTER VALUE: somefield_&lt;%somevar%&gt;
+    field: somefield
+          </code></pre>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># SET VALUE OF THE FIELD OF THE OBJECT AS SPECIFIC DATA TYPE
+- object_field_set:
+    # OBJECT NAME
+    object: item
+    # FIELD NAME
+    # CAN BE SET AS STRING: somefield
+    # OR WITH USING VARIABLES/ARGUMENTS/COUNTER VALUE: somefield_&lt;%somevar%&gt;
+    field: somefield
+    # SETTING FIELD TYPE (CAN BE: float, date OR int)
+    type: float
+    # YOU CAN ALSO SET PRECISION FOR FLOAT TYPE
+    precision: 2
+          </code></pre>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># PUSHING VALUE TO THE FIELD AS ELEMENT OF ARRAY
+- object_field_push:
+    # OBJECT NAME
+    object: item
+    # FIELD NAME
+    # CAN BE SET AS STRING: somefield
+    # OR WITH USING VARIABLES/ARGUMENTS/COUNTER VALUE: somefield_&lt;%somevar%&gt;
+    field: somefield
+    # CHECK FOR UNIQUENESS (OPTIONAL)
+    # IF SUCH VALUE ALREADY EXIST IN THE ARRAY, IT WILL NOT BE PUSHED
+    unique: yes
+          </code></pre>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># SAVING OBJECT TO THE FIELD OF OTHER OBJECT
+- object_save:
+    # OBJECT NAME
+    name: item
+   # TARGET OBJECT NAME
+    to: anotherobj
+# OR
+- object_save:
+    # OBJECT NAME
+    name: item
+    # TARGET OBJECT NAME
+    to: anotherobj
+    # SAVE OBJECT AS MAP (OPTIONAL, WITHOUT THIS OPTION OBJECT WILL BE PUSHED AS AN ELEMENT OF ARRAY, WHICH ALLOW YOU TO PUSH SEVERAL OBJECTS TO THE FIELD)
+    as: map
+          </code></pre>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># SAVING OBJECT TO THE DB
+- object_save:
+    # OBJECT NAME
+    name: item
+          </code></pre>
+
+        <pre class="language-yaml">
+            <code class="language-yaml"># CHECKING OBJECT
+  - object_check:
+      # OBJECT NAME
+      name: item
+      do:
+      # IF CHECK RESULTS WERE POSITIVE WE DO THIS BLOCK
+      - register_set: All is good
+      else:
+      # IF CHECK RESULTS WERE NEGATIVE WE DO THIS BLOCK
+      - exit
+        </code></pre>
+              
+        <p class="flow-text">
+          The process of saving of objects to an object can occur in two scenarios: <br/>
+          save a list of objects in a field or save one object as a hashmap.
+        </p>
+
+        <p class="flow-text">
+          Saving of a list of objects into an object is performed as follows:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s2"><a class="active" href="#obj_mult_save">Code</a></li>
+              <li class="tab col s2"><a href="#obj_mult_result">Dataset</a></li>
+            </ul>
+          </div>
+
+          <div id="obj_mult_save" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># CREATE BLOCK FROM HTML STRING
+- register_set: '&lt;ul&gt;
+                    &lt;li&gt;A&lt;/li&gt;
+                    &lt;li&gt;B&lt;/li&gt;
+                    &lt;li&gt;C&lt;/li&gt;
+                    &lt;li&gt;D&lt;/li&gt;
+                &lt;/ul&gt;'
+- to_block
+- find:
+    path: ul
+    do:
+    # CREATE OBJECT WITH NAME `item`
+    - object_new: item
+    - find:
+        path: li
+        do:
+        # CREATE ANOTHER OBJECT WITH NAME `sub-item`
+        - object_new: sub-item
+
+        # PARSE TO REGISTER
+        - parse
+
+        # SAVE REGISTER VALUE TO THE OBJECT `sub-item` FIELD `sometext`
+        - object_field_set:
+            object: sub-item
+            field: sometext
+
+        # SAVE OBJECT `sub-item` TO THE OBJECT `item`
+        - object_save:
+            name: sub-item
+            to: item
+
+    # SAVE OBJECT `item` TO THE DB
+    - object_save:
+        name: item
+              </code></pre>
+          </div>
+
+          <div id="obj_mult_result" class="col s12">
+            <pre class="language-js">
+              <code class="language-js">{
+    "item": {
+        "sub-item": [
+          {
+            "sometext": "A",
+          },
+          {
+            "sometext": "B",
+          },
+          {
+            "sometext": "C",
+          },
+          {
+            "sometext": "D",
+          }
+        ]
+    }
+}
+              </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          Saving object to other object as hashmap:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s2"><a class="active" href="#obj_single_save">Code</a></li>
+              <li class="tab col s2"><a href="#obj_single_result">Dataset</a></li>
+            </ul>
+          </div>
+
+          <div id="obj_single_save" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># CREATE BLOCK FROM HTML STRING
+- register_set: '&lt;ul&gt;
+                    &lt;li&gt;A&lt;/li&gt;
+                    &lt;li&gt;B&lt;/li&gt;
+                    &lt;li&gt;C&lt;/li&gt;
+                    &lt;li&gt;D&lt;/li&gt;
+                &lt;/ul&gt;'
+- to_block
+- find:
+    path: ul
+    do:
+    # CREATE OBJECT WITH NAME `item`
+    - object_new: item
+    - find:
+        path: li
+        do:
+        # CREATE ANOTHER OBJECT WITH NAME `sub-item`
+        - object_new: sub-item
+
+        # PARSE TO THE REGISTER
+        - parse
+
+        # SAVE REGISTER VALUE TO THE OBJECT `sub-item` FIELD `sometext`
+        - object_field_set:
+            object: sub-item
+            field: sometext
+
+        # SAVE OBJECT `sub-item` TO THE OBJECT `item` AS HASHMAP
+        - object_save:
+            name: sub-item
+            to: item
+            as: map
+
+    # SAVE OBJECT `item` TO THE DB
+    - object_save:
+        name: item
+              </code></pre>
+          </div>
+
+          <div id="obj_single_result" class="col s12">
+            <pre class="language-js">
+              <code class="language-js">{
+    "item": {
+        "sub-item" : {
+            "sometext": "D"
+    }
+}
+              </code></pre>
+          </div>
+        </div>
+
+        <blockquote class="warning darken-1">
+          <p class="flow-text">
+            <strong>Please note:</strong><br/>
+            In this example, the script goes through all <span class = "hlt">li</span> tags, but in the dataset there is
+            only the last element with the value <span class = "hlt">D</span> falls into the data. This is because the field
+            will be consistently overwritten by the values ​​of all the elements sequentally. As a result, only the value of the last element
+            will remain in the field.
+          </p>
+        </blockquote>
+
+        <span class="spacer"></span>
+
+        <p class="flow-text">
+          An example of the correct creation and saving objects:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s2"><a class="active" href="#obj_cr_sv_good">Correct</a></li>
+              <li class="tab col s2"><a href="#obj_cr_sv_bad">Wrong</a></li>
+              <li class="tab col s2"><a href="#obj_cr_sv_result">Dataset</a></li>
+            </ul>
+          </div>
+
+          <div id="obj_cr_sv_good" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># EVERY TIME DIGGER ITERATE SAME BLOCK - IT EXECUTES SAME CODE AND APPLY SAME LOGIC
+# THATS WHY WITH EACH NEW ITERATION DIGGER WILL CREATE NEW OBJECT
+- find:
+    path: .somepath
+    do:
+    # CREATE OBJECT WITH NAME `someobj`
+    - object_new: someobj
+
+    # PARSE TEXT TO THE REGISTER
+    - parse
+
+    # SET `somefield` FIELD OF THE `someobj` OBJECT WITH THE VALUE OF THE REGISTER
+    - object_field_set:
+        object: someobj
+        field: somefield
+
+    # JUMP TO SOME OTHER BLOCK, PARSE TEXT CONTENT AND SAVE IT TO SOME OTHER FIELD OF THE OBJECT `someobj`
+    # PLEASE NOTE: IF DIGGER FIND SINGLE ELEMENT USING CSS SELECTOR - THEN VALUE OF FIELD WILL BE PROPER,
+    # IF DIGGER FINDS SEVERAL ELEMENTS, IT WILL ITERATE OVER ALL OF THEM SEQUENTALLY AND ONLY CONTENT OF LAST ELEMENT WILL BE ACTUALLY KEPT IN THE FIELD
+    # WE WILL OVERVIEW IT IN DETAILS LATER, NOW LETS JUST SWITCH TO THE SINGLE BLOCK
+    - find:
+        path: li:nth-of-type(1)
+        do:
+        - parse
+
+        # SET `anotherfield` FIELD OF THE `someobj` OBJECT WITH THE VALUE OF THE REGISTER
+        - object_field_set:
+            object: someobj
+            field: anotherfield
+
+    # LETS NOW USE CSS SELECTOR THAT SELECTS SEVERAL ELEMENTS,
+    # WHILE WE ITERATING WE WILL CREATE NEW OBJECTS AND PUT THEM TO OUR MAIN OBJECT `someobj`
+    - find:
+        path: .anotherpath
+        do:
+        # CREATE NEW OBJECT
+        - object_new: anotherobj
+
+        # SET FIELD `somefield` OF THE OBJECT `anotherobj`
+        - parse
+        - object_field_set:
+            object: anotherobj
+            field: somefield
+
+        # SAVE OBJECT `anotherobj` TO THE OBJECT `someobj`
+        - object_save:
+            name: anotherobj
+            to: someobj
+
+    # SAVE MAIN OBJECT `someobj`
+    - object_save:
+        name: someobj
+              </code></pre>
+          </div>
+
+          <div id="obj_cr_sv_bad" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># EXAMPLE OF HOW YOU SHOOULD NOT DO IT :)
+- find:
+    path: .somepath
+    do:
+    # CREATE OBJECT `someobj`
+    - object_new: someobj
+
+    # PARSE TEXT TO THE REGISTER
+    - parse
+
+    # SET FIELD `somefield` OF THE OBJECT `someobj` WITH THE VALUE OF THE REGISTER
+    - object_field_set:
+        object: someobj
+        field: somefield
+
+    # LETS USE CSS SELECTOR THAT WILL FIND SEVERAL ELEMENTS,
+    # WHILE WE ITERATING WE WILL CREATE NEW OBJECTS AND PUT THEM TO OUR MAIN OBJECT `someobj`
+    - find:
+        path: .anotherpath
+        do:
+        # CREATE NEW OBJECT
+        - object_new: anotherobj
+
+        # SET FIELD `somefield` OF THE OBJECT `anotherobj`
+        - parse
+        - object_field_set:
+            object: anotherobj
+            field: somefield
+
+        # SAVE OBJECT `anotherobj` TO THE OBJECT `someobj`
+        - object_save:
+            name: anotherobj
+            to: someobj
+
+    # SWITCH TO OTHER BLOCK AND SAVE PARSED DATA TO SOME OTHER FIELD OF THE OBJECT `someobj`
+    - find:
+        path: li:nth-of-type(1)
+        do:
+        - parse
+
+        # SET FIELD `anotherfield` OF THE OBJECT `someobj` WITH THE VALUE OF THE REGISTER
+        - object_field_set:
+            object: someobj
+            field: anotherfield
+
+        # SAVE OBJECT `someobj`
+        - object_save:
+            name: someobj
+
+    # AS YOU SEE MAIN OBJECT IS SAVED IN DIFFERENT SCOPE THAN OBJECT OPENING SCOPE
+    # IT COULD LEAD TO THE POTENTIAL PROBLEM
+    # IF SOME PAGES WILL NOT HAVE ANY ELEMENTS WITH SELECTOR `li:nth-of-type(1)`, OBJECT WILL NOT BE SAVED
+    # AND YOU WILL LOSE DATA FOR SUCH PAGES
+    # SO IT WILL WORK ONLY IF SUCH SELECTOR HAS AT LEAST 1 ELEMENT ON PAGE
+    # THATS WHY YOU SHOULD ALWAYS SAVE YOUR OBJECT IN SAME SCOPE WHERE YOU CREATE THE OBJECT
+              </code></pre>
+          </div>
+
+          <div id="obj_cr_sv_result" class="col s12">
+            <pre class="language-js">
+              <code class="language-js">{
+    "someobj": {
+        "somefield" : "somedata",
+        "anotherfield": "anotherdata",
+        "anotherobj" : [
+            {
+                "somefield":"somedata"
+            },
+            {
+                "somefield":"somedata"
+            },
+            ...
+            ...
+            ...
+            {
+                "somefield":"somedata"
+            },
+            {
+                "somefield":"somedata"
+            }
+        ]
+    }
+}
+              </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          Save a field to an object specifying the type of field (supported types are: int, float, bool and string). If omitted, the default type "string" is used:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s2"><a class="active" href="#obj_type_save">Code</a></li>
+              <li class="tab col s2"><a href="#obj_type_result">Dataset</a></li>
+            </ul>
+          </div>
+
+          <div id="obj_type_save" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># CREATE A BLOCK FROM HTML STRING
+- register_set: '&lt;ul&gt;
+                    &lt;li class="float"&gt;12.85&lt;/li&gt;
+                    &lt;li class="int"&gt;158&lt;/li&gt;
+                    &lt;li class="bool_false"&gt;false&lt;/li&gt;
+                    &lt;li class="bool_true"&gt;true&lt;/li&gt;
+                &lt;/ul&gt;'
+- to_block
+- find:
+    path: ul
+    do:
+    # CREATE OBJECT WITH NAME `item`
+    - object_new: item
+    - find:
+        path: .float
+        do:
+        # PARSE TEXT TO THE REGISTER
+        - parse
+
+        # SAVE VALUE OF THE REGISTER TO `somefloat` FIELD OF THE `item` OBJECT WITH SPECIFYING FIELD TYPE AS `float`
+        - object_field_set:
+            object: item
+            field: somefloat
+            type: float
+
+    - find:
+        path: .int
+        do:
+        # PARSE TEXT TO THE REGISTER
+        - parse
+
+        # SAVE VALUE OF THE REGISTER TO `someint` FIELD OF THE `item` OBJECT WITH SPECIFYING FIELD TYPE AS `int`
+        - object_field_set:
+            object: item
+            field: someint
+            type: int
+    - find:
+      path: .bool_false
+      do:
+      # PARSE TEXT TO THE REGISTER
+      - parse
+      # SAVE VALUE OF THE REGISTER TO `falsebool` FIELD OF THE `item` OBJECT WITH SPECIFYING FIELD TYPE AS `bool`
+      - object_field_set:
+          object: item
+          field: falsebool
+          type: bool
+
+  - find:
+      path: .bool_true
+      do:
+      # PARSE TEXT TO THE REGISTER
+      - parse
+      # SAVE VALUE OF THE REGISTER TO `truebool` FIELD OF THE `item` OBJECT WITH SPECIFYING FIELD TYPE AS `bool`
+      - object_field_set:
+          object: item
+          field: truebool
+          type: bool
+      
+    # SAVE OBJECT `item`
+    - object_save:
+        name: item
+              </code></pre>
+          </div>
+
+          <div id="obj_type_result" class="col s12">
+            <pre class="language-js">
+              <code class="language-js">{
+    "item": {
+        "somefloat": 12.85,
+        "someint": 158,
+        "falsebool": false,
+        "truebool": true
+    }
+}
+              </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          Setting field value with joining old values:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s2"><a class="active" href="#obj_join_int_save">int</a></li>
+              <li class="tab col s2"><a href="#obj_join_int_result">int result</a></li>
+              <li class="tab col s2"><a class="active" href="#obj_join_float_save">float</a></li>
+              <li class="tab col s2"><a href="#obj_join_float_result">float result</a></li>
+              <li class="tab col s2"><a class="active" href="#obj_join_save">default</a></li>
+              <li class="tab col s2"><a href="#obj_join_result">default result</a></li>
+            </ul>
+          </div>
+
+          <div id="obj_join_int_save" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># CREATE BLOCK FROM HTML STRING
+- register_set: '&lt;ul class="int"&gt;
+                    &lt;li&gt;125&lt;/li&gt;
+                    &lt;li&gt;158&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;ul class="float"&gt;
+                    &lt;li&gt;12.5&lt;/li&gt;
+                    &lt;li&gt;15.8&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;ul class="default"&gt;
+                    &lt;li&gt;sometext&lt;/li&gt;
+                    &lt;li&gt;15.8&lt;/li&gt;
+                &lt;/ul&gt;'
+- to_block
+- find:
+    path: ul.int
+    do:
+    # CREATE OBJECT WITH NAME `item`
+    - object_new: item
+    - find:
+        path: li
+        do:
+        # PARSE TEXT TO THE REGISTER
+        - parse
+
+        # SETTING OBJECT FIELD WITH SPECIFYING FIELD TYPE AS `int` AND OPERATION FOR JOINING
+        - object_field_set:
+            object: item
+            field: multint
+            type: int
+            joinby: "*" # MULTIPLY
+
+    - find:
+        path: li
+        do:
+        # PARSE TEXT TO THE REGISTER
+        - parse
+
+        # SETTING OBJECT FIELD WITH SPECIFYING FIELD TYPE AS `int` AND OPERATION FOR JOINING
+        - object_field_set:
+            object: item
+            field: divint
+            type: int
+            joinby: "/" # DIVIDE
+
+    - find:
+        path: li
+        do:
+        # PARSE TEXT TO THE REGISTER
+        - parse
+
+        # SETTING OBJECT FIELD WITH SPECIFYING FIELD TYPE AS `int` AND OPERATION FOR JOINING
+        - object_field_set:
+            object: item
+            field: subint
+            type: int
+            joinby: "-" # SUBSTRACT
+
+    - find:
+        path: li
+        do:
+        # PARSE TEXT TO THE REGISTER
+        - parse
+
+        # SETTING OBJECT FIELD WITH SPECIFYING FIELD TYPE AS `int` AND OPERATION FOR JOINING
+        - object_field_set:
+            object: item
+            field: sumint
+            type: int
+            joinby: "+" # ADD
+
+    # SAVE OBJECT `item`
+    - object_save:
+        name: item
+              </code></pre>
+          </div>
+
+          <div id="obj_join_int_result" class="col s12">
+            <pre class="language-js">
+              <code class="language-js">{
+    "item": {
+        "divint": 0,
+        "multint": 19750,
+        "subint": -33,
+        "sumint": 283
+    }
+}
+              </code></pre>
+          </div>
+
+          <div id="obj_join_float_save" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># CREATE BLOCK FROM HTML STRING
+- register_set: '&lt;ul class="int"&gt;
+                    &lt;li&gt;125&lt;/li&gt;
+                    &lt;li&gt;158&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;ul class="float"&gt;
+                    &lt;li&gt;12.5&lt;/li&gt;
+                    &lt;li&gt;15.8&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;ul class="default"&gt;
+                    &lt;li&gt;sometext&lt;/li&gt;
+                    &lt;li&gt;15.8&lt;/li&gt;
+                &lt;/ul&gt;'
+- to_block
+- find:
+    path: ul.float
+    do:
+    # CREATE OBJECT WITH NAME `item`
+    - object_new: item
+    - find:
+        path: li
+        do:
+        # PARSE TEXT TO THE REGISTER
+        - parse
+
+        # SETTING OBJECT FIELD WITH SPECIFYING FIELD TYPE AS `float` AND OPERATION FOR JOINING
+        - object_field_set:
+            object: item
+            field: multfloat
+            type: float
+            joinby: "*" # УМНОЖЕНИЕ
+            precision: 2
+
+    - find:
+        path: li
+        do:
+        # PARSE TEXT TO THE REGISTER
+        - parse
+
+        # SETTING OBJECT FIELD WITH SPECIFYING FIELD TYPE AS `float` AND OPERATION FOR JOINING
+        - object_field_set:
+            object: item
+            field: divfloat
+            type: float
+            joinby: "/" # ДЕЛЕНИЕ
+            precision: 3
+
+    - find:
+        path: li
+        do:
+        # PARSE TEXT TO THE REGISTER
+        - parse
+
+        # SETTING OBJECT FIELD WITH SPECIFYING FIELD TYPE AS `float` AND OPERATION FOR JOINING
+        - object_field_set:
+            object: item
+            field: subfloat
+            type: float
+            joinby: "-" # ВЫЧИТАНИЕ
+            precision: 4
+
+    - find:
+        path: li
+        do:
+        # PARSE TEXT TO THE REGISTER
+        - parse
+
+        # SETTING OBJECT FIELD WITH SPECIFYING FIELD TYPE AS `float` AND OPERATION FOR JOINING
+        - object_field_set:
+            object: item
+            field: sumfloat
+            type: float
+            joinby: "+" # СЛОЖЕНИЕ
+            precision: 5
+
+    # SAVE OBJECT `item`
+    - object_save:
+        name: item
+              </code></pre>
+          </div>
+
+          <div id="obj_join_float_result" class="col s12">
+            <pre class="language-js">
+              <code class="language-js">{
+    "item": {
+        "divfloat": 0.7911392405063291,
+        "multfloat": 197.5,
+        "subfloat": -3.3000000000000007,
+        "sumfloat": 28.3
+    }
+}
+              </code></pre>
+          </div>
+
+          <div id="obj_join_save" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># CREATE BLOCK FROM HTML STRING
+- register_set: '&lt;ul class="int"&gt;
+                    &lt;li&gt;125&lt;/li&gt;
+                    &lt;li&gt;158&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;ul class="float"&gt;
+                    &lt;li&gt;12.5&lt;/li&gt;
+                    &lt;li&gt;15.8&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;ul class="default"&gt;
+                    &lt;li&gt;sometext&lt;/li&gt;
+                    &lt;li&gt;15.8&lt;/li&gt;
+                &lt;/ul&gt;'
+- to_block
+- find:
+    path: ul.default
+    do:
+    # CREATE OBJECT WITH NAME `item`
+    - object_new: item
+    - find:
+        path: li
+        do:
+        # PARSE TEXT TO THE REGISTER
+        - parse
+
+        # SETTING OBJECT FIELD WITH SPECIFYING DELIMITER FOR JOINING
+        - object_field_set:
+            object: item
+            field: default
+            joinby: "*" # DELIMITER
+
+    # SAVE OBJECT `item`
+    - object_save:
+        name: item
+              </code></pre>
+          </div>
+
+          <div id="obj_join_result" class="col s12">
+            <pre class="language-js">
+              <code class="language-js">{
+    "item": {
+        "default": "sometext*15.8"
+    }
+}
+              </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          Commands <span class = "hlt2">object_save</span> and <span class = "hlt2">object_check</span> supports special update mode. By default its turned off
+          and to enable it you need to pass parameter <span class = "hlt">mode</span> with value <span class = "hlt">update</span> as its shown in the sample below.
+          Along with <span class = "hlt">mode</span> parameter, you also need to pass <span class = "hlt">primary_key</span> parameter that should has as value 
+          the name of the field in your dataset which you want to use as primary (unique) key for records. In this mode, system gets checksum of last saved record
+          with given primary key and compare it with checksum of new record. If checksums matches, record will not be saved as counted as duplicate. In other case,
+          the new record will be saved and checksum in the cache will be updated to the most recent.
+        </p>
+  
+        <div id="obj_join_save" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># SAVE OBJECT `item`
+- object_save:
+    name: item
+    mode: update
+    primary_key: title
+              </code></pre>
+        </div>
+
+
+        <p class="flow-text">
+          In the next chapter, we'll review the methods for working with the DOM structure.
+        </p>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-methods-working-with-dom-nodes.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

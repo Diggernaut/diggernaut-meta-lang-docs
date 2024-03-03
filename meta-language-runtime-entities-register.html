@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Runtime Entities | Register</title>
+  <meta name="description" content="What is the register, how it works and in what context it is available.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, register">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-runtime-entities-register.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-runtime-entities-register.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-obyekty-sredy-vypolneniya-registr.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Runtime Entities | Register">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Runtime Entities | Register"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-runtime-entities-register.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="What is the register, how it works and in what context it is available."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Runtime Entities</h1>
+      <div>
+        <h2>Register</h2>
+
+        <p class="flow-text">
+          A register is a special variable that is implicitly passed to a command and modified by this command.
+          In the example below, you can see how the contents of the register gets changed depending on the <a href = "https://en.wikipedia.org/wiki/Iteration" target="_ blank ">iteration</a> step.
+        </p>
+        <p class="flow-text">
+          For example, we have the following HTML code on the page:
+        </p>
+        <pre class="language-markup">
+          <code class="language-markup">&lt;ul&gt;
+  &lt;li&gt;Some text&lt;/li&gt;
+  &lt;li&gt;Another text&lt;/li&gt;
+  &lt;li&gt;A bit more text&lt;/li&gt;
+&lt;/ul&gt;
+          </code></pre>
+
+        <p class="flow-text">
+          If we search for page elements using the path <span class = "hlt2">ul &gt; li</span>,
+          the <span class = "hlt2">Find</span> command will find <strong>3</strong> blocks and will iterate over them from the first:
+        </p>
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs tabs-fixed-width excdark">
+              <li class="tab col s3"><a class="active" href="#entity_register_1">Example of using <span class="hlt2">Find</span></a></li>
+              <li class="tab col s3"><a href="#entity_register_2">1-st iteration</a></li>
+              <li class="tab col s3"><a href="#entity_register_3">2-nd iteration</a></li>
+              <li class="tab col s3"><a href="#entity_register_4">3-rd iteration</a></li>
+            </ul>
+          </div>
+          <div id="entity_register_1" class="col s12">
+            <pre class="language-yaml">
+                <code class="language-yaml">- find:
+  path: ul > li
+  do:
+  - parse
+                </code></pre>
+          </div>
+          <div id="entity_register_2" class="col s12">
+            <pre class="language-yaml">
+                <code class="language-yaml"># NOW WE ARE IN THE FIRST LI ELEMENT
+- parse
+# THERE WILL BE "Some text" VALUE IN THE REGISTER
+                </code></pre>
+          </div>
+          <div id="entity_register_3" class="col s12">
+            <pre class="language-yaml">
+                <code class="language-yaml"># NOW WE ARE IN THE SECOND LI ELEMENT
+- parse
+# THERE WILL BE "Another text" VALUE IN THE REGISTER
+                </code></pre>
+          </div>
+          <div id="entity_register_4" class="col s12">
+            <pre class="language-yaml">
+                <code class="language-yaml"># NOW WE ARE FINALLY IN THE THIRD LI ELEMENT
+- parse
+# THERE WILL BE "A bit more text" VALUE IN THE REGISTER
+                </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          Now let's try to create a small digger and we'll see what happens in the debugging log when we run it.
+        </p>
+
+        <pre class="language-yaml">
+          <code class="language-yaml">---
+config:
+    agent: Firefox
+    debug: 2
+do:
+- walk:
+    to: https://www.diggernaut.com/sandbox/meta-lang-register-en.html
+    do:
+    - find:
+        path: ul > li
+        do:
+        - parse
+          </code></pre>
+
+        <p class="flow-text">
+          Let's change digger mode to <i>Debug</i> and then start the digger. Wait for completions and lets look into the log.
+        </p>
+
+        <img src="img/meta-language/meta_lang_register_en.png" class="responsive-img materialboxed z-depth-2" alt="">
+        <span class="spacer"></span>
+
+        <p class="flow-text">
+          The register values when digger is resided in specific block are highlighted in green. <br/>
+          Statements execution order is indicated by an orange arrow.          
+        </p>
+
+        <p class="flow-text">
+          Pay attention to five main points about the register:
+        </p>
+        <blockquote class="custom darken-1">
+          <ol class="flow-text">
+            <li>This entity stores the data in the <strong>block context</strong></li>
+            <li>Almost all commands of the block context takes the current value of the register as the input argument for their operations</li>
+            <li>Almost all commands of the block context returns the result of their work to the register</li>
+            <li>The register is context-sensitive, so when digger gets to new block, the register is initialized with an empty value</li>
+            <li>During iterations over blocks, at the moment of entering each block, the register is initialized with an empty value</li>
+          </ol>
+        </blockquote>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-runtime-entities-variables.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

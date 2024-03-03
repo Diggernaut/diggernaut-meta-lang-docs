@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Conditional Flow | Using If</title>
+  <meta name="description" content="Learning how to build logical branching in the scraper algorithm.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, conditional flow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-conditional-flow-using-if.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-conditional-flow-using-if.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-uslovnoe-vypolnenie-proverka-usloviy.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Conditional Flow | Using If">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Conditional Flow | Using If"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-conditional-flow-using-if.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="Learning how to build logical branching in the scraper algorithm."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+  
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Conditional Flow</h1>
+
+      <div>
+        <h2>Using If</h2>
+
+        <p class="flow-text">
+          When you scraping something, you often end up with situations when some operations should be done depending on certain condition.
+          To check the condition, you can use the <span class = "hlt2">if</span> command. This command works with strings,
+          integer and floating-point values. The command compare the value of the register with explicitly given value as parameter,
+          so command can only be used in a block context.
+        </p>
+
+        <p class="flow-text">
+          You can use following parameters:
+        </p>
+
+        <table class="responsive-table highlight">
+          <thead>
+          <tr>
+            <th data-field="parameter">Parameter</th>
+            <th data-field="description">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="centered">match|eq|gt|lt|nlt</td>
+            <td>Modes, which command work with:<br/>
+              <span class="hlt">match</span> - checks whether the value of the register contains the passed parameter;<br/>
+              <span class="hlt">eq</span> - checks whether the passed value is equal to the value in the register;<br/>
+              <span class="hlt">gt</span> - checks whether the value of the register is greater than the passed parameter;<br/>
+              <span class="hlt">lt</span> - checks whether the value of the register is less than the passed parameter;<br/>
+              <span class="hlt">nlt</span> - checks whether the value of the register is not less than the passed parameter.
+            </td>
+          </tr>
+          <tr>
+            <td>type</td>
+            <td>Values type for comparison:<br/>
+              <span class="hlt">string</span> - for string values comparison;<br/>
+              <span class="hlt">int</span> - for integer values comparison;<br/>
+              <span class="hlt">float</span> - for float values comparison.<br/>
+              If not passed, default <span class="hlt">string</span> type is used.
+            </td>
+          </tr>
+          <tr>
+            <td>do</td>
+            <td>A block of commands to execute if the condition is met. Optional parameter.</td>
+          </tr>
+          <tr>
+            <td>else</td>
+            <td>A block of commands to execute if the condition is not met. Optional parameter.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <p class="flow-text">
+          Examples of <span class="hlt2">if</span> notation:
+        </p>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># COMPARISON USING REGULAR EXPRESSION
+- if:
+    match: regex
+    # IF MATCHED REGEX - BLOCK `do` WILL BE EXECUTED
+    do:
+    ..
+    ..
+    # IF NOT - BLOCK `else` WILL BE EXECUTED
+    else:
+    ..
+    ..
+          </code></pre>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># COMPARISON USING REGULAR EXPRESSION
+# BUT ONLY `do` USED, WITHOUT `else` LOGIC BLOCK
+# WORKS SAME WAY IN OTHER MODES
+- if:
+    match: regex
+    # IF MATCHED REGEX - BLOCK `do` WILL BE EXECUTED
+    do:
+    ..
+    ..  
+          </code></pre>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># COMPARISON USING REGULAR EXPRESSION
+# BUT ONLY `else` USED
+# WORKS SAME WAY IN OTHER MODES
+- if:
+    match: regex
+    # IF NOT MATCHED - BLOCK `else` WILL BE EXECUTED
+    else:
+    ..
+    ..
+          </code></pre>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># COMPARISON OF INTEGER VALUES
+- if:
+    eq: 0
+    type: int
+    # IF TRUE - BLOCK `do` WILL BE EXECUTED
+    do:
+    ..
+    ..
+    # IF FALSE - BLOCK `else` WILL BE EXECUTED
+    else:
+    ..
+    ..
+          </code></pre>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># COMPARISON OF INTEGER VALUES
+- if:
+    gt: 0
+    type: int
+    # IF REGISTER VALUE IS GREATER THAN 0, BLOCK `do` WILL BE EXECUTED
+    do:
+    ..
+    ..
+    # IN OTHER CASE - BLOCK `else` WILL BE EXECUTED
+    else:
+    ..
+    ..
+
+- if:
+    lt: 0
+    type: int
+    # IF REGISTER VALUE IS LESS THAN 0, BLOCK `do` WILL BE EXECUTED
+    do:
+    ..
+    ..
+    # IN OTHER CASE - BLOCK `else` WILL BE EXECUTED
+    else:
+    ..
+    ..
+
+- if:
+    nlt: 0
+    type: int
+    # IF REGISTER VALUE IS NOT LESS THAN 0, BLOCK `do` WILL BE EXECUTED
+    do:
+    ..
+    ..
+    # IN OTHER CASE - BLOCK `else` WILL BE EXECUTED
+    else:
+    ..
+    ..
+          </code></pre>
+
+        <span class="spacer"></span>
+
+        <p class="flow-text">
+          Let's overview different cases of using <span class="hlt2">if</span> command, and use following HTML source for it:
+        </p>
+
+        <pre class="language-markup">
+          <code class="language-markup">&lt;ul class="list"&gt;
+    &lt;li class="list-item" id="1"&gt;Some text&lt;/li&gt;
+    &lt;li class="list-item" id="item=2"&gt;&lt;a href="http://somesite.com/"&gt;Link&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="list-item" id="item=3"&gt;Some other text&lt;/li&gt;
+&lt;/ul&gt;
+          </code></pre>
+
+        <p class="flow-text">
+          Example of <span class="hlt">match</span> mode usage:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s4"><a class="active" href="#if_1">If</a></li>
+              <li class="tab col s4"><a href="#if_2">else</a></li>
+              <li class="tab col s4"><a href="#if_3">if/else</a></li>
+            </ul>
+          </div>
+
+          <div id="if_1" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># FIND ALL `li`
+- find:
+    path: li
+    do:
+    - parse
+
+    # CHECK IF THERE IS WORD `text` IN THE REGISTER
+    - if:
+        match: text
+        do:
+        # IF TRUE, SET OBJECT FIELD WITH THE VALUE OF THE REGISTER
+        - object_field_set:
+            object: someobj
+            field: somefield
+              </code></pre>
+          </div>
+
+          <div id="if_2" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># FIND ALL `li`
+- find:
+    path: li
+    do:
+    - parse
+
+    # CHECK IF THERE IS WORD `text` IN THE REGISTER
+    - if:
+        match: text
+        # IF NOT FOUND, FIND `a`
+        else:
+        - find:
+            path: a
+            do:
+            # PARSE ATTRIBUTE `href` TO THE REGISTER
+            - parse:
+                attr: href
+
+            # NORMALIZE URL
+            - normalize:
+                routine: url
+
+            # LOAD PAGE LOCATED AT THAT URL
+            - walk:
+                to: value
+                do:
+                ..
+                ..
+              </code></pre>
+          </div>
+
+          <div id="if_3" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># FIND ALL `li`
+- find:
+    path: li
+    do:
+    - parse
+
+    # CHECK IF THERE IS WORD `text` IN THE REGISTER
+    - if:
+        match: text
+        do:
+        # IF TRUE, SET OBJECT FIELD WITH THE VALUE OF THE REGISTER
+        - object_field_set:
+            object: someobj
+            field: somefield
+
+        # IF NOT FOUND, FIND `a`
+        else:
+        - find:
+            path: a
+            do:
+            # PARSE ATTRIBUTE `href` TO THE REGISTER
+            - parse:
+                attr: href
+
+            # NORMALIZE URL
+            - normalize:
+                routine: url
+
+            # LOAD PAGE LOCATED AT THAT URL
+            - walk:
+                to: value
+                do:
+                ..
+                ..
+              </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          Examples of <span class="hlt">gt</span>, <span class="hlt">lt</span>,
+          <span class="hlt">nlt</span>, <span class="hlt">eq</span> modes usage:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s3"><a class="active" href="#if_gt">gt</a></li>
+              <li class="tab col s3"><a href="#if_lt">lt</a></li>
+              <li class="tab col s3"><a href="#if_nlt">nlt</a></li>
+              <li class="tab col s3"><a href="#if_eq">eq</a></li>
+            </ul>
+          </div>
+
+          <div id="if_gt" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># FIND ALL `li`
+- find:
+    path: li
+    do:
+    # PARSE ATTRIBUTE `id` VALUE AND EXTRACT ONLY DIGITS
+    - parse:
+        attr: id
+        filter:
+            - (\d+)
+
+    # CHECK IF VALUE OF THE REGISTER IS GREATER THAN `2`
+    - if:
+        gt: 2
+        # SPECIFY TYPE `integer`
+        type: int
+        do:
+        # IF ITS TRUE SET FIELD OF THE OBJECT TO THE REGISTER VALUE
+        - object_field_set:
+            object: someobj
+            field: somefield
+              </code></pre>
+          </div>
+
+          <div id="if_lt" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># FIND ALL `li`
+- find:
+    path: li
+    do:
+    # PARSE ATTRIBUTE `id` VALUE AND EXTRACT ONLY DIGITS
+    - parse:
+        attr: id
+        filter:
+            - (\d+)
+
+    # CHECK IF VALUE OF THE REGISTER IS LESS THAN `2`
+    - if:
+        lt: 2
+        # SPECIFY TYPE `integer`
+        type: int
+        do:
+        # IF ITS TRUE SET FIELD OF THE OBJECT TO THE REGISTER VALUE
+        - object_field_set:
+            object: someobj
+            field: somefield
+              </code></pre>
+          </div>
+
+          <div id="if_nlt" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># НАЙДЕМ ВСЕ `li`
+- find:
+    path: li
+    do:
+    # PARSE ATTRIBUTE `id` VALUE AND EXTRACT ONLY DIGITS
+    - parse:
+        attr: id
+        filter:
+            - (\d+)
+
+    # CHECK IF VALUE OF THE REGISTER IS NOT LESS (GREATER OR EQUAL) THAN `2`
+    - if:
+        nlt: 2
+        # SPECIFY TYPE `integer`
+        type: int
+        do:
+        # IF ITS TRUE SET FIELD OF THE OBJECT TO THE REGISTER VALUE
+        - object_field_set:
+            object: someobj
+            field: somefield
+              </code></pre>
+          </div>
+
+          <div id="if_eq" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># НАЙДЕМ ВСЕ `li`
+- find:
+    path: li
+    do:
+    # PARSE ATTRIBUTE `id` VALUE AND EXTRACT ONLY DIGITS
+    - parse:
+        attr: id
+        filter:
+            - (\d+)
+
+    # CHECK IF VALUE OF THE REGISTER IS EQUAL `2`
+    - if:
+        eq: 1
+        # SPECIFY TYPE `integer`
+        type: int
+        else:
+        # IF ITS FALSE SET FIELD OF THE OBJECT TO THE REGISTER VALUE
+        - object_field_set:
+            object: someobj
+            field: somefield
+              </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          In the next chapter, you will learn how to use optical text recognition (OCR) and text extraction from images.
+        </p>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-methods-ocr-extracting-text-from-images.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

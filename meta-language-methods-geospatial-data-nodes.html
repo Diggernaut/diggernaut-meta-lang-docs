@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Geospatial Data | Nodes</title>
+  <meta name="description" content="What is OSM nodes and what methods you can use to work with them.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, geospatial">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-geospatial-data-nodes.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-geospatial-data-nodes.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-geodannye-nody.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Geospatial Data | Nodes">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Geospatial Data | Nodes"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-geospatial-data-nodes.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="What is OSM nodes and what methods you can use to work with them."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+  
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Geospatial Data</h1>
+
+      <div>
+        <h2>Nodes</h2>
+
+        <p class="flow-text">
+            The node is the basic element of the OSM geomodel, consisting of only one point and has parameters such as:
+            longitude, latitude and identifier.
+        </p>
+
+        <p class="flow-text">
+            To get information about specific node, you can use the <span class="hlt2">node</span> command, which can find nodes by ID.
+        </p>
+        <p class="flow-text">
+            You can use following parameters in the command:
+        </p>
+
+        <table class="responsive-table highlight">
+            <thead>
+                <tr>
+                    <th data-field="parameter">Parameter</th>
+                    <th data-field="description">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>id</td>
+                    <td>Node ID.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs excdark">
+                    <li class="tab col s1">
+                        <a class="active" href="#code">Digger code</a>
+                    </li>
+                    <li class="tab col s1">
+                        <a class="active" href="#log">Log</a>
+                    </li>
+                    <li class="tab col s1">
+                        <a class="active" href="#data">Data source</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="code" class="col s12">
+                <pre class="language-yaml">
+    <code class="language-yaml"># SWITCHING TO THE GEO CONTEXT
+- geo:
+    provider: osm
+    do:
+    # Find node by ID
+    - node:
+        id: 67253662
+        do:</code>
+</pre>
+            </div>
+            <div id="log" class="col s12">
+                <table id="datatable_logs" class="striped responsive-table debug-log" role="grid" aria-describedby="datatable_logs_info">
+                    <thead>
+                        <tr role="row">
+                            <th width="11%" class="sorting_desc" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending"
+                                aria-sort="descending">Time</th>
+                            <th width="4%" class="sorting" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Level: activate to sort column ascending">Level</th>
+                            <th class="word-wrapper sorting_disabled" rowspan="1" colspan="1" aria-label="Message">Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">2018-05-29 21:41:39:382</td>
+                            <td>info</td>
+                            <td class=" word-wrapper">Stopped by exit command</td>
+                        </tr>
+                        <tr role="row" class="even">
+                            <td class="sorting_1">2018-05-29 21:41:39:356</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">
+                                <span data-cr="more" data-full="">Page content: ...</span>
+                            </td>
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">2018-05-29 21:41:37:385</td>
+                            <td>info</td>
+                            <td class=" word-wrapper">Retrieving page (POST/JSON): https://lz4.overpass-api.de/api/interpreter</td>
+                        </tr>
+                        <tr role="row" class="even">
+                            <td class="sorting_1">2018-05-29 21:41:37:376</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">Node ID: 67253662</td>
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">2018-05-29 21:41:37:367</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">Getting geo information about node</td>
+                        </tr>
+                        <tr role="row" class="even">
+                            <td class="sorting_1">2018-05-29 21:41:37:358</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">Setting up geo provider: osm</td>
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">2018-05-29 21:41:37:350</td>
+                            <td>info</td>
+                            <td class=" word-wrapper">Starting scrape</td>
+                        </tr>
+                        <tr role="row" class="even">
+                            <td class="sorting_1">2018-05-29 21:41:37:325</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">Setting up default proxy</td>
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">2018-05-29 21:41:37:315</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">Setting up surf</td>
+                        </tr>
+                        <tr role="row" class="even">
+                            <td class="sorting_1">2018-05-29 21:41:37:283</td>
+                            <td>info</td>
+                            <td class=" word-wrapper">Starting digger: 1 [2158]</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div id="data" class="col s12">
+                <pre class="language-html">
+            <code class="language-html">&lt;html&gt;
+&lt;head&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;body_safe&gt;
+&lt;elements&gt;
+&lt;changeset&gt;55420427&lt;/changeset&gt;
+&lt;id&gt;67253662&lt;/id&gt;
+&lt;lat&gt;38.1112268&lt;/lat&gt;
+&lt;lon&gt;13.3524434&lt;/lon&gt;
+&lt;tags&gt;
+    &lt;capital&gt;4&lt;/capital&gt;
+    &lt;gfoss_id&gt;6894&lt;/gfoss_id&gt;
+    &lt;is_in&gt;Palermo, Sicilia, Italy&lt;/is_in&gt;
+    &lt;is_in_continent&gt;Europe&lt;/is_in_continent&gt;
+    &lt;is_in_country&gt;Italy&lt;/is_in_country&gt;
+    &lt;is_in_country_code&gt;IT&lt;/is_in_country_code&gt;
+    &lt;name&gt;Palermo&lt;/name&gt;
+    &lt;name_ar&gt;باليرمو&lt;/name_ar&gt;
+    &lt;name_ca&gt;Palerm&lt;/name_ca&gt;
+    &lt;name_de&gt;Palermo&lt;/name_de&gt;
+    &lt;name_el&gt;Παλέρμο&lt;/name_el&gt;
+    &lt;name_es&gt;Palermo&lt;/name_es&gt;
+    &lt;name_fa&gt;پالرمو&lt;/name_fa&gt;
+    &lt;name_fi&gt;Palermo&lt;/name_fi&gt;
+    &lt;name_fr&gt;Palerme&lt;/name_fr&gt;
+    &lt;name_he&gt;פלרמו&lt;/name_he&gt;
+    &lt;name_it&gt;Palermo&lt;/name_it&gt;
+    &lt;name_kn&gt;ಪಲೇರ್ಮೋ&lt;/name_kn&gt;
+    &lt;name_la&gt;Panormus&lt;/name_la&gt;
+    &lt;name_lt&gt;Palermas&lt;/name_lt&gt;
+    &lt;name_pl&gt;Palermo&lt;/name_pl&gt;
+    &lt;name_pt&gt;Palermo&lt;/name_pt&gt;
+    &lt;name_ru&gt;Палермо&lt;/name_ru&gt;
+    &lt;name_scn&gt;Palermu&lt;/name_scn&gt;
+    &lt;name_uk&gt;Палермо&lt;/name_uk&gt;
+    &lt;name_zh&gt;巴勒莫&lt;/name_zh&gt;
+    &lt;old_name_el&gt;Πάνορμος&lt;/old_name_el&gt;
+    &lt;place&gt;city&lt;/place&gt;
+    &lt;population&gt;686722&lt;/population&gt;
+    &lt;rank&gt;20&lt;/rank&gt;
+    &lt;safe_source&gt;geodati.gfoss.it&lt;/safe_source&gt;
+    &lt;wikidata&gt;Q2656&lt;/wikidata&gt;
+    &lt;wikipedia&gt;it:Palermo&lt;/wikipedia&gt;
+&lt;/tags&gt;
+&lt;timestamp&gt;2018-01-14T01:57:17Z&lt;/timestamp&gt;
+&lt;type&gt;node&lt;/type&gt;
+&lt;uid&gt;6757296&lt;/uid&gt;
+&lt;user&gt;gionax&lt;/user&gt;
+&lt;version&gt;33&lt;/version&gt;
+&lt;/elements&gt;
+&lt;generator&gt;Overpass API 0.7.55.2 3ab0d275&lt;/generator&gt;
+&lt;osm3s&gt;
+&lt;copyright&gt;The data included in this document is from www.openstreetmap.org.
+                The data is made available under ODbL.&lt;/copyright&gt;
+&lt;timestamp_osm_base&gt;2018-05-29T18:41:02Z&lt;/timestamp_osm_base&gt;
+&lt;/osm3s&gt;
+&lt;version&gt;0.6&lt;/version&gt;
+&lt;/body_safe&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </code></pre>
+            </div>
+        </div>
+
+        <p class="flow-text">
+            In next chapter we learn how to get shapes for relations.
+        </p>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-methods-geospatial-data-shapes.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

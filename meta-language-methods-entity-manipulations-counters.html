@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Methods for Entity Manipulations | Counters</title>
+  <meta name="description" content="In this chapter, you will learn how to work with counters and use them in different situations.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, entity manipulation, counters">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-entity-manipulations-counters.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-entity-manipulations-counters.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-manipuliruem-obyektami-schetchiki.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Methods for Entity Manipulations | Counters">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Methods for Entity Manipulations | Counters"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-entity-manipulations-counters.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="In this chapter, you will learn how to work with counters and use them in different situations."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+  
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Entity Manipulations</h1>
+
+      <div>
+        <h2>Counters</h2>
+
+        <p class="flow-text">
+          Counters can be useful in situations when you need to count certain events.
+          For example, to count the number of iterations of the <span class = "hlt2">walk</span> command in <span class = "hlt">repeat</span> mode.
+          Counters can be used for values substitution, so you can use them to solve pagination tasks,
+          and not only to use it as page number, but also as record number, because you can increase (or decrease) value of counter by any integer number.
+        </p>
+
+        <p class="flow-text">
+          Before using the counter, you can initialize it with any integer value
+          using <span class = "hlt2">counter_set</span> command. If the counter has not been initialized explicitly, it will be set to <strong>0</strong> when
+          digger execute one of the following commands: <span class = "hlt2">counter_get</span>, <span class = "hlt2">counter_increment</span> or <span class = "hlt2">counter_decrement</span>.
+        </p>
+
+        <p class="flow-text">
+          All methods supposed to work with counters, with the exception of <span class = "hlt2">counter_get</span>
+          (only works in a block context), can be used in all contexts.
+        </p>
+
+        <p class="flow-text">
+          Let's overview the usage of counters in more details on examples:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s2"><a class="active" href="#counter_set">set</a></li>
+              <li class="tab col s2"><a href="#counter_get">get</a></li>
+              <li class="tab col s2"><a href="#counter_increment">increment</a></li>
+              <li class="tab col s2"><a href="#counter_decrement">decrement</a></li>
+              <li class="tab col s2"><a href="#counter_reset">reset</a></li>
+            </ul>
+          </div>
+
+          <div id="counter_set" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># CREATE BLOCK FROM HTML STRING
+- register_set: '&lt;div&gt;123&lt;/div&gt;'
+- to_block
+- find:
+    path: div
+    do:
+    # PARSE TO THE REGISTER
+    - parse
+
+    # INITIALIZE COUNTER  `somecounter` WITH VALUE OF THE REGISTER (123)
+    - counter_set: somecounter
+    # COUNTER VALUE: 123
+
+    # ------------------------------------------------------
+    # SET REGISTER TO SOME INTEGER VALUE
+    - register_set: 456
+
+    # INITIALIZE COUNTER `somecounter` WITH VALUE OF THE REGISTER (456)
+    - counter_set: somecounter
+    # COUNTER VALUE: 456
+
+# ------------------------------------------------------
+# INITIALIZE COUNTER `somecounter` DIRECTLY
+- counter_set:
+    name: somecounter
+    value: 100
+# COUNTER VALUE: 100
+            </code></pre>
+          </div>
+
+          <div id="counter_get" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># CREATE BLOCK FROM HTML STRING
+- register_set: '&lt;div&gt;232&lt;/div&gt;&lt;p&gt;block&lt;/p&gt;'
+- to_block
+- find:
+    path: div
+    do:
+    # PARSE TO THE REGISTER
+    - parse
+
+    # SET COUNTER WITH NAME `somecounter` WITH VALUE OF THE REGISTER
+    - counter_set: somecounter
+    # COUNTER VALUE: 232
+
+- find:
+    path: p
+    do:
+    # READ COUNTER `somecounter` VALUE TO THE REGISTER
+    - counter_get: somecounter
+    # REGISTER VALUE: 232
+
+    # YOU CAN ALSO USE COUNTERS FOR VALUES SUBSTITUTION, EG WHEN YOU USE register_set COMMAND:
+    - register_set: <%somecounter%> persons
+    # REGISTER VALUE: 232 persons
+              </code></pre>
+          </div>
+
+          <div id="counter_increment" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># CREATE BLOCK FROM HTML STRING
+- register_set: '&lt;div&gt;232&lt;/div&gt;&lt;p&gt;block&lt;/p&gt;'
+- to_block
+- find:
+    path: div
+    do:
+    # PARSE TO THE REGISTER
+    - parse
+    # REGISTER VALUE: 232
+
+    - counter_set: somecounter
+    # COUNTER VALUE: 232
+
+- find:
+    path: p
+    do:
+    # INCREMENT COUNTER BY 1
+    - counter_increment: 
+        name: somecounter
+    # COUNTER VALUE: 233
+
+    # INCREMENT COUNTER BY 24
+    - counter_increment: 
+        name: somecounter
+        by: 24
+    # COUNTER VALUE: 257
+              </code></pre>
+          </div>
+
+          <div id="counter_decrement" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># CREATE BLOCK FROM HTML STRING
+- register_set: '&lt;div&gt;232&lt;/div&gt;&lt;p&gt;block&lt;/p&gt;'
+- to_block
+- find:
+    path: div
+    do:
+    # PARSE TO THE REGISTER
+    - parse
+
+    # INITIALIZE COUNTER `somecounter` WITH THE VALUE OF THE REGISTER
+    - counter_set: somecounter
+    # COUNTER VALUE: 232
+
+- find:
+    path: p
+    do:
+    # DECREMENT COUNTER BY 1
+    - counter_decrement: 
+        name: somecounter
+    # COUNTER VALUE: 231
+    
+    # DECREMENT COUNTER BY 24
+    - counter_decrement: 
+        name: somecounter
+        by: 24
+    # COUNTER VALUE: 207
+              </code></pre>
+          </div>
+
+          <div id="counter_reset" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># CREATE BLOCK FROM HTML STRING
+- register_set: '&lt;div&gt;232&lt;/div&gt;&lt;p&gt;block&lt;/p&gt;'
+- to_block
+- find:
+    path: div
+    do:
+    # PARSE TO THE REGISTER
+    - parse
+
+    # INITIALIZE COUNTER `somecounter` WITH THE VALUE OF THE REGISTER
+    - counter_set: somecounter
+    # COUNTER VALUE: 232
+
+- find:
+    path: p
+    do:
+    # RESET COUNTER
+    - counter_reset: somecounter
+    # COUNTER VALUE: 0
+              </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          In the next chapter, we'll see what methods can be used to work with the link pools.
+        </p>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-methods-entity-manipulations-link-pools.html" class="btn goto teal z-depth-2">Далее</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

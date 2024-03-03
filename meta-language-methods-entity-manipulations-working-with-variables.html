@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Methods for Entity Manipulations | Working with Variables</title>
+  <meta name="description" content="Learning how to use variables.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, entity manipulation, variables">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-entity-manipulations-working-with-variables.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-entity-manipulations-working-with-variables.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-manipuliruem-obyektami-rabota-s-peremennymi.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Methods for Entity Manipulations | Working with Variables">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Methods for Entity Manipulations | Working with Variables"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-entity-manipulations-working-with-variables.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="Learning how to use variables."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+  
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Methods for Entity Manipulations</h1>
+
+      <div>
+        <h2>Working with Variables</h2>
+
+        <p class="flow-text">
+          As you already know, the variables are context-independent and therefore their values ​​persist throughout the digger's entire operation.
+          This fact can be used to unite data disparate in different documents into a single object.
+          To do it, you have to parse one document, save the data in a variable, and when parsing another document, read the veriable value
+          to the register and write them to the object. Also, variables are often used to substitute values ​​into requests or CSS selectors.
+        </p>
+
+        <p class="flow-text">
+          The <span class = "hlt2">variable_set</span> command allows you to set the value of a variable. It can be used in any context,
+          but if the command notation implies the use of a register value, then this notation can only be used in a block context only.
+        </p>
+
+        <blockquote class="warning darken-1">
+          <p class="flow-text">
+            <strong>Please note:</strong><br/>
+            If the register is empty and you are trying to write this empty value into a variable, the command will be ignored.
+            This is done in order to work out the cases when you need to store the previous value of the field if the field is missing in subsequent cycles.<br/>
+            <span class = "spacer-10"></span>
+            To erase a variable, use the <span class = "hlt2">variable_clear</span>command.
+          </p>
+        </blockquote>
+
+        <p class="flow-text">
+          The following are various examples of writing values ​​to variables:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s4 darken-1"><a class="active" href="#var_set">Set value from register</a></li>
+              <li class="tab col s4 darken-1"><a href="#var_set_1">Variable in variable name</a></li>
+              <li class="tab col s4 darken-1"><a href="#var_set_2">Set value directly</a></li>
+            </ul>
+          </div>
+
+          <div id="var_set" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># JUMP TO BLOCK CONTEXT
+- find:
+    path: .somepath
+    do:
+    # PARSE TEXT
+    - parse
+
+    # SAVE VALUE OF THE REGISTER TO VARIABLE WITH NAME `somevar`
+    - variable_set: somevar
+              </code></pre>
+          </div>
+
+          <div id="var_set_1" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># JUMP TO BLOCK CONTEXT
+- find:
+    path: .somepath
+    do:
+    # PARSE TEXT
+    - parse
+
+    # LETS IMAGINE THAT IN REGISTER NOW: 123
+    # SAVE VALUE OF THE REGISTER TO THE VARIABLE WITH NAME `somevar`
+    - variable_set: somevar
+
+# JUMP TO OTHER BLOCK
+- find:
+    path: .anotherpath
+    do:
+    # PARSE TEXT
+    - parse
+
+    # SAVE REGISTER VALUE TO THE VARIABLE
+    # NAME OF VARIABLE IS RESULT OF CONCATENATION OF `another_` AND VALUE OF VARIABLE `somevar`
+    - variable_set: another_&lt;%somevar%&gt;
+    # SO VARIABLE NAME WILL BE `another_123`
+              </code></pre>
+          </div>
+
+          <div id="var_set_2" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">- walk:
+    to: http://www.somesite.com/
+    do:
+    # SET VALUE FOR VARIABLE
+    # IF YOU ARE NO IN BLOCK CONTECT, ONLY SUCH NOTATION CAN BE USED
+    - variable_set:
+        field: somevar
+        value: 123
+    # YOU CAN ALSO USE VARIABLES FOR SUBSTITUTION IN VALUE AND FIELD
+
+    # BELOW LOGIC WILL ASSIGN VALUE "123" TO THE VARIABLE WITH NAME `another_123`
+    - variable_set:
+        field: another_&lt;%somevar%&gt;
+        value: &lt;%somevar%&gt;
+              </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          The <span class = "hlt2">variable_get</span> command is used to write the value of a variable to the register.<br/>
+          The <span class = "hlt2">variable_append</span> and <span class = "hlt2">variable_prepend</span> commands can be used for adding
+          the content of the variable to the end or beginning of the register.<br/>
+          To clear the contents of a variable, you can use the <span class = "hlt2">variable_clear</span> command.
+          It is useful when iterating over blocks with unstable structure, when some element may be missing and the variable_set command
+          will not be executed. In this case the old value will remain in the variable, and can be mistakenly written to the object.
+          If you need to avoid it, you can clear the contents of the variable with this command.
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s1"><a class="active" href="#var_get">Writing to the register</a></li>
+              <li class="tab col s1"><a href="#var_get_1">Dynamic name of variable</a></li>
+              <li class="tab col s1"><a href="#var_get_2">Other manipulations</a></li>
+            </ul>
+          </div>
+
+          <div id="var_get" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># JUMPING TO THE BLOCK
+- find:
+    path: .somepath
+    do:
+    # READING VALUE OF THE VARIABLE `somevar` TO THE REGISTER
+    - variable_get: somevar
+              </code></pre>
+          </div>
+
+          <div id="var_get_1" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># SET VARIABLE `somevar` WITH VALUE
+- variable_set:
+    field: somevar
+    value: 123
+
+# SET VALUE OF VARIABLE `another_123`
+- variable_set:
+    field: another_123
+    value: 456
+
+# JUMPING TO THE BLOCK
+- find:
+    path: .somepath
+    do:
+    # READING VALUE OF VARIABLE `another_123` TO THE REGISTER
+    - variable_get: another_&lt;%somevar%&gt;
+
+# REGISTER VALUE: 456
+              </code></pre>
+          </div>
+
+          <div id="var_get_2" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># SET VALUE OF VARIABLE `somevar`
+- variable_set:
+    field: somevar
+    value: 123
+
+# JUMPING TO THE BLOCK
+- find:
+    path: .somepath
+    do:
+    # SET REGISTER VALUE TO `data` LITERAL
+    - register_set: data
+
+    # APPEND VALUE OF THE VARIABLE `somevar` TO THE REGISTER VALUE,
+    # USING " - " FOR JOINING VALUES
+    - variable_append:
+        field: somevar
+        joinby: " - "
+    # REGISTER VALUE: data - 123
+
+    # PREPEND VALUE OF THE VARIABLE `somevar` TO THE REGISTER VALUE,
+    # USING "" FOR JOINING VALUES
+    - variable_prepend:
+        field: somevar
+        joinby: ""
+    # REGISTER VALUE: 123data - 123
+
+    # CLEAR VARIABLE `somevar`
+    - variable_clear: somevar
+              </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          Next we will tell you how you can work with arguments.
+        </p>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-methods-entity-manipulations-commands-for-arguments.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Working with DOM | Sequences</title>
+  <meta name="description" content="Splitting the content into logical blocks using sequences.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, dom, sequences">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-working-with-dom-sequences.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-working-with-dom-sequences.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-rabota-s-dom-strukturoy-posledovatelnosti.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Working with DOM | Sequences">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Working with DOM | Sequences"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-working-with-dom-sequences.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="Splitting the content into logical blocks using sequences."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Methods for Working with DOM</h1>
+
+      <div>
+        <h2>Sequences</h2>
+
+        <p class="flow-text">
+          Sometimes it is required to divide the sequence of nodes into logical blocks using the header
+          (the leading node of the logical block) or the footer (the final node of the logical block). For this operation
+          you can use the <span class = "hlt2">sequence</span> command. This command, unlike a <span class = "hlt2">split</span> command, works with the nodes
+          of the current block, so as parameters you will have to pass CSS selectors.
+        </p>
+
+        <p class="flow-text">
+          Following parameters can be used with the command:
+        </p>
+
+        <table class="responsive-table highlight">
+          <thead>
+          <tr>
+            <th data-field="parameter">Parameter</th>
+            <th data-field="description">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="centered">selector</td>
+            <td>Selectors for nodes that must be selected in the current block. Bear in mind that the nodes,
+              used as a header or a footer, should also be selected by selectors in this parameter.
+            </td>
+          </tr>
+          <tr>
+            <td>header</td>
+            <td>A selector for nodes that will be used as header of logical blocks. If you are using
+              this parameter, the <span class = "hlt">footer</span> parameter will be ignored if it is also passed.
+            </td>
+          </tr>
+          <tr>
+            <td>footer</td>
+            <td>A selector for nodes that will be used as footer of logical blocks. If you are passing also the <span class = "hlt">header</span>
+              parameter, this parameter will be ignored.
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <p class="flow-text">
+          Let's use following HTML source for our examples:
+        </p>
+
+        <pre class="language-markup">
+          <code class="language-markup">&lt;div&gt;
+    &lt;h1&gt;Some title&lt;/h1&gt;
+    &lt;p&gt;Some text 1&lt;/p&gt;
+    &lt;p&gt;Some text 1 - 1&lt;/p&gt;
+    &lt;p class="footer"&gt;My footer&lt;/p&gt;
+    &lt;h1&gt;Some other title&lt;/h1&gt;
+    &lt;p&gt;Some text 2&lt;/p&gt;
+    &lt;p class="footer"&gt;My other footer&lt;/p&gt;
+    &lt;h1&gt;Another title&lt;/h1&gt;
+    &lt;p&gt;Some text 2&lt;/p&gt;
+    &lt;p&gt;Final p&lt;/p&gt;
+    &lt;p class="footer"&gt;My last footer&lt;/p&gt;
+&lt;/div&gt;
+          </code></pre>
+
+        <p class="flow-text">
+          As you can see, we can take the tag <span class = "hlt">h1</span> as a header node for splitting into additional
+          blocks in this example, or <span class = "hlt">p</span> tag with the <span class = "hlt">footer</span> class as a footer.
+        </p>
+
+        <p class="flow-text">
+          Now, let's try to split the common <span class = "hlt">div</span> block into a set of separate, independent blocks. <br/>
+          Let's take a closer look at the examples:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s6"><a class="active" href="#header">Split by header</a></li>
+              <li class="tab col s6"><a href="#footer">Split by footer</a></li>
+            </ul>
+          </div>
+
+          <div id="header" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">- find:
+    path: div 
+    do:
+    - sequence:
+        selector: p,h1
+        header: h1
+
+    # WE WILL GET NEW BLOCK CREATED BY COMMAND `sequence`
+    # WITH FOLLOWING HTML CONTENTS:
+    # &lt;div class="sequence element_0"&gt;
+    #     &lt;h1&gt;Some title&lt;/h1&gt;
+    #     &lt;p&gt;Some text 1&lt;/p&gt;
+    #     &lt;p&gt;Some text 1 - 1&lt;/p&gt;
+    #     &lt;p class="footer"&gt;My footer&lt;/p&gt;
+    # &lt;/div&gt;
+    # &lt;div class="sequence element_1"&gt;
+    #     &lt;h1&gt;Some other title&lt;/h1&gt;
+    #     &lt;p&gt;Some text 2&lt;/p&gt;
+    #     &lt;p class="footer"&gt;My other footer&lt;/p&gt;
+    # &lt;/div&gt;
+    # &lt;div class="sequence element_2"&gt;
+    #     &lt;h1&gt;Another title&lt;/h1&gt;
+    #     &lt;p&gt;Some text 2&lt;/p&gt;
+    #     &lt;p&gt;Final p&lt;/p&gt;
+    #     &lt;p class="footer"&gt;My last footer&lt;/p&gt;
+    # &lt;/div&gt;
+
+    # LETS EXTRACT HEADER OF LAST ELEMENT OF SPLITTED BLOCKS
+    - find:
+        path: .sequence > h1
+        slice: -1
+        do:
+        - parse
+        # REGISTER VALUE: Another title
+              </code></pre>
+          </div>
+
+          <div id="footer" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">- find:
+    path: div 
+    do:
+    - sequence:
+        selector: p
+        footer: p.footer
+
+    # WE WILL GET NEW BLOCK CREATED BY COMMAND `sequence`
+    # WITH FOLLOWING HTML CONTENTS:
+    # &lt;div class="sequence element_0"&gt;
+    #     &lt;p&gt;Some text 1&lt;/p&gt;
+    #     &lt;p&gt;Some text 1 - 1&lt;/p&gt;
+    #     &lt;p class="footer"&gt;My footer&lt;/p&gt;
+    # &lt;/div&gt;
+    # &lt;div class="sequence element_1"&gt;
+    #     &lt;p&gt;Some text 2&lt;/p&gt;
+    #     &lt;p class="footer"&gt;My other footer&lt;/p&gt;
+    # &lt;/div&gt;
+    # &lt;div class="sequence element_2"&gt;
+    #     &lt;p&gt;Some text 2&lt;/p&gt;
+    #     &lt;p&gt;Final p&lt;/p&gt;
+    #     &lt;p class="footer"&gt;My last footer&lt;/p&gt;
+    # &lt;/div&gt;
+
+    # LETS EXTRACT FOOTER OF LAST ELEMENT OF SPLITTED BLOCKS
+    - find:
+        path: .sequence > p.footer
+        slice: -1
+        do:
+        - parse
+        # REGISTER VALUE: My last footer
+              </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          In the next chapter, we will learn how to create a new block from the contents of the register.
+        </p>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-methods-working-with-dom-creating-new-block.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

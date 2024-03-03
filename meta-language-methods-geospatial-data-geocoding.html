@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Geospatial Data | Geocoding</title>
+  <meta name="description" content="What is geocoding and how you can get geo coordinates of specific place with a single call.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, geospatial">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-geospatial-data-geocoding.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-geospatial-data-geocoding.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-geodannye-geocoding.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Geospatial Data | Geocoding">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Geospatial Data | Geocoding"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-geospatial-data-geocoding.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="What is geocoding and how you can get geo coordinates of specific place with a single call."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+  
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Geospatial Data</h1>
+
+      <div>
+        <h2>Geocoding</h2>
+
+        <p class="flow-text">
+            Geocoding refers to the process of converting a description of a location into position coordinates on the surface of the earth (latitude and
+            longitude). This process is very in demand if you need to get the coordinates of the location to use it later for further aggregation by geo-referenced
+            data in the database. Or if you simply need to show place on the map.
+        </p>
+
+        <p class="flow-text">
+            To get coordinates for specific place you can use the <span class="hlt2">geocode</span> command:
+        </p>
+
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs excdark">
+                    <li class="tab col s1">
+                        <a class="active" href="#code">Digger code</a>
+                    </li>
+                    <li class="tab col s1">
+                        <a class="active" href="#log">Log</a>
+                    </li>
+                    <li class="tab col s1">
+                        <a class="active" href="#data">Data source</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="code" class="col s12">
+                <pre class="language-yaml">
+    <code class="language-yaml"># SWITCHING TO THE GEO CONTEXT
+- geo:
+    provider: osm
+    do:
+    # Get coordinates of place defined by specific address
+    - geocode:
+        address: 53 W Jackson Blvd, Chicago, IL 60604, USA
+        do:</code>
+</pre>
+            </div>
+            <div id="log" class="col s12">
+                <table id="datatable_logs" class="striped responsive-table debug-log" role="grid" aria-describedby="datatable_logs_info">
+                    <thead>
+                        <tr role="row">
+                            <th width="11%" class="sorting_desc" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending"
+                                aria-sort="descending">Time</th>
+                            <th width="4%" class="sorting" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Level: activate to sort column ascending">Level</th>
+                            <th class="word-wrapper sorting_disabled" rowspan="1" colspan="1" aria-label="Message">Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">2018-05-29 23:01:19:468</td>
+                            <td>info</td>
+                            <td class=" word-wrapper">Stopped by exit command</td>
+                        </tr>
+                        <tr role="row" class="even">
+                            <td class="sorting_1">2018-05-29 23:01:19:453</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">
+                                <span data-cr="less" data-full="">Page content: ...</span>
+                            </td>
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">2018-05-29 23:01:18:575</td>
+                            <td>info</td>
+                            <td class=" word-wrapper">Retrieving page (GET): https://nominatim.openstreetmap.org/search?q=53+W+Jackson+Blvd%2C+Chicago%2C+IL+60604%2C+USA&amp;format=json&amp;polygon=1&amp;addressdetails=1</td>
+                        </tr>
+                        <tr role="row" class="even">
+                            <td class="sorting_1">2018-05-29 23:01:18:566</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">Getting coordinates by address: 53 W Jackson Blvd, Chicago, IL 60604, USA</td>
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">2018-05-29 23:01:18:547</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">Setting up geo provider: osm</td>
+                        </tr>
+                        <tr role="row" class="even">
+                            <td class="sorting_1">2018-05-29 23:01:18:539</td>
+                            <td>info</td>
+                            <td class=" word-wrapper">Starting scrape</td>
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">2018-05-29 23:01:18:503</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">Setting up default proxy</td>
+                        </tr>
+                        <tr role="row" class="even">
+                            <td class="sorting_1">2018-05-29 23:01:18:485</td>
+                            <td>
+                                <span class="log-debug">debug</span>
+                            </td>
+                            <td class=" word-wrapper">Setting up surf</td>
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">2018-05-29 23:01:18:455</td>
+                            <td>info</td>
+                            <td class=" word-wrapper">Starting digger: 1 [2158]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="data" class="col s12">
+                <pre class="language-html">
+            <code class="language-html">&lt;html&gt;
+&lt;head&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;body_safe&gt;
+&lt;element&gt;
+&lt;address&gt;
+    &lt;building&gt;Monadnock Building&lt;/building&gt;
+    &lt;city&gt;Chicago&lt;/city&gt;
+    &lt;country&gt;United States of America&lt;/country&gt;
+    &lt;country_code&gt;us&lt;/country_code&gt;
+    &lt;county&gt;Cook County&lt;/county&gt;
+    &lt;house_number&gt;53&lt;/house_number&gt;
+    &lt;neighbourhood&gt;Loop&lt;/neighbourhood&gt;
+    &lt;postcode&gt;60604&lt;/postcode&gt;
+    &lt;road&gt;West Jackson Boulevard&lt;/road&gt;
+    &lt;state&gt;Illinois&lt;/state&gt;
+&lt;/address&gt;
+&lt;boundingbox&gt;41.876976&lt;/boundingbox&gt;
+&lt;boundingbox&gt;41.8780754&lt;/boundingbox&gt;
+&lt;boundingbox&gt;-87.6297057&lt;/boundingbox&gt;
+&lt;boundingbox&gt;-87.6294066&lt;/boundingbox&gt;
+&lt;class&gt;historic&lt;/class&gt;
+&lt;display_name&gt;Monadnock Building, 53, West Jackson Boulevard, Loop, Chicago, Cook County,
+    Illinois, 60604, United States of America&lt;/display_name&gt;
+&lt;importance&gt;0.71924499588714&lt;/importance&gt;
+&lt;lat&gt;41.8775257&lt;/lat&gt;
+&lt;licence&gt;Data &#169; OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright&lt;/licence&gt;
+&lt;lon&gt;-87.62955615&lt;/lon&gt;
+&lt;osm_id&gt;73671128&lt;/osm_id&gt;
+&lt;osm_type&gt;way&lt;/osm_type&gt;
+&lt;place_id&gt;85949297&lt;/place_id&gt;
+&lt;polygonpoints&gt;-87.6297057&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.8780724&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.6296748&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.876976&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.6294066&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.876979&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.6294375&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.8780754&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.6297057&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.8780724&lt;/polygonpoints&gt;
+&lt;type&gt;building&lt;/type&gt;
+&lt;/element&gt;
+&lt;element&gt;
+&lt;address&gt;
+    &lt;bar&gt;Cavanaughs&lt;/bar&gt;
+    &lt;city&gt;Chicago&lt;/city&gt;
+    &lt;country&gt;United States of America&lt;/country&gt;
+    &lt;country_code&gt;us&lt;/country_code&gt;
+    &lt;county&gt;Cook County&lt;/county&gt;
+    &lt;house_number&gt;53&lt;/house_number&gt;
+    &lt;neighbourhood&gt;Loop&lt;/neighbourhood&gt;
+    &lt;postcode&gt;60604&lt;/postcode&gt;
+    &lt;road&gt;West Jackson Boulevard&lt;/road&gt;
+    &lt;state&gt;Illinois&lt;/state&gt;
+&lt;/address&gt;
+&lt;boundingbox&gt;41.8775765&lt;/boundingbox&gt;
+&lt;boundingbox&gt;41.8776765&lt;/boundingbox&gt;
+&lt;boundingbox&gt;-87.6297154&lt;/boundingbox&gt;
+&lt;boundingbox&gt;-87.6296154&lt;/boundingbox&gt;
+&lt;class&gt;amenity&lt;/class&gt;
+&lt;display_name&gt;Cavanaughs, 53, West Jackson Boulevard, Loop, Chicago, Cook County,
+    Illinois, 60604, United States of America&lt;/display_name&gt;
+&lt;icon&gt;https://nominatim.openstreetmap.org/images/mapicons/food_bar.p.20.png&lt;/icon&gt;
+&lt;importance&gt;0.63025&lt;/importance&gt;
+&lt;lat&gt;41.8776265&lt;/lat&gt;
+&lt;licence&gt;Data &#169; OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright&lt;/licence&gt;
+&lt;lon&gt;-87.6296654&lt;/lon&gt;
+&lt;osm_id&gt;3238872061&lt;/osm_id&gt;
+&lt;osm_type&gt;node&lt;/osm_type&gt;
+&lt;place_id&gt;45210181&lt;/place_id&gt;
+&lt;polygonpoints&gt;-87.6296654&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.8776765&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.629630044661&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.877661855339&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.6296154&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.8776265&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.629630044661&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.877591144661&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.6296654&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.8775765&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.629700755339&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.877591144661&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.6297154&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.8776265&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.629700755339&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.877661855339&lt;/polygonpoints&gt;
+&lt;type&gt;bar&lt;/type&gt;
+&lt;/element&gt;
+&lt;element&gt;
+&lt;address&gt;
+    &lt;address29&gt;Michael J. Petro&lt;/address29&gt;
+    &lt;city&gt;Chicago&lt;/city&gt;
+    &lt;country&gt;United States of America&lt;/country&gt;
+    &lt;country_code&gt;us&lt;/country_code&gt;
+    &lt;county&gt;Cook County&lt;/county&gt;
+    &lt;house_number&gt;53&lt;/house_number&gt;
+    &lt;neighbourhood&gt;Loop&lt;/neighbourhood&gt;
+    &lt;postcode&gt;60604&lt;/postcode&gt;
+    &lt;road&gt;West Jackson Boulevard&lt;/road&gt;
+    &lt;state&gt;Illinois&lt;/state&gt;
+&lt;/address&gt;
+&lt;boundingbox&gt;41.8774832&lt;/boundingbox&gt;
+&lt;boundingbox&gt;41.8775832&lt;/boundingbox&gt;
+&lt;boundingbox&gt;-87.6296016&lt;/boundingbox&gt;
+&lt;boundingbox&gt;-87.6295016&lt;/boundingbox&gt;
+&lt;class&gt;office&lt;/class&gt;
+&lt;display_name&gt;Michael J. Petro, 53, West Jackson Boulevard, Loop, Chicago, Cook County,
+    Illinois, 60604, United States of America&lt;/display_name&gt;
+&lt;importance&gt;0.63025&lt;/importance&gt;
+&lt;lat&gt;41.8775332&lt;/lat&gt;
+&lt;licence&gt;Data &#169; OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright&lt;/licence&gt;
+&lt;lon&gt;-87.6295516&lt;/lon&gt;
+&lt;osm_id&gt;4841340094&lt;/osm_id&gt;
+&lt;osm_type&gt;node&lt;/osm_type&gt;
+&lt;place_id&gt;59402467&lt;/place_id&gt;
+&lt;polygonpoints&gt;-87.6295516&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.8775832&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.629516244661&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.877568555339&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.6295016&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.8775332&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.629516244661&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.877497844661&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.6295516&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.8774832&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.629586955339&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.877497844661&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.6296016&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.8775332&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;-87.629586955339&lt;/polygonpoints&gt;
+&lt;polygonpoints&gt;41.877568555339&lt;/polygonpoints&gt;
+&lt;type&gt;lawyer&lt;/type&gt;
+&lt;/element&gt;
+&lt;/body_safe&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </code></pre>
+            </div>
+        </div>
+
+        <p class="flow-text">
+            In our final chapter about geospatial data we will study process of reverse geocoding.
+        </p>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-methods-geospatial-data-reverse-geocoding.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Methods for Navigation | Walk</title>
+  <meta name="description" content="Using the Walk command you can navigate through websites, load pages and documents.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, navigation, page loading">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-navigation-walk.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-navigation-walk.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-navigatsiya-walk.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Methods for Navigation | Walk">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Methods for Navigation | Walk"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-navigation-walk.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="Using the Walk command you can navigate through websites, load pages and documents."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Methods for Navigation</h1>
+
+      <p class="flow-text">
+        Navigation is used to load various pages, documents and files on the website, as well as to traverse over the DOM structure
+        of the loaded document.
+      </p>
+
+      <h2>Walk</h2>
+
+      <p class="flow-text">
+        The <span class = "hlt2">walk</span> method is used to load pages and other documents (json, js, ical, xml, images)
+        from various web resources or websites. If the downloaded file is presented in a format other than HTML or XML,
+        the digger automatically converts the content of the resource into XML. It works this way so you can use
+        the same approach for extracting data from heterogeneous resources.        
+      </p>
+      <p class="flow-text">
+        The main points of the <span class = "hlt2">walk</span> method:
+      </p>
+
+      <blockquote class="custom darken-1">
+        <ol class="flow-text">
+          <li>The method can be called from any context</li>
+          <li>Can work with the contents of the register, use the values ​​of arguments and variables as data for the substitution</li>
+          <li>The execution of the block logic can be looped until a certain condition is reached</li>
+          <li>Can iterate over link pool</li>
+          <li>It is possible to use custom request headers</li>
+          <li>The method can do <span class = "hlt">GET</span> and <span class = "hlt">POST</span> requests</li>
+          <li>If a page or document is successfully loaded, the digger goes into a page context and works with the downloaded content</li>
+        </ol>
+      </blockquote>
+
+      <p class="flow-text">
+        Parameters that you can use in the <span class = "hlt2">walk</span> method:
+      </p>
+
+      <table class="responsive-table highlight">
+        <thead>
+        <tr>
+          <th data-field="parameter">Parameter</th>
+          <th data-field="description">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="centered">to</td>
+          <td>The value that defines which request the digger should make. If the value is a literal, the GET request will be executed.
+            If the dictionary - POST request will be done. When using a literal, you can use the URL of the resource that the digger should
+            download. It is possible to use variables and arguments in a URL. If you want to use a URL value from the register,
+            you can use the reserved word <span class = "hlt2">value</span>. And if you want a digger to iterate over the link pool,
+            use the word <span class = "hlt2">pool</span>.
+            To do POST request, you will need to make a dictionary with fields described below and use this dictionary as value
+            for parameter <span class = "hlt2">to</span>.
+          </td>
+        </tr>
+        <tr>
+          <td>headers</td>
+          <td>A dictionary where you can include any headers that will be sent to the server with the request. You can use any standard
+            and non-standard headers, except for user-agent. User agent header is populated with value you define in config section of the digger's configuration.
+          </td>
+        </tr>
+        <tr>
+          <td>mode</td>
+          <td>Enables mode that only unique URLs (<span class = "hlt3">across all digger sessions</span>) will be loaded. To enable this mode,
+            it is enough to specify the value of this parameter as <span class = "hlt2">unique</span>. In this mode, the digger will be
+            cache all downloaded URLs in the database and the next time you try access the URL, it will check the database if this URL has been
+            fetched before. And if its so, such URL will be skipped. In some cases, this mode helps to save on resources (page requests) you pay for.
+          </td>
+        </tr>
+        <tr>
+          <td>pool</td>
+          <td>The name of the link pool. Used only if the reserved word <span class = "hlt2">links</span> is used as value for
+            the parameter <span class = "hlt2">to</span>. If this parameter is omitted, then the digger will use the default pool.
+          </td>
+        </tr>
+        <tr>
+          <td>repeat</td>
+          <td>A special flag that sets execution the block of <span class = "hlt2">walk</span> command to the loop while the value of this
+            flag is equivalent to <span class = "hlt">"yes"</span>. In practice, there is variable used as value of this flag, which initially is set to
+            <span class = "hlt">"yes"</span>. Then during execution of the loop, when digger meet some condition, it changes variable value to something other and digger breaks out of the loop
+            and continues execution of code outside of this walk block.
+          </td>
+        </tr>
+        <tr>
+          <td>repeat_in_pool</td>
+          <td>Works just the same as <span class="hlt2">repeat</span>, but for link pool.</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <h3>GET</h3>
+
+      <p class="flow-text">
+        The following are examples of GET requests with some parameters:
+      </p>
+
+      <div class="row">
+        <div class="col s12">
+          <ul class="tabs excdark">
+            <li class="tab col s3"><a class="active" href="#walk_get">URL</a></li>
+            <li class="tab col s3"><a href="#walk_get_1">Links</a></li>
+            <li class="tab col s3"><a href="#walk_get_2">Repeat</a></li>
+            <li class="tab col s3"><a href="#walk_get_3">Headers</a></li>
+          </ul>
+        </div>
+        <div id="walk_get" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">---
+do:
+# LOADING PAGE LOCATED AT SPECIFIED URL AND RUN LOGIC INSIDE THE `walk` BLOCK FOR ITS CONTENT
+- walk:
+    to: http://www.somesite.com/
+    do:
+    # FIND ALL LINKS OF THIS PAGE
+    - find:
+        path: a
+        do:
+        # PUT VALUE OF `href` ATTRIBUTE TO THE REGISTER
+        - parse:
+            attr: href
+        # LOAD PAGE WITH URL WE HAVE IN REGISTER
+        - walk:
+            to: value
+            do:
+              </code></pre>
+        </div>
+
+        <div id="walk_get_1" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">---
+do:
+# ADD URL OF PAGES TO THE LINK POOL WITH NAME `somepool`
+- link_add:
+    pool: somepool
+    url:
+    - http://www.somesite.com/page-1/
+    - http://www.somesite.com/page-2/
+    - http://www.somesite.com/page-3/
+# ITERATING OVER POOL (OVER URLS ONE BY ONE)
+# FOR EACH URL WE RUN LOGIC INSIDE `walk` BLOCK
+- walk:
+    to: links
+    pool: somepool
+    do: 
+    - find:
+        path: .somepath
+        do:
+              </code></pre>
+        </div>
+
+        <div id="walk_get_2" class="col s12">
+          <pre class="language-yaml">
+            <code class="language-yaml">---
+do:
+# DECLARE VARIABLE `repeatable` AND SET IT TO `yes`
+- variable_set:
+    field: repeatable
+    value: 'yes'
+# LETS IMAGINE THAT WEBSITE WE ARE SCRAPING IS NOT STABLE
+# AND SOMETIMES DOESNT RETURN PROPER PAGE, OR JUST NOT AVAILABLE
+# LETS PUT `walk` COMMAND TO THE LOOP USING VARIABLE `repeatable`
+# COMMAND `walk` WILL BE REPEATED UNTIL SPECIFIC CSS PATH `.somepath`
+# IS NOT FOUND ON THE LOADED PAGE
+- walk:
+    repeat: &lt;%repeatable%&gt;
+    to: http://www.somesite.com/
+    do:
+    - find:
+        path: .somepath
+        do:
+        # CSS PATH IS FOUND, LETS CLEAR VARIABLE TO STOP LOOPING `walk` COMMAND
+        - variable_clear: repeatable
+            </code></pre>
+        </div>
+
+        <div id="walk_get_3" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">---
+do:
+# LOAD PAGE LOCATED AT GIVEN URL WITH COMMAND `walk`
+- walk:
+    to: http://www.somesite.com/
+    # WE ARE GOING TO SEND SOME HEADERS WITH PAGE REQUEST
+    headers:
+        Cookie: JSESSIONID=1234123412321; OTHERCOOKIE=&lt;%somevar%&gt;;
+        Accept: text/xml
+    do:
+    - find:
+        path: .somepath
+        do:
+              </code></pre>
+        </div>
+      </div>
+
+      <h3>POST</h3>
+
+      <p class="flow-text">
+        To do POST request, you need to use specifically formed dictionary in <span class="hlt2">to</span> parameter:
+      </p>
+
+      <table class="responsive-table highlight">
+        <thead>
+        <tr>
+          <th data-field="parameter">Parameter</th>
+          <th data-field="description">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="centered">post</td>
+          <td>URL of web resource, where your POST request with data formed as X-WWW-FORM-URLENCODED should be sent to.</td>
+        </tr>
+        <tr>
+          <td>json</td>
+          <td>URL of web resource, where your POST request with data formed as APPLICATION/JSON should be sent to.</td>
+        </tr>
+        <tr>
+          <td>xml</td>
+          <td>URL of web resource, where your POST request with data formed as TEXT/XML should be sent to. Data should be provided using payload parameter only.</td>
+        </tr>
+        <tr>
+          <td>graphql</td>
+          <td>URL of web resource, where your POST request with data formed as APPLICATION/GRAPHQL should be sent to. Data should be provided using payload parameter only.</td>
+        </tr>
+        <tr>
+          <td>headers</td>
+          <td>A dictionary where you can include any headers that will be sent to the server with the request. You can use any standard
+            and non-standard headers, except for user-agent. User agent header is populated with value you define in config section of the digger's configuration.
+            Attention, headers for POST requests should be used in the <span class = "hlt2">to</span> scope, not in the root <span class = "hlt2">walk</span>
+            scope as for GET requests.
+          </td>
+        </tr>
+        <tr>
+          <td>data</td>
+          <td>A dictionary with all fields/values of query that should be sent with the request. Field names and values ​​are allowed to
+            use variables and arguments to substitute data. The maximum nesting level of the dictionary is 2. If your data in JSON format should have a deeper
+            level of nesting, use the <span class = "hlt2">payload</span> parameter.
+          </td>
+        </tr>
+        <tr>
+          <td>payload</td>
+          <td>A string in the JSON/XML/GraphQL format, which is passed instead of the <span class = "hlt2">data</span> parameter for APPLICATION/JSON, TEXT/XML
+            and APPLICATION/GRAPHQL queries.
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <p class="flow-text">
+        Few examples of POST requests.
+      </p>
+
+      <div class="row">
+        <div class="col s12">
+          <ul class="tabs excdark">
+            <li class="tab col s6"><a class="active" href="#config">Digger configuration (X-WWW-FORM-URLENCODED)</a></li>
+            <li class="tab col s6"><a href="#log">Execution log</a></li>
+          </ul>
+        </div>
+
+        <div id="config" class="col s12">
+          <pre class="language-yaml">
+            <code class="language-yaml">---
+config:
+  debug: 2
+do:
+- walk:
+  to:
+      post: https://mockbin.org/request
+      data:
+          fizz: buzz
+  do:
+            </code></pre>
+        </div>
+
+        <div id="log" class="col s12">
+          <table class="striped responsive-table debug-log" role="grid" aria-describedby="datatable_logs_info">
+            <thead>
+            <tr role="row">
+              <th class="sorting_desc" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending" aria-sort="descending" width="11%">Time</th>
+              <th class="sorting" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Level: activate to sort column ascending" width="4%">Level</th>
+              <th class="word-wrapper sorting_disabled" rowspan="1" colspan="1" aria-label="Message">Message</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr role="row" class="odd">
+              <td class="sorting_1">2017-10-23 22:02:30:452</td>
+              <td>info</td>
+              <td class=" word-wrapper">Scrape is done</td>
+            </tr>
+            <tr role="row" class="even">
+              <td class="sorting_1">2017-10-23 22:02:30:436</td>
+              <td><span class="log-debug">debug</span></td>
+              <td class=" word-wrapper">Page content: &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;body_safe&gt;
+                &lt;bodysize&gt;9&lt;/bodysize&gt;
+                &lt;clientipaddress&gt;1.1.1.1&lt;/clientipaddress&gt;
+                &lt;cookies&gt;&lt;/cookies&gt;
+                &lt;headers&gt;
+                &lt;accept-encoding&gt;gzip&lt;/accept-encoding&gt;
+                &lt;cf-connecting-ip&gt;1.1.1.1&lt;/cf-connecting-ip&gt;
+                &lt;cf-visitor&gt;{&amp;#34;scheme&amp;#34;:&amp;#34;https&amp;#34;}&lt;/cf-visitor&gt;
+                &lt;connect-time&gt;2&lt;/connect-time&gt;
+                &lt;connection&gt;close&lt;/connection&gt;
+                &lt;content-length&gt;9&lt;/content-length&gt;
+                &lt;content-type&gt;application/x-www-form-urlencoded&lt;/content-type&gt;
+                &lt;host&gt;mockbin.org&lt;/host&gt;
+                &lt;total-route-time&gt;0&lt;/total-route-time&gt;
+                &lt;user-agent&gt;Surf/1.0 (Linux 3.19.0-65-generic; go1.9)&lt;/user-agent&gt;
+                &lt;via&gt;1.1 vegur&lt;/via&gt;
+                &lt;x-forwarded-for&gt;1.1.1.1, 1.1.1.1&lt;/x-forwarded-for&gt;
+                &lt;x-forwarded-port&gt;80&lt;/x-forwarded-port&gt;
+                &lt;x-forwarded-proto&gt;http&lt;/x-forwarded-proto&gt;
+                &lt;x-request-start&gt;1508785350353&lt;/x-request-start&gt;
+                &lt;/headers&gt;
+                &lt;headerssize&gt;556&lt;/headerssize&gt;
+                &lt;httpversion&gt;HTTP/1.1&lt;/httpversion&gt;<br/>
+                &lt;method&gt;POST&lt;/method&gt;<br/>
+                &lt;postdata&gt;<br/>
+                &lt;mimetype&gt;application/x-www-form-urlencoded&lt;/mimetype&gt;<br/>
+                &lt;params&gt;<br/>
+                <span class="hlt2">&lt;fizz&gt;buzz&lt;/fizz&gt;</span><br/>
+                &lt;/params&gt;<br/>
+                <span class="hlt2">&lt;text&gt;fizz=buzz&lt;/text&gt;</span><br/>
+                &lt;/postdata&gt;<br/>
+                &lt;querystring&gt;&lt;/querystring&gt;
+                &lt;starteddatetime&gt;2017-10-23T19:02:30.355Z&lt;/starteddatetime&gt;
+                &lt;url&gt;https://mockbin.org/request&lt;/url&gt;
+                &lt;/body_safe&gt;&lt;/body&gt;&lt;/html&gt;
+              </td>
+            </tr>
+            <tr role="row" class="odd">
+              <td class="sorting_1">2017-10-23 22:02:29:405</td>
+              <td>info</td>
+              <td class=" word-wrapper">Retrieving page (POST): https://mockbin.org/request</td>
+            </tr>
+            <tr role="row" class="even">
+              <td class="sorting_1">2017-10-23 22:02:29:398</td>
+              <td>info</td>
+              <td class=" word-wrapper">Starting scrape</td>
+            </tr>
+            <tr role="row" class="odd">
+              <td class="sorting_1">2017-10-23 22:02:29:382</td>
+              <td><span class="log-debug">debug</span></td>
+              <td class=" word-wrapper">Setting up default proxy</td>
+            </tr>
+            <tr role="row" class="even">
+              <td class="sorting_1">2017-10-23 22:02:29:367</td>
+              <td><span class="log-debug">debug</span></td>
+              <td class=" word-wrapper">Setting up surf</td>
+            </tr>
+            <tr role="row" class="odd">
+              <td class="sorting_1">2017-10-23 22:02:29:336</td>
+              <td>info</td>
+              <td class=" word-wrapper">Starting digger: meta-lang-post-x-www [1862]</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="flow-text">
+        Note, since the mockbin.org server sends the response in JSON format, the digger has made the conversion of the response to XML.
+      </p>
+
+      <div class="row">
+        <div class="col s12">
+          <ul class="tabs excdark">
+            <li class="tab col s6"><a class="active" href="#config2">Digger configuration (APPLICATION/JSON)</a></li>
+            <li class="tab col s6"><a href="#log2">Execution log</a></li>
+          </ul>
+        </div>
+
+        <div id="config2" class="col s12">
+          <pre class="language-yaml">
+              <code class="language-yaml">---
+config:
+    debug: 2
+do:
+# LETS INITIALIZE COUPLE VARIABLES
+- variable_set:
+    field: field_name
+    value: age
+- variable_set:
+    field: field_value
+    value: 25
+- walk:
+    to:
+        json: https://mockbin.org/request
+        data:
+            fizz: buzz
+            <%field_name%>: <%field_value%>
+    do:
+              </code></pre>
+        </div>
+
+        <div id="log2" class="col s12">
+          <table class="striped responsive-table debug-log" role="grid" aria-describedby="datatable_logs_info">
+            <thead>
+            <tr role="row">
+              <th class="sorting_desc" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending" aria-sort="descending" width="11%">Time</th>
+              <th class="sorting" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Level: activate to sort column ascending" width="4%">Level</th>
+              <th class="word-wrapper sorting_disabled" rowspan="1" colspan="1" aria-label="Message">Message</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr role="row" class="odd">
+              <td class="sorting_1">2017-10-24 01:31:08:538</td>
+              <td>info</td>
+              <td class=" word-wrapper">Scrape is done</td>
+            </tr>
+            <tr role="row" class="even">
+              <td class="sorting_1">2017-10-24 01:31:08:523</td>
+              <td><span class="log-debug">debug</span></td>
+              <td class=" word-wrapper">Page content: &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;body_safe&gt;
+                &lt;bodysize&gt;26&lt;/bodysize&gt;
+                &lt;clientipaddress&gt;1.1.1.1&lt;/clientipaddress&gt;
+                &lt;cookies&gt;&lt;/cookies&gt;
+                &lt;headers&gt;
+                &lt;accept-encoding&gt;gzip&lt;/accept-encoding&gt;
+                &lt;cf-connecting-ip&gt;1.1.1.1&lt;/cf-connecting-ip&gt;
+                &lt;cf-visitor&gt;{&amp;#34;scheme&amp;#34;:&amp;#34;https&amp;#34;}&lt;/cf-visitor&gt;
+                &lt;connect-time&gt;1&lt;/connect-time&gt;
+                &lt;connection&gt;close&lt;/connection&gt;
+                &lt;content-length&gt;26&lt;/content-length&gt;
+                &lt;content-type&gt;application/json&lt;/content-type&gt;
+                &lt;host&gt;mockbin.org&lt;/host&gt;
+                &lt;total-route-time&gt;0&lt;/total-route-time&gt;
+                &lt;user-agent&gt;Surf/1.0 (Linux 3.19.0-65-generic; go1.9)&lt;/user-agent&gt;
+                &lt;via&gt;1.1 vegur&lt;/via&gt;
+                &lt;x-forwarded-for&gt;1.1.1.1, 1.1.1.1&lt;/x-forwarded-for&gt;
+                &lt;x-forwarded-port&gt;80&lt;/x-forwarded-port&gt;
+                &lt;x-forwarded-proto&gt;http&lt;/x-forwarded-proto&gt;
+                &lt;x-request-start&gt;1508797868503&lt;/x-request-start&gt;
+                &lt;/headers&gt;
+                &lt;headerssize&gt;539&lt;/headerssize&gt;
+                &lt;httpversion&gt;HTTP/1.1&lt;/httpversion&gt;<br/>
+                &lt;method&gt;POST&lt;/method&gt;<br/>
+                &lt;postdata&gt;<br/>
+                &lt;mimetype&gt;application/json&lt;/mimetype&gt;<br/>
+                &lt;params&gt;&lt;/params&gt;<br/>
+                <span class="hlt2">&lt;text&gt;{&amp;#34;age&amp;#34;:&amp;#34;25&amp;#34;,&amp;#34;fizz&amp;#34;:&amp;#34;buzz&amp;#34;}&lt;/text&gt;</span><br/>
+                &lt;/postdata&gt;<br/>
+                &lt;querystring&gt;&lt;/querystring&gt;
+                &lt;starteddatetime&gt;2017-10-23T22:31:08.509Z&lt;/starteddatetime&gt;
+                &lt;url&gt;https://mockbin.org/request&lt;/url&gt;
+                &lt;/body_safe&gt;&lt;/body&gt;&lt;/html&gt;
+              </td>
+            </tr>
+            <tr role="row" class="odd">
+              <td class="sorting_1">2017-10-24 01:31:08:052</td>
+              <td>info</td>
+              <td class=" word-wrapper">Retrieving page (POST/JSON): https://mockbin.org/request</td>
+            </tr>
+            <tr role="row" class="even">
+              <td class="sorting_1">2017-10-24 01:31:08:044</td>
+              <td><span class="log-debug">debug</span></td>
+              <td class=" word-wrapper">Variable field_value has been set to value: 25</td>
+            </tr>
+            <tr role="row" class="odd">
+              <td class="sorting_1">2017-10-24 01:31:08:035</td>
+              <td><span class="log-debug">debug</span></td>
+              <td class=" word-wrapper">Variable field_name has been set to value: age</td>
+            </tr>
+            <tr role="row" class="even">
+              <td class="sorting_1">2017-10-24 01:31:08:028</td>
+              <td>info</td>
+              <td class=" word-wrapper">Starting scrape</td>
+            </tr>
+            <tr role="row" class="odd">
+              <td class="sorting_1">2017-10-24 01:31:08:015</td>
+              <td><span class="log-debug">debug</span></td>
+              <td class=" word-wrapper">Setting up default proxy</td>
+            </tr>
+            <tr role="row" class="even">
+              <td class="sorting_1">2017-10-24 01:31:08:002</td>
+              <td><span class="log-debug">debug</span></td>
+              <td class=" word-wrapper">Setting up surf</td>
+            </tr>
+            <tr role="row" class="odd">
+              <td class="sorting_1">2017-10-24 01:31:07:971</td>
+              <td>info</td>
+              <td class=" word-wrapper">Starting digger: meta-lang-post-json [1863]</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12">
+          <ul class="tabs excdark">
+            <li class="tab col s6"><a class="active" href="#config3">Digger configuration (APPLICATION/JSON PAYLOAD)</a></li>
+            <li class="tab col s6"><a href="#log3">Execution log</a></li>
+          </ul>
+        </div>
+
+        <div id="config3" class="col s12">
+          <pre class="language-yaml">
+              <code class="language-yaml">---
+config:
+    debug: 2
+do:
+- variable_set:
+    field: age
+    value: 25
+- walk:
+    to:
+        json: https://mockbin.org/request
+        payload: '{"fizz":"buzz","age":"<%age%>"}'
+    do:
+              </code></pre>
+        </div>
+
+        <div id="log3" class="col s12">
+          <table class="striped responsive-table debug-log" role="grid" aria-describedby="datatable_logs_info">
+            <thead>
+            <tr role="row">
+              <th class="sorting_desc" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending" aria-sort="descending" width="11%">Time</th>
+              <th class="sorting" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Level: activate to sort column ascending" width="4%">Level</th>
+              <th class="word-wrapper sorting_disabled" rowspan="1" colspan="1" aria-label="Message">Message</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr role="row" class="odd">
+              <td class="sorting_1">2017-10-24 02:00:06:387</td>
+              <td>info</td>
+              <td class=" word-wrapper">Scrape is done</td>
+            </tr>
+            <tr role="row" class="even">
+              <td class="sorting_1">2017-10-24 02:00:06:374</td>
+              <td><span class="log-debug">debug</span></td>
+              <td class=" word-wrapper">Page content: &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;body_safe&gt;
+                &lt;bodysize&gt;26&lt;/bodysize&gt;
+                &lt;clientipaddress&gt;1.1.1.1&lt;/clientipaddress&gt;
+                &lt;cookies&gt;&lt;/cookies&gt;
+                &lt;headers&gt;
+                &lt;accept-encoding&gt;gzip&lt;/accept-encoding&gt;
+                &lt;cf-connecting-ip&gt;1.1.1.1&lt;/cf-connecting-ip&gt;
+                &lt;cf-visitor&gt;{&amp;#34;scheme&amp;#34;:&amp;#34;https&amp;#34;}&lt;/cf-visitor&gt;
+                &lt;connect-time&gt;1&lt;/connect-time&gt;
+                &lt;connection&gt;close&lt;/connection&gt;
+                &lt;content-length&gt;26&lt;/content-length&gt;
+                &lt;content-type&gt;application/json&lt;/content-type&gt;
+                &lt;host&gt;mockbin.org&lt;/host&gt;
+                &lt;total-route-time&gt;0&lt;/total-route-time&gt;
+                &lt;user-agent&gt;Surf/1.0 (Linux 3.19.0-65-generic; go1.9)&lt;/user-agent&gt;
+                &lt;via&gt;1.1 vegur&lt;/via&gt;
+                &lt;x-forwarded-for&gt;1.1.1.1, 1.1.1.1&lt;/x-forwarded-for&gt;
+                &lt;x-forwarded-port&gt;80&lt;/x-forwarded-port&gt;
+                &lt;x-forwarded-proto&gt;http&lt;/x-forwarded-proto&gt;
+                &lt;x-request-start&gt;1508799606293&lt;/x-request-start&gt;
+                &lt;/headers&gt;
+                &lt;headerssize&gt;540&lt;/headerssize&gt;
+                &lt;httpversion&gt;HTTP/1.1&lt;/httpversion&gt;<br/>
+                &lt;method&gt;POST&lt;/method&gt;<br/>
+                &lt;postdata&gt;<br/>
+                &lt;mimetype&gt;application/json&lt;/mimetype&gt;<br/>
+                &lt;params&gt;&lt;/params&gt;<br/>
+                <span class="hlt2">&lt;text&gt;{&amp;#34;fizz&amp;#34;:&amp;#34;buzz&amp;#34;,&amp;#34;age&amp;#34;:&amp;#34;25&amp;#34;}&lt;/text&gt;</span><br/>
+                &lt;/postdata&gt;<br/>
+                &lt;querystring&gt;&lt;/querystring&gt;
+                &lt;starteddatetime&gt;2017-10-23T23:00:06.298Z&lt;/starteddatetime&gt;
+                &lt;url&gt;https://mockbin.org/request&lt;/url&gt;
+                &lt;/body_safe&gt;&lt;/body&gt;&lt;/html&gt;
+              </td>
+            </tr>
+            <tr role="row" class="odd">
+              <td class="sorting_1">2017-10-24 02:00:05:098</td>
+              <td>info</td>
+              <td class=" word-wrapper">Retrieving page (POST/JSON): https://mockbin.org/request</td>
+            </tr>
+            <tr role="row" class="even">
+              <td class="sorting_1">2017-10-24 02:00:05:089</td>
+              <td><span class="log-debug">debug</span></td>
+              <td class=" word-wrapper">Variable age has been set to value: 25</td>
+            </tr>
+            <tr role="row" class="odd">
+              <td class="sorting_1">2017-10-24 02:00:05:081</td>
+              <td>info</td>
+              <td class=" word-wrapper">Starting scrape</td>
+            </tr>
+            <tr role="row" class="even">
+              <td class="sorting_1">2017-10-24 02:00:05:069</td>
+              <td><span class="log-debug">debug</span></td>
+              <td class=" word-wrapper">Setting up default proxy</td>
+            </tr>
+            <tr role="row" class="odd">
+              <td class="sorting_1">2017-10-24 02:00:05:062</td>
+              <td><span class="log-debug">debug</span></td>
+              <td class=" word-wrapper">Setting up surf</td>
+            </tr>
+            <tr role="row" class="even">
+              <td class="sorting_1">2017-10-24 02:00:05:035</td>
+              <td>info</td>
+              <td class=" word-wrapper">Starting digger: meta-lang-post-payload [1864]</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="flow-text">
+        In the next part, we'll learn the <span class = "hlt2">find</span> method.
+        It is used to navigate the DOM structure of the loaded document.
+      </p>
+
+      <div class="row">
+        <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+          <div class="pagination">
+            <a href="meta-language-methods-navigation-find.html" class="btn goto teal z-depth-2">Next</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

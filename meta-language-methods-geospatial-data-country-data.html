@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Geospatial Data | Country data</title>
+  <meta name="description" content="How to obtain geographic data about a particular country.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, geospatial">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-geospatial-data-country-data.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-geospatial-data-country-data.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-geodannye-dannye-o-strane.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Geospatial Data | Country data">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Geospatial Data | Country data"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-geospatial-data-country-data.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="How to obtain geographic data about a particular country."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+  
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Geospatial Data</h1>
+
+      <div>
+        <h2>Country data</h2>
+
+        <p class="flow-text">
+            You can search for any country by its name and get all the geographical information about it, including the multipolygons of country borders.
+            Also, using data obtained with this command in other commands, you can get the centroid of the country shape. At the moment, you can search only for
+            English name of the country.
+        </p>
+
+        <p class="flow-text">
+            This command only works in the geo context and after execution takes you to the page context, where you can go through the XML structure with the data
+            and extract the information you need and save it to the variables or object fields.
+        </p>
+
+        <div class="row">
+            <div class="col s12">
+            <ul class="tabs excdark">
+                <li class="tab col s1"><a class="active" href="#code">Digger code</a></li>
+                <li class="tab col s1"><a class="active" href="#log">Log</a></li>
+                <li class="tab col s1"><a class="active" href="#data">Data source</a></li>
+            </ul>
+            </div>
+            <div id="code" class="col s12">
+            <pre class="language-yaml">
+                <code class="language-yaml"># SWITCHING TO THE GEO CONTEXT
+- geo:
+    provider: osm
+    do:
+    # Looking for country with name United States of America
+    - country:
+        name: United States of America
+        do:
+
+                </code>
+            </pre>
+            </div>
+            <div id="log" class="col s12">
+            <table id="datatable_logs" class="striped responsive-table debug-log" role="grid" aria-describedby="datatable_logs_info">
+                <thead>
+                    <tr role="row"><th width="11%" class="sorting_desc" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending" aria-sort="descending">Time</th><th width="4%" class="sorting" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Level: activate to sort column ascending">Level</th><th class="word-wrapper sorting_disabled" rowspan="1" colspan="1" aria-label="Message">Message</th></tr>
+                </thead>
+                <tbody>
+                    <tr role="row" class="odd"><td class="sorting_1">2018-05-29 00:07:11:757</td><td>info</td><td class=" word-wrapper">Scrape is done</td></tr>
+                    <tr role="row" class="even"><td class="sorting_1">2018-05-29 00:07:11:635</td><td><span class="log-debug">debug</span></td><td class=" word-wrapper"><span data-cr="less">Page content: ...</span></td></tr>
+                    <tr role="row" class="odd"><td class="sorting_1">2018-05-29 00:07:10:185</td><td>info</td><td class=" word-wrapper">Retrieving page (POST/JSON): https://lz4.overpass-api.de/api/interpreter</td></tr>
+                    <tr role="row" class="even"><td class="sorting_1">2018-05-29 00:07:10:176</td><td><span class="log-debug">debug</span></td><td class=" word-wrapper">Area name: United States of America</td></tr>
+                    <tr role="row" class="odd"><td class="sorting_1">2018-05-29 00:07:10:168</td><td><span class="log-debug">debug</span></td><td class=" word-wrapper">Getting geo information about country</td></tr>
+                    <tr role="row" class="even"><td class="sorting_1">2018-05-29 00:07:10:159</td><td><span class="log-debug">debug</span></td><td class=" word-wrapper">Setting up geo provider: osm</td></tr>
+                    <tr role="row" class="odd"><td class="sorting_1">2018-05-29 00:07:10:150</td><td>info</td><td class=" word-wrapper">Starting scrape</td></tr>
+                    <tr role="row" class="even"><td class="sorting_1">2018-05-29 00:07:10:125</td><td><span class="log-debug">debug</span></td><td class=" word-wrapper">Setting up default proxy</td></tr>
+                    <tr role="row" class="odd"><td class="sorting_1">2018-05-29 00:07:10:115</td><td><span class="log-debug">debug</span></td><td class=" word-wrapper">Setting up surf</td></tr>
+                    <tr role="row" class="even"><td class="sorting_1">2018-05-29 00:07:10:082</td><td>info</td><td class=" word-wrapper">Starting digger: 1 [2158]</td></tr>
+                </tbody>
+            </table>
+            </div>
+            <div id="data" class="col s12">
+                    <pre class="language-html">
+                        <code class="language-html">
+&lt;html&gt;
+&lt;head&gt;&lt;/head&gt;
+&lt;body&gt;
+    &lt;body_safe&gt;
+        &lt;elements&gt;
+            &lt;id&gt;148838&lt;/id&gt;
+            &lt;members&gt;
+                &lt;ref&gt;158368533&lt;/ref&gt;
+                &lt;role&gt;admin_centre&lt;/role&gt;
+                &lt;type&gt;node&lt;/type&gt;
+            &lt;/members&gt;
+            ...
+            &lt;members&gt;
+                &lt;ref&gt;162069&lt;/ref&gt;
+                &lt;role&gt;subarea&lt;/role&gt;
+                &lt;type&gt;relation&lt;/type&gt;
+            &lt;/members&gt;
+            &lt;tags&gt;
+                &lt;iso3166-1&gt;US&lt;/iso3166-1&gt;
+                &lt;iso3166-1_alpha2&gt;US&lt;/iso3166-1_alpha2&gt;
+                &lt;iso3166-1_alpha3&gt;USA&lt;/iso3166-1_alpha3&gt;
+                &lt;iso3166-1_numeric&gt;840&lt;/iso3166-1_numeric&gt;
+                &lt;admin_level&gt;2&lt;/admin_level&gt;
+                &lt;alt_name_vi&gt;Hoa K&igrave;;Mỹ;Mĩ&lt;/alt_name_vi&gt;
+                &lt;border_type&gt;national&lt;/border_type&gt;
+                &lt;boundary&gt;administrative&lt;/boundary&gt;
+                &lt;default_language&gt;en&lt;/default_language&gt;
+                &lt;flag&gt;http://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg&lt;/flag&gt;
+                &lt;gnis_feature_id&gt;1890467&lt;/gnis_feature_id&gt;
+                &lt;name&gt;United States of America&lt;/name&gt;
+                &lt;name_ab&gt;Америка Еиду Аштатқәа&lt;/name_ab&gt;
+                &lt;name_ace&gt;Amirika Car&eacute;kat&lt;/name_ace&gt;
+                &lt;name_af&gt;Verenigde State van Amerika&lt;/name_af&gt;
+                &lt;name_als&gt;Vereinigte Schtaate vo Amerika&lt;/name_als&gt;
+                &lt;name_am&gt;የተባበሩት የአሜሪካ ግዛቶች&lt;/name_am&gt;
+                &lt;name_an&gt;Estatos Unitos d&amp;#39;America&lt;/name_an&gt;
+                &lt;name_ang&gt;Geānlǣtan Rīcu American&lt;/name_ang&gt;
+                &lt;name_ar&gt;الولايات المتّحدة الأمريكيّة&lt;/name_ar&gt;
+                &lt;name_arc&gt;ܐܬܪܘܬܐ ܡܚܝܕܐ ܕܐܡܪܝܟܐ&lt;/name_arc&gt;
+                &lt;name_arz&gt;امريكا&lt;/name_arz&gt;
+                &lt;name_as&gt;মাৰ্কিন যুক্তৰাষ্ট্ৰ&lt;/name_as&gt;
+                &lt;name_ast&gt;Estaos Xun&iacute;os d&amp;#39;Am&eacute;rica&lt;/name_ast&gt;
+                &lt;name_av&gt;Америкалъул Цолъарал Штатал&lt;/name_av&gt;
+                &lt;name_ay&gt;Istadus Unidus&lt;/name_ay&gt;
+                &lt;name_az&gt;Amerika Birləşmiş Ştatları&lt;/name_az&gt;
+                &lt;name_ba&gt;Америка Ҡушма Штаттары&lt;/name_ba&gt;
+                &lt;name_bar&gt;Vaeinigtn Staatn vo Amerika&lt;/name_bar&gt;
+                &lt;name_bat-smg&gt;JAV&lt;/name_bat-smg&gt;
+                &lt;name_bcl&gt;Estados Unidos&lt;/name_bcl&gt;
+                &lt;name_be&gt;Злучаныя Штаты Амерыкі&lt;/name_be&gt;
+                &lt;name_be-tarask&gt;Злучаныя Штаты Амэрыкі&lt;/name_be-tarask&gt;
+                &lt;name_bg&gt;Съединени американски щати&lt;/name_bg&gt;
+                &lt;name_bi&gt;Yunaeted Stet blong Amerika&lt;/name_bi&gt;
+                &lt;name_bm&gt;Amerika ka Kelenyalen Jamanaw&lt;/name_bm&gt;
+                &lt;name_bn&gt;মার্কিন যুক্তরাষ্ট্র&lt;/name_bn&gt;
+                &lt;name_bo&gt;ཨ་མེ་རི་ཁ་རྒྱལ་ཕྲན་མཉམ་འབྲེལ་རྒྱལ་ཁབ།&lt;/name_bo&gt;
+                &lt;name_bpy&gt;তিলপারাষ্ট্র&lt;/name_bpy&gt;
+                &lt;name_br&gt;Stado&ugrave;-Unanet Amerika&lt;/name_br&gt;
+                &lt;name_bs&gt;Sjedinjene Američke Države&lt;/name_bs&gt;
+                &lt;name_bxr&gt;Американ Нэгэдэһэн Улас&lt;/name_bxr&gt;
+                &lt;name_ca&gt;Estats Units d&amp;#39;Am&egrave;rica&lt;/name_ca&gt;
+                &lt;name_cbk-zam&gt;Estados Unidos de America&lt;/name_cbk-zam&gt;
+                &lt;name_cdo&gt;Mī-l&eacute;-giĕng Hăk-c&eacute;̤ṳng-gu&oacute;k&lt;/name_cdo&gt;
+                &lt;name_ce&gt;Iамерка пачхьалк&lt;/name_ce&gt;
+                &lt;name_ceb&gt;Estados Unidos sa Amerika&lt;/name_ceb&gt;
+                &lt;name_chr&gt;ᏌᏊᎢᏳᎾᎵᏍᏔᏅᏍᎦᏚᎩ ᎾᎿ ᎠᎺᏰᏟ&lt;/name_chr&gt;
+                &lt;name_chy&gt;United States&lt;/name_chy&gt;
+                &lt;name_ckb&gt;وڵاتە یەکگرتووەکان&lt;/name_ckb&gt;
+                &lt;name_co&gt;Stati Uniti d&amp;#39;America&lt;/name_co&gt;
+                &lt;name_crh&gt;Amerika Qoşma Ştatları&lt;/name_crh&gt;
+                &lt;name_cs&gt;Spojen&eacute; st&aacute;ty americk&eacute;&lt;/name_cs&gt;
+                &lt;name_csb&gt;Zjedn&oacute;n&eacute; Kraje Americzi&lt;/name_csb&gt;
+                &lt;name_cu&gt;Амєрика́ньскꙑ Ѥдьнѥнꙑ́ Дрьжа́вꙑ&lt;/name_cu&gt;
+                &lt;name_cv&gt;Америкăри Пĕрлешӳллĕ Штатсем&lt;/name_cv&gt;
+                &lt;name_cy&gt;Unol Daleithiau America&lt;/name_cy&gt;
+                &lt;name_da&gt;Amerikas Forenede Stater&lt;/name_da&gt;
+                &lt;name_de&gt;Vereinigte Staaten von Amerika&lt;/name_de&gt;
+                &lt;name_diq&gt;Dewlet&ecirc; Amerikay&ecirc; Yewbiyayey&lt;/name_diq&gt;
+                &lt;name_dsb&gt;Zjadnośone staty Ameriki&lt;/name_dsb&gt;
+                &lt;name_dv&gt;އެމެރިކާ&lt;/name_dv&gt;
+                &lt;name_dz&gt;ཡུ་ནའིཊེཊ་སི་ཊེས&lt;/name_dz&gt;
+                &lt;name_ee&gt;United States&lt;/name_ee&gt;
+                &lt;name_el&gt;&Eta;&nu;&omega;&mu;έ&nu;&epsilon;&sigmaf; &Pi;&omicron;&lambda;&iota;&tau;&epsilon;ί&epsilon;&sigmaf; &tau;&eta;&sigmaf; &Alpha;&mu;&epsilon;&rho;&iota;&kappa;ή&sigmaf;&lt;/name_el&gt;
+                &lt;name_eml&gt;Stat Un&icirc;&lt;/name_eml&gt;
+                &lt;name_en&gt;United States of America&lt;/name_en&gt;
+                &lt;name_eo&gt;Usono&lt;/name_eo&gt;
+                &lt;name_es&gt;Estados Unidos de Am&eacute;rica&lt;/name_es&gt;
+                &lt;name_et&gt;Ameerika &Uuml;hendriigid&lt;/name_et&gt;
+                &lt;name_eu&gt;Ameriketako Estatu Batuak&lt;/name_eu&gt;
+                &lt;name_ext&gt;Estaus U&ntilde;&iacute;us d&amp;#39;Am&eacute;rica&lt;/name_ext&gt;
+                &lt;name_fa&gt;ایالات متحده آمریکا&lt;/name_fa&gt;
+                &lt;name_ff&gt;Dowlaaji Dentuɗi&lt;/name_ff&gt;
+                &lt;name_fi&gt;Amerikan yhdysvallat&lt;/name_fi&gt;
+                &lt;name_fiu-vro&gt;Ameeriga &Uuml;tisriigiq&lt;/name_fiu-vro&gt;
+                &lt;name_fo&gt;Sambandsr&iacute;ki&eth; Amerika&lt;/name_fo&gt;
+                &lt;name_fr&gt;&Eacute;tats-Unis d&amp;#39;Am&eacute;rique&lt;/name_fr&gt;
+                &lt;name_frp&gt;&Egrave;tats-Unis d&rsquo;Am&egrave;rica&lt;/name_frp&gt;
+                &lt;name_frr&gt;Feriind Stoote foon Ameerika&lt;/name_frr&gt;
+                &lt;name_fur&gt;St&acirc;ts Un&icirc;ts di Americhe&lt;/name_fur&gt;
+                &lt;name_fy&gt;Feriene Steaten fan Amearika&lt;/name_fy&gt;
+                &lt;name_ga&gt;St&aacute;it Aontaithe Mheirice&aacute;&lt;/name_ga&gt;
+                &lt;name_gag&gt;Amerika Birleşik Devletl&auml;ri&lt;/name_gag&gt;
+                &lt;name_gan&gt;美國&lt;/name_gan&gt;
+                &lt;name_gd&gt;Na St&agrave;itean Aonaichte&lt;/name_gd&gt;
+                &lt;name_gl&gt;Estados Unidos de Am&eacute;rica&lt;/name_gl&gt;
+                &lt;name_glk&gt;امریکا&lt;/name_glk&gt;
+                &lt;name_gn&gt;Tet&atilde; peteĩ reko Am&eacute;rikagua&lt;/name_gn&gt;
+                &lt;name_gu&gt;સંયુક્ત રાજ્ય અમેરિકા&lt;/name_gu&gt;
+                &lt;name_gv&gt;Steatyn Unnaneysit America&lt;/name_gv&gt;
+                &lt;name_ha&gt;kunkiyar taraiyar Amurika&lt;/name_ha&gt;
+                &lt;name_hak&gt;M&icirc;-li-ki&ecirc;n Ha̍p-chung-koet&lt;/name_hak&gt;
+                &lt;name_haw&gt;&lsquo;Amelika Hui Pū &lsquo;ia&lt;/name_haw&gt;
+                &lt;name_he&gt;ארצות הברית&lt;/name_he&gt;
+                &lt;name_hi&gt;संयुक्त राज्य अमेरिका&lt;/name_hi&gt;
+                &lt;name_hif&gt;United States&lt;/name_hif&gt;
+                &lt;name_hr&gt;Sjedinjene Američke Države&lt;/name_hr&gt;
+                &lt;name_hsb&gt;Zjednoćene staty Ameriki&lt;/name_hsb&gt;
+                &lt;name_ht&gt;Etazini&lt;/name_ht&gt;
+                &lt;name_hu&gt;Amerikai Egyes&uuml;lt &Aacute;llamok&lt;/name_hu&gt;
+                &lt;name_hy&gt;Ամերիկայի Միացյալ Նահանգներ&lt;/name_hy&gt;
+                &lt;name_ia&gt;Statos Unite de America&lt;/name_ia&gt;
+                &lt;name_id&gt;Amerika Serikat&lt;/name_id&gt;
+                &lt;name_ie&gt;Unit States de America&lt;/name_ie&gt;
+                &lt;name_ig&gt;Njikota Obodo Amerika&lt;/name_ig&gt;
+                &lt;name_ik&gt;United States of America&lt;/name_ik&gt;
+                &lt;name_ilo&gt;stados Unidos iti Amerika&lt;/name_ilo&gt;
+                &lt;name_io&gt;Unionita Stati di Amerika&lt;/name_io&gt;
+                &lt;name_is&gt;Bandar&iacute;ki Nor&eth;ur-Amer&iacute;ku&lt;/name_is&gt;
+                &lt;name_it&gt;Stati Uniti d&amp;#39;America&lt;/name_it&gt;
+                &lt;name_iu&gt;ᐊᒥᐊᓕᑲ&lt;/name_iu&gt;
+                &lt;name_ja&gt;アメリカ合衆国&lt;/name_ja&gt;
+                &lt;name_jbo&gt;.iunaited.steits.&lt;/name_jbo&gt;
+                &lt;name_jv&gt;Am&eacute;rika Sar&eacute;kat&lt;/name_jv&gt;
+                &lt;name_ka&gt;ამერიკის შეერთებული შტატები&lt;/name_ka&gt;
+                &lt;name_kaa&gt;Amerika Qurama Shtatları&lt;/name_kaa&gt;
+                &lt;name_kab&gt;Iwunak Yedduklen&lt;/name_kab&gt;
+                &lt;name_kbd&gt;Америкэ Штат Зэгуэт&lt;/name_kbd&gt;
+                &lt;name_ki&gt;United States&lt;/name_ki&gt;
+                &lt;name_kk&gt;Америка Құрама Штаттары&lt;/name_kk&gt;
+                &lt;name_kl&gt;Naalagaaffeqatigiit&lt;/name_kl&gt;
+                &lt;name_km&gt;សហរដ្ឋអាមេរិក&lt;/name_km&gt;
+                &lt;name_kn&gt;ಅಮೇರಿಕ ಸಂಯುಕ್ತ ಸಂಸ್ಥಾನ&lt;/name_kn&gt;
+                &lt;name_ko&gt;미국&lt;/name_ko&gt;
+                &lt;name_koi&gt;Америкаись Ӧтлаасьӧм Штаттэз&lt;/name_koi&gt;
+                &lt;name_krc&gt;Американы Бирлешген Штатлары&lt;/name_krc&gt;
+                &lt;name_ks&gt;संयुक्त राज्&zwj;य अमेरिका&lt;/name_ks&gt;
+                &lt;name_ksh&gt;Vereenichde Staate van Amerika&lt;/name_ksh&gt;
+                &lt;name_ku&gt;Dewlet&ecirc;n Yekb&ucirc;y&icirc; y&ecirc;n Amer&icirc;kay&ecirc;&lt;/name_ku&gt;
+                &lt;name_kv&gt;Америкаса Ӧтувтӧм Штатъяс&lt;/name_kv&gt;
+                &lt;name_kw&gt;Statys Unys Amerika&lt;/name_kw&gt;
+                &lt;name_ky&gt;Америка Кошмо Штаттары&lt;/name_ky&gt;
+                &lt;name_la&gt;Civitates Foederatae Americae&lt;/name_la&gt;
+                &lt;name_lad&gt;Estatos Unitos d&amp;#39;Amerika&lt;/name_lad&gt;
+                &lt;name_lb&gt;Vereenegt Staate vun Amerika&lt;/name_lb&gt;
+                &lt;name_lbe&gt;Американал ЦачӀунхьу Штатру&lt;/name_lbe&gt;
+                &lt;name_lez&gt;Америкадин Садхьанвай Штатар&lt;/name_lez&gt;
+                &lt;name_lg&gt;Amereka&lt;/name_lg&gt;
+                &lt;name_li&gt;Vereinegde State van Amerika&lt;/name_li&gt;
+                &lt;name_lij&gt;Stati Un&iuml;i d&amp;#39;America&lt;/name_lij&gt;
+                &lt;name_lmo&gt;Stat &Uuml;n&igrave; d&amp;#39;America&lt;/name_lmo&gt;
+                &lt;name_ln&gt;Lisang&aacute; lya Amer&iacute;ka&lt;/name_ln&gt;
+                &lt;name_lo&gt;ສະຫະລັດອາເມລິກາ&lt;/name_lo&gt;
+                &lt;name_lt&gt;Jungtinės Amerikos Valstijos&lt;/name_lt&gt;
+                &lt;name_ltg&gt;Amerikys Sa&scaron;kierstuos Vaļsteibys&lt;/name_ltg&gt;
+                &lt;name_lv&gt;Amerikas Savienotās Valstis&lt;/name_lv&gt;
+                &lt;name_map-bms&gt;Amerika Serikat&lt;/name_map-bms&gt;
+                &lt;name_mdf&gt;Америконь Аймакнень Соткссна&lt;/name_mdf&gt;
+                &lt;name_mg&gt;Etazonia&lt;/name_mg&gt;
+                &lt;name_mhr&gt;Америкысе Ушымо Штатвлак&lt;/name_mhr&gt;
+                &lt;name_mi&gt;Hononga-o-Amerika&lt;/name_mi&gt;
+                &lt;name_min&gt;Amerika Sarikat&lt;/name_min&gt;
+                &lt;name_mk&gt;Соединети Американски Држави&lt;/name_mk&gt;
+                &lt;name_ml&gt;അമേരിക്കന്&zwj; ഐക്യനാടുകള്&zwj;&lt;/name_ml&gt;
+                &lt;name_mn&gt;Америкийн Нэгдсэн Улс&lt;/name_mn&gt;
+                &lt;name_mr&gt;अमेरिकेची संयुक्त संस्थाने&lt;/name_mr&gt;
+                &lt;name_mrj&gt;Америкын Ушымы Штатвлӓжӹ&lt;/name_mrj&gt;
+                &lt;name_ms&gt;Amerika Syarikat&lt;/name_ms&gt;
+                &lt;name_mt&gt;Stati Uniti tal-Amerika&lt;/name_mt&gt;
+                &lt;name_mwl&gt;Stados Ounidos de la Am&eacute;rica&lt;/name_mwl&gt;
+                &lt;name_my&gt;အမေရိကန်ပြည်ထောင်စု&lt;/name_my&gt;
+                &lt;name_myv&gt;Американь Вейтьсэндявкс Штаттнэ&lt;/name_myv&gt;
+                &lt;name_mzn&gt;متحده ایالات آمریکا&lt;/name_mzn&gt;
+                &lt;name_na&gt;Eben Merika&lt;/name_na&gt;
+                &lt;name_nah&gt;Tlacetilīlli Tlahtohcāyōtl Ixachitlān&lt;/name_nah&gt;
+                &lt;name_nap&gt;State Aunite d&amp;#39;Amereca&lt;/name_nap&gt;
+                &lt;name_nds&gt;Verenigten Staten vun Amerika&lt;/name_nds&gt;
+                &lt;name_nds-nl&gt;Verienigde Staoten van Amerika&lt;/name_nds-nl&gt;
+                &lt;name_ne&gt;संयुक्त राज्य अमेरिका&lt;/name_ne&gt;
+                &lt;name_new&gt;संयुक्त राज्य अमेरिका&lt;/name_new&gt;
+                &lt;name_nl&gt;Verenigde Staten van Amerika&lt;/name_nl&gt;
+                &lt;name_nn&gt;USA&lt;/name_nn&gt;
+                &lt;name_no&gt;Amerikas forente stater&lt;/name_no&gt;
+                &lt;name_nov&gt;Unionati States de Amerika&lt;/name_nov&gt;
+                &lt;name_nrm&gt;&Ecirc;tats Unnis d&amp;#39;Am&eacute;thique&lt;/name_nrm&gt;
+                &lt;name_nso&gt;United States of America&lt;/name_nso&gt;
+                &lt;name_nv&gt;W&aacute;&aacute;shindoon Bik&eacute;yah Ałhidadiidzoo&iacute;g&iacute;&iacute;&lt;/name_nv&gt;
+                &lt;name_oc&gt;Estats Units d&amp;#39;America&lt;/name_oc&gt;
+                &lt;name_om&gt;USA&lt;/name_om&gt;
+                &lt;name_or&gt;ଯୁକ୍ତରାଷ୍ଟ୍ର ଆମେରିକା&lt;/name_or&gt;
+                &lt;name_os&gt;Америк&aelig;йы Иугонд Штатт&aelig;&lt;/name_os&gt;
+                &lt;name_pa&gt;ਸੰਯੁਕਤ ਰਾਜ ਅਮਰੀਕਾ&lt;/name_pa&gt;
+                &lt;name_pag&gt;Estados Unidos&lt;/name_pag&gt;
+                &lt;name_pam&gt;United States ning America&lt;/name_pam&gt;
+                &lt;name_pap&gt;Estadonan Uni di Merka&lt;/name_pap&gt;
+                &lt;name_pcd&gt;&Eacute;tats-Unis Anm&eacute;rikes&lt;/name_pcd&gt;
+                &lt;name_pdc&gt;Vereenichde Schtaate vun Amerikaa&lt;/name_pdc&gt;
+                &lt;name_pfl&gt;Verainischde Schdaade vun Ameriga&lt;/name_pfl&gt;
+                &lt;name_pih&gt;Yunitid Staits&lt;/name_pih&gt;
+                &lt;name_pl&gt;Stany Zjednoczone&lt;/name_pl&gt;
+                &lt;name_pms&gt;Stat Un&igrave; d&amp;#39;Am&eacute;rica&lt;/name_pms&gt;
+                &lt;name_pnb&gt;امریکہ&lt;/name_pnb&gt;
+                &lt;name_ps&gt;د امريکا متحده ايالات&lt;/name_ps&gt;
+                &lt;name_pt&gt;Estados Unidos da Am&eacute;rica&lt;/name_pt&gt;
+                &lt;name_qu&gt;Hukllachasqa Amirika Suyukuna&lt;/name_qu&gt;
+                &lt;name_rm&gt;Stadis Unids da l&amp;#39;America&lt;/name_rm&gt;
+                &lt;name_rn&gt;Leta Zunze Ubumwe za Amerika&lt;/name_rn&gt;
+                &lt;name_ro&gt;Statele Unite ale Americii&lt;/name_ro&gt;
+                &lt;name_roa-tara&gt;Stat&egrave;re Aun&igrave;te d&amp;#39;Americhe&lt;/name_roa-tara&gt;
+                &lt;name_ru&gt;Соединённые Штаты Америки&lt;/name_ru&gt;
+                &lt;name_rue&gt;Споєны Штаты Америцькы&lt;/name_rue&gt;
+                &lt;name_rw&gt;Leta Zunze Ubumwe z&rsquo;Amerika&lt;/name_rw&gt;
+                &lt;name_sa&gt;संयुक्तानि राज्यानि&lt;/name_sa&gt;
+                &lt;name_sah&gt;Америка Холбоһуктаах Штаттара&lt;/name_sah&gt;
+                &lt;name_sc&gt;Istados Unidos de America&lt;/name_sc&gt;
+                &lt;name_scn&gt;Stati Uniti&lt;/name_scn&gt;
+                &lt;name_sco&gt;Unitit States o Americae&lt;/name_sco&gt;
+                &lt;name_sd&gt;آمريڪا&lt;/name_sd&gt;
+                &lt;name_se&gt;Amerihk&aacute; ovttastuvvan st&aacute;htat&lt;/name_se&gt;
+                &lt;name_sg&gt;&Acirc;K&ouml;d&ouml;r&ouml;-&ocirc;ko t&icirc; Amer&icirc;ka&lt;/name_sg&gt;
+                &lt;name_sh&gt;Sjedinjene Američke Države&lt;/name_sh&gt;
+                &lt;name_si&gt;අ&amp;#39;මෙරිකා&zwj;වේ එක්සත් රාජ්&zwj;යයන්&lt;/name_si&gt;
+                &lt;name_sk&gt;Spojen&eacute; &scaron;t&aacute;ty americk&eacute;&lt;/name_sk&gt;
+                &lt;name_sl&gt;Združene države Amerike&lt;/name_sl&gt;
+                &lt;name_sm&gt;Iunaite Sitete o Amerika&lt;/name_sm&gt;
+                &lt;name_sn&gt;United States of America&lt;/name_sn&gt;
+                &lt;name_so&gt;Mareykanka&lt;/name_so&gt;
+                &lt;name_sq&gt;Shtetet e Bashkuara t&euml; Amerik&euml;s&lt;/name_sq&gt;
+                &lt;name_sr&gt;Сједињене Америчке Државе&lt;/name_sr&gt;
+                &lt;name_srn&gt;Kondre Makandrameki&lt;/name_srn&gt;
+                &lt;name_ss&gt;IMelika&lt;/name_ss&gt;
+                &lt;name_stq&gt;Fereende Stoaten fon Amerikoa&lt;/name_stq&gt;
+                &lt;name_su&gt;Am&eacute;rika Sarikat&lt;/name_su&gt;
+                &lt;name_sv&gt;Amerikas F&ouml;renta Stater&lt;/name_sv&gt;
+                &lt;name_sw&gt;Muungano wa Madola ya Amerika&lt;/name_sw&gt;
+                &lt;name_szl&gt;Zjednoczůne Sztaty Ameriki&lt;/name_szl&gt;
+                &lt;name_ta&gt;அமெரிக்க ஐக்கிய நாடு&lt;/name_ta&gt;
+                &lt;name_te&gt;అమెరికా సంయుక్త రాష్ట్రాలు&lt;/name_te&gt;
+                &lt;name_tet&gt;Estadu Naklibur Sira Am&eacute;rika Nian&lt;/name_tet&gt;
+                &lt;name_tg&gt;Иёлоти Муттаҳидаи Амрико&lt;/name_tg&gt;
+                &lt;name_th&gt;สหรัฐอเมริกา&lt;/name_th&gt;
+                &lt;name_tk&gt;Amerikanyň Birleşen Ştatlary&lt;/name_tk&gt;
+                &lt;name_tl&gt;Estados Unidos&lt;/name_tl&gt;
+                &lt;name_tn&gt;USA&lt;/name_tn&gt;
+                &lt;name_to&gt;Puleʻanga Fakataha &amp;#39;o &amp;#39;Amelika&lt;/name_to&gt;
+                &lt;name_tpi&gt;Yunaitet Stet bilong Amerika&lt;/name_tpi&gt;
+                &lt;name_tr&gt;Amerika Birleşik Devletleri&lt;/name_tr&gt;
+                &lt;name_ts&gt;United States&lt;/name_ts&gt;
+                &lt;name_tt&gt;Америка Кушма Штатлары&lt;/name_tt&gt;
+                &lt;name_tw&gt;USA&lt;/name_tw&gt;
+                &lt;name_ty&gt;Fenua Marite&lt;/name_ty&gt;
+                &lt;name_tzl&gt;Estats Viensi&ccedil;eschti d&amp;#39;America&lt;/name_tzl&gt;
+                &lt;name_udm&gt;Америкалэн Огазеяськем Штатъёсыз&lt;/name_udm&gt;
+                &lt;name_ug&gt;ئامېرىكا قوشما شتاتلىرى&lt;/name_ug&gt;
+                &lt;name_uk&gt;Сполучені Штати Америки&lt;/name_uk&gt;
+                &lt;name_ur&gt;ریاستہائے متحدہ امریکہ&lt;/name_ur&gt;
+                &lt;name_uz&gt;Amerika Qoʻshma Shtatlari&lt;/name_uz&gt;
+                &lt;name_vec&gt;Stati Un&igrave;i de la M&egrave;rica&lt;/name_vec&gt;
+                &lt;name_vep&gt;Amerikan &Uuml;htenzoittud Valdkundad&lt;/name_vep&gt;
+                &lt;name_vi&gt;Hoa Kỳ&lt;/name_vi&gt;
+                &lt;name_vls&gt;Ver&ecirc;nigde Stoaten van Amerika&lt;/name_vls&gt;
+                &lt;name_vo&gt;Lamerik&auml;n&lt;/name_vo&gt;
+                &lt;name_wa&gt;Estats Unis d&amp;#39; Amerike&lt;/name_wa&gt;
+                &lt;name_war&gt;Estados Unidos&lt;/name_war&gt;
+                &lt;name_wo&gt;Diwaan-yu-Bennoo yu Aamerig&lt;/name_wo&gt;
+                &lt;name_wuu&gt;美国&lt;/name_wuu&gt;
+                &lt;name_xal&gt;Америкин Ниицәтә Орн Нутгуд&lt;/name_xal&gt;
+                &lt;name_xh&gt;IYunayithedi Steyitsi&lt;/name_xh&gt;
+                &lt;name_xmf&gt;ამერიკაშ აკოართაფილი შტატეფი&lt;/name_xmf&gt;
+                &lt;name_yi&gt;פאראייניקטע שטאטן פון אמעריקע&lt;/name_yi&gt;
+                &lt;name_yo&gt;&Agrave;wọn &Igrave;p&iacute;nlẹ̀ Aṣọ̀kan Amẹ́r&iacute;k&agrave;&lt;/name_yo&gt;
+                &lt;name_za&gt;Meijgoz&lt;/name_za&gt;
+                &lt;name_zea&gt;Vere&ecirc;nigde Staeten&lt;/name_zea&gt;
+                &lt;name_zh&gt;美利坚合众国&lt;/name_zh&gt;
+                &lt;name_zh-classical&gt;美利堅合眾國&lt;/name_zh-classical&gt;
+                &lt;name_zh-min-nan&gt;America Ha̍p-chi&ograve;ng-kok&lt;/name_zh-min-nan&gt;
+                &lt;name_zh-yue&gt;即美利堅合眾國&lt;/name_zh-yue&gt;
+                &lt;name_zu&gt;IMelika&lt;/name_zu&gt;
+                &lt;official_name_cs&gt;Spojen&eacute; st&aacute;ty americk&eacute;&lt;/official_name_cs&gt;
+                &lt;official_name_eo&gt;Unuiĝintaj Ŝtatoj de Ameriko&lt;/official_name_eo&gt;
+                &lt;official_name_pl&gt;Stany Zjednoczone Ameryki&lt;/official_name_pl&gt;
+                &lt;official_name_vi&gt;Hợp ch&uacute;ng quốc Hoa Kỳ;Hợp ch&uacute;ng quốc Hoa K&igrave;;Hợp chủng quốc Hoa Kỳ;Hợp chủng quốc Hoa K&igrave;&lt;/official_name_vi&gt;
+                &lt;old_name_ru&gt;Северо-Американские Соединённые Штаты&lt;/old_name_ru&gt;
+                &lt;old_name_vi&gt;Mỹ Lợi Ki&ecirc;n;Ma Ly Căn;Nh&atilde; Di L&yacute;&lt;/old_name_vi&gt;
+                &lt;old_short_name_ru&gt;САСШ&lt;/old_short_name_ru&gt;
+                &lt;short_name_cs&gt;Spojen&eacute; st&aacute;ty&lt;/short_name_cs&gt;
+                &lt;short_name_ru&gt;США&lt;/short_name_ru&gt;
+                &lt;short_name_vi&gt;Mỹ&lt;/short_name_vi&gt;
+                &lt;type&gt;boundary&lt;/type&gt;
+                &lt;wikidata&gt;Q30&lt;/wikidata&gt;
+                &lt;wikipedia&gt;en:United States&lt;/wikipedia&gt;
+            &lt;/tags&gt;
+            &lt;type&gt;relation&lt;/type&gt;
+        &lt;/elements&gt;
+        &lt;generator&gt;Overpass API 0.7.55.2 3ab0d275&lt;/generator&gt;
+        &lt;osm3s&gt;
+            &lt;copyright&gt;The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.&lt;/copyright&gt;
+            &lt;timestamp_osm_base&gt;2018-05-30T10:54:02Z&lt;/timestamp_osm_base&gt;
+        &lt;/osm3s&gt;
+        &lt;version&gt;0.6&lt;/version&gt;
+    &lt;/body_safe&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                        </code></pre>
+            </div>
+        </div>
+
+        <p class="flow-text">
+            In next lesson we will learn more about OSM relations and methods to work with them.
+        </p>
+
+        
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-methods-geospatial-data-relations.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

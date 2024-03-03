@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Methods for Navigation | Find</title>
+  <meta name="description" content="To navigate through XML / HTML document elements (DOM), used the Find command.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, navigation, DOM traverse">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-navigation-find.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-navigation-find.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-navigatsiya-find.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Methods for Navigation | Find">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Methods for Navigation | Find"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-navigation-find.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="To navigate through XML / HTML document elements (DOM), used the Find command."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Methods for Navigation</h1>
+
+      <div>
+        <h2>Find</h2>
+
+        <p class="flow-text">
+          The <span class = "hlt2">find</span> command is used to navigate the DOM structure of the loaded document.
+          You can use <a href="http://www.w3schools.com/cssref/css_selectors.asp" target="_blank">CSS selectors</a> to find specific elements.
+        </p>
+
+        <p class="flow-text">
+          Useful information about the <span class = "hlt2">find</span> command that you need to know:
+        </p>
+
+        <blockquote class="custom darken-1">
+          <ol class="flow-text">
+            <li>Each time, when digger execute the find command and enters the found block, it creates a new block context</li>
+            <li>If the digger finds more than one element using given CSS selector, the digger visits sequentially all found elements
+              and executes commands in the parameter <span class = "hlt2">do</span> for each such element</li>
+            <li>If the digger has found several elements, you can limit the selection using the <span class = "hlt2">slice</span> parameter</li>
+            <li>In the CSS selector, you can use variables, arguments, and even regular expressions</li>
+            <li>You can merge the found elemets into single element using the <span class = "hlt2">merge</span> parameter</li>
+          </ol>
+        </blockquote>
+
+        <p class="flow-text">
+          Below is a series of examples with various CCS selectors:
+        </p>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># SEARCHING BY TAGS
+- find:
+    path: body > div
+    do:
+
+# SEARCHING BY CLASS
+- find:
+    path: body > .someclass
+    do:
+
+# SEARCHING BY TAG WITH CLASS
+- find:
+    path: body > div.someclass
+    do:
+
+# SEARCH BY ID, PLEASE NOTE THAT YOU NEED TO ENCLOSE SUCH SELECTOR TO THE QUOTES
+- find:
+    path: 'body > #someid'
+    do:
+
+# SEARCH BY TAG WITH ID, PLEASE NOTE THAT YOU NEED TO ENCLOSE SUCH SELECTOR TO THE QUOTES
+- find:
+    path: 'body > div#someid'
+    do:
+
+# SEARCH BY FEW SELECTORS, ALL FOUND ELEMENTS WILL BE RETURNED AS SELECTION
+- find:
+    path: 'body > #someid, body > .someclass, body > div'
+    do:
+
+# USING :HAS SELECTOR, FINDS ALL TAGS WITH CLASS .someclass WITH NESTED TAG td
+- find:
+    path: body > .someclass:has(td)
+    do:
+
+# USING :CONTAINS SELECTOR, FINDS ALL TAGS WITH CLASS .someclass WITH NESTED TAG td WHICH CONTAINS TEXT sometext.
+- find:
+    path: body > .someclass:has(td:contains('sometext'))
+    do:
+
+# USING :MATCHES SELECTOR, FINDS ALL TAGS WITH CLASS .someclass WITH NESTED TAG td WHICH HAS TEXT THAT MATCHES GIVEN REGULAR EXPRESSION
+- find:
+    path: body > .someclass:has(td:matches(^\s*sometext\s*$))
+    do:
+
+# WILDCARD * SELECTOR, FINDS ALL TAGS WITH CLASS .someclass AND ID CONTAINS 123
+- find:
+    path: body > .someclass[id*="123"]
+    do:
+
+# USING SLICES, SEARCH BY CLASS AND LIMITING SELECTION BY ALL ELEMENTS BESIDES THE FIRST (ALLOWED NOTATION FOR SLICES: slice: 1, slice: -1, slice: 0:1, WHERE -1 MEANS LAST ELEMENT, 0 MEANS FIRST ELEMENT AND ":"" IS USED TO SET RANGES)
+- find:
+    path: body > .someclass
+    slice: 1:-1
+    do:
+
+# SEARCH BY CLASS, THE MERGE ALL FOUND ELEMENTS INTO SINGLE ELEMENT p
+- find:
+    path: body > .someclass
+    merge: p
+    do:
+
+# SEARCHING IN ENTIRE DOCUMENT FROM ANY BLOCK
+- find: 
+    path: body > div
+    do:
+    - find:
+        # SET THE FLAG TO SHOW THAT YOU ARE PLANNING TO SEARCH IN THE ENTIRE DOCUMENT INSTEAD OF JUST CURRENT BLOCK
+        in: doc
+        path: body > ul > li
+        do:
+          </code></pre>
+
+        <p class="flow-text">
+          The <span class = "hlt2">find</span> command supports the following parameters:
+        </p>
+
+        <table class="responsive-table highlight">
+          <thead>
+          <tr>
+            <th data-field="parameter">Parameter</th>
+            <th data-field="description">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="centered">path</td>
+            <td>CSS selector, which is used by the digger to search for DOM elements. Bear in mind that the search will be done in the current block,
+              if the command is called from a block context, so you must use a relative selector. If the command is called
+              from the page context, the search is performed in the entire document.</td>
+          </tr>
+          <tr>
+            <td>form</td>
+            <td>CSS selector, which is used by the digger to search for form elements. Bear in mind that the search will be done in the current block,
+              if the command is called from a block context, so you must use a relative selector. If the command is called
+              from the page context, the search is performed in the entire document. If the search was a successful digger switches into the form context.</td>
+          </tr>
+          <tr>
+            <td>in</td>
+            <td>A special flag indicating where to perform the search. Currently supports only one possible value <span class = "hlt2">doc</span>, which is
+              used when you need to search in the entire document.
+            </td>
+          </tr>
+          <tr>
+            <td>merge</td>
+            <td>Combines the content of all found elements into one block and proceeds to it, to perform further commands on this block.
+              If a non-empty string is passed in the parameter, the value will be considered as a tag and every element found will be enclosed into this tag.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <p class="flow-text">
+          Now let's look at more detailed examples of using the <span class = "hlt2">find</span> command.
+          As an source HTML, we will use the following fragment:
+        </p>
+
+        <pre class="language-markup">
+          <code class="language-markup">&lt;ul&gt;
+  &lt;li&gt;Some text&lt;/li&gt;
+  &lt;li&gt;Some other text&lt;/li&gt;
+  &lt;li&gt;Some other other text&lt;/li&gt;
+&lt;/ul&gt;
+          </code></pre>
+
+        <p class="flow-text">
+          See how the digger will go through the found elements and what will be in the block at each iteration step:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs tabs-fixed-width excdark">
+              <li class="tab col s2"><a class="active" href="#find_iter_1">Command</a></li>
+              <li class="tab col s2"><a href="#find_iter_2">1-st iteration</a></li>
+              <li class="tab col s2"><a href="#find_iter_3">2-nd iteration</a></li>
+              <li class="tab col s2"><a href="#find_iter_4">3-rd iteration</a></li>
+            </ul>
+          </div>
+          <div id="find_iter_1" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">- find:
+    path: li
+    do:
+    - parse
+              </code></pre>
+          </div>
+
+          <div id="find_iter_2" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">- find:
+    path: li
+    do:
+    # NOW WE ARE IN THE FIRST `&lt;li&gt;` ELEMENT BLOCK: &lt;li&gt;Some text&lt;/li&gt;
+    # REGISTER CONTENT: ""
+    - parse
+    # REGISTER CONTENT: "Some text"
+              </code></pre>
+          </div>
+
+          <div id="find_iter_3" class="col s12">
+          <pre class="language-yaml">
+            <code class="language-yaml">- find:
+    path: li
+    do:
+    # NOW WE ARE IN THE SECOND `&lt;li&gt;` ELEMENT BLOCK: &lt;li&gt;Some other text&lt;/li&gt;
+    # REGISTER CONTENT: ""
+    - parse
+    # REGISTER CONTENT: "Some other text"
+            </code></pre>
+          </div>
+
+          <div id="find_iter_4" class="col s12">
+          <pre class="language-yaml">
+            <code class="language-yaml">- find:
+    path: li
+    do:
+    # NOW WE ARE IN THE THIRD `&lt;li&gt;` ELEMENT BLOCK: &lt;li&gt;Some other other text&lt;/li&gt;
+    # REGISTER CONTENT: ""
+    - parse
+    # REGISTER CONTENT: "Some other other text"
+            </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          More usage examples:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s4"><a class="active" href="#find_simple">Simple selector</a></li>
+              <li class="tab col s4"><a href="#find_slice">Making slice</a></li>
+              <li class="tab col s4"><a href="#find_merge">Merging content</a></li>
+            </ul>
+          </div>
+
+          <div id="find_simple" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># SIMPLE SEARCH OF `ul` TAG
+- find:
+    path: ul
+    do:
+    # NOW WE ARE IN THE `ul` BLOCK
+    - parse
+    # REGISTER CONTENT: "Some textSome other textSome other other text"
+              </code></pre>
+          </div>
+
+          <div id="find_slice" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># SIMPLE SEARCH OF `li` TAG INSIDE THE `ul` TAG
+- find:
+    path: ul > li
+    # GETTING SLICE OF SINGLE FOUND ELEMENT WITH INDEX 1
+    slice: 1
+    do:
+    # NOW WE ARE IN &lt;li&gt;Some other text&lt;/li&gt;
+    - parse
+    # REGISTER CONTENT: "Some other text"
+              </code></pre>
+          </div>
+
+          <div id="find_merge" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># SIMPLE SEARCH OF `li` TAG INSIDE THE `ul` TAG
+- find:
+    path: ul > li
+    merge: p
+    do:
+    # NEW BLOCK (CURRENT) NOW HAS FOLLOWING DOM STRUCTURE:
+    #   &lt;p&gt;Some text&lt;/p&gt;
+    #   &lt;p&gt;Some other text&lt;/p&gt;
+    #   &lt;p&gt;Some other other text&lt;/p&gt;
+    - parse
+    # REGISTER CONTENT: "Some textSome other textSome other other text"
+
+# SIMPLE SEARCH OF `li` TAG INSIDE THE `ul` TAG
+- find:
+    path: ul > li
+    merge: ""
+    do:
+    # NEW BLOCK (CURRENT) NOW HAS FOLLOWING DOM STRUCTURE:
+    #   Some textSome other textSome other other text
+    - parse
+    # REGISTER CONTENT: "Some textSome other textSome other other text"
+                </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          As mentioned earlier, if you are in a block context, then you can search only
+          in the current block and find only the elements from the current block. Therefore, your CSS selector must be
+          constructed relative to your current location (block). Let's take a closer look at this using the following example:          
+        </p>
+
+        <pre class="language-markup">
+          <code class="language-markup">&lt;body&gt;
+&lt;div&gt;
+  &lt;p&gt;Some text&lt;/p&gt;
+  &lt;p&gt;Some other text &lt;/p&gt;
+  &lt;p&gt;Some other other text&lt;/p&gt;
+&lt;/div&gt;
+&lt;div&gt;
+  &lt;a&gt;Some text&lt;/a&gt;
+  &lt;a&gt;Some other other text&lt;/a&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+          </code></pre>
+
+        <p class="flow-text">
+          If we search using <span class="hlt">body > div</span> CSS selector, we find 2 blocks:
+        </p>
+
+        <pre class="language-yaml">
+          <code class="language-yaml">- find:
+    path: body > div
+    do:
+    # THIS SELECTOR WILL FIND 2 `div` ELEMENTS
+    # First block:
+    # &lt;div&gt;
+    #    &lt;p&gt;Some text&lt;/p&gt;
+    #    &lt;p&gt;Some other text &lt;/p&gt;
+    #    &lt;p&gt;Some other other text&lt;/p&gt;
+    # &lt;/div&gt;
+
+    # Second block:
+    # &lt;div&gt;
+    #    &lt;a&gt;Some text&lt;/a&gt;
+    #    &lt;a&gt;Some other other text&lt;/a&gt;
+    # &lt;/div&gt;
+    
+    # LETS SELECT `а` INSIDE EACH `div`
+    - find:
+        path: a
+        do:
+          </code></pre>
+
+        <p class="flow-text">
+          Logic of the script is following:
+        </p>
+
+        <blockquote class="custom darken-1">
+          <ol class="flow-text">
+            <li>Digger finds all blocks <span class="hlt">div</span> usinf first CSS selector, and for each found block it will execute commands passed in the <span class="hlt2">do</span> parameter</li>
+            <li>Digger enters the first found <span class="hlt">div</span> block and tried to find elements using the <span class="hlt">a</span> CSS selector</li>
+            <li>There is nothing found by this selector in the first block, so digger do nothing and leave the first <span class="hlt">div</span> block</li>
+            <li>Digger enters the second <span class="hlt">div</span> block and tries to find elements using the <span class="hlt">a</span> CSS selector</li>
+            <li>There are 2 <span class="hlt">a</span> elements, so digger enters each and execute commands passed in the <span class="hlt2">do</span></li>
+          </ol>
+        </blockquote>
+
+        <span class="spacer"></span>
+        <p class="flow-text">
+          If, being in some specific block context, you need to find some elements outside of scope of the current block, you can
+          use <span class="hlt2">in</span> parameter with value <span class="hlt2">doc</span> to perform search in the entire document:
+        </p>
+
+        <pre class="language-yaml">
+          <code class="language-yaml">- find:
+    path: body > div > ul > li
+    do:
+    - find:
+        # INDICATE THAT WE ARE GOING TO SEARCH IN THE ENTIRE DOCUMENT
+        in: doc
+        path: body > div > a
+        do:
+          </code></pre>
+
+        <span class="spacer"></span>
+        <p class="flow-text">
+          In the next chapter, we'll take a closer look at using the <span class = "hlt2">form</span> parameter of the <span class = "hlt2">find</span> command.
+        </p>
+
+        <span class="spacer"></span>
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-methods-navigation-forms.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

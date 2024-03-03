@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Working with DOM | Nodes</title>
+  <meta name="description" content="Learning how to manipulate nodes in a DOM structure.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, dom, nodes">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-working-with-dom-nodes.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-working-with-dom-nodes.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-rabota-s-dom-strukturoy-nody.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Working with DOM | Nodes">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Working with DOM | Nodes"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-working-with-dom-nodes.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="Learning how to manipulate nodes in a DOM structure."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+  
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Methods for Working with DOM</h1>
+
+      <div>
+        <h2>Nodes</h2>
+
+        <p class="flow-text">
+          When a digger is working with HTML or XML document, it works with <a href="https://en.wikipedia.org/wiki/Document_Object_Model" target="_blank">DOM (Domain Object Model)</a> structure of the document.
+          So basically such document consists of nodes. When you use the <span class = "hlt2">find</span> method, you search through nodes of the document, switch
+          to the found node and, respectively, to block context. Inside the current block (node) there can be nested (child) nodes,
+          and they also may have child nodes and so on. In a block context, you can manipulate the nodes of the current block,
+          delete or replace them.
+        </p>
+
+        <p class="flow-text">
+          Examples of commands you can use for nodes manipulations:
+        </p>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># DELETE ALL NON-TEXT CHILD NODES
+- node_remove_all
+        </code></pre>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># DELETE ALL `а` NODES
+- node_remove: a
+        </code></pre>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># REPLACE ALL `а` NODES TO EMPTY `p` NODES
+- node_replace:
+    path: a
+    with: &lt;p&gt;&lt;/p&gt;
+        </code></pre>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># REPLACE ALL `а` NODES TO THEIR CONTENTS
+- node_replace:
+    path: a
+    with: content
+        </code></pre>
+
+        <span class="spacer"></span>
+
+        <p class="flow-text">
+          Let's use following HTML source as example:
+        </p>
+
+        <pre class="language-markup">
+          <code class="language-markup">&lt;div&gt;
+    &lt;span&gt;some text&lt;/span&gt;
+    &lt;a&gt;some link&lt;/a&gt;
+    &lt;span&gt;another text&lt;/span&gt;
+&lt;/div&gt;
+            </code></pre>
+
+        <p class="flow-text">
+          Examples of usage:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s6"><a class="active" href="#node_remove_all">Delete all nodes</a></li>
+              <li class="tab col s6"><a href="#node_remove">Delete nodes by CSS selector</a></li>
+              <li class="tab col s6"><a href="#node_replace">Replace nodes</a></li>
+              <li class="tab col s6"><a href="#node_replace_content">Replace with node contents</a></li>
+            </ul>
+          </div>
+
+          <div id="node_remove_all" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">- find:
+    path: div
+    do:
+    - node_remove_all
+    - parse
+
+    # REGISTER WILL BE EMPTY AS ALL NODES WERE REMOVED
+              </code></pre>
+          </div>
+
+          <div id="node_remove" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">- find:
+    path: div
+    do:
+    - node_remove: span
+    - parse
+
+    # REGISTER VALUE: some link
+    # BECAUSE ALL `span` NODES WERE REMOVED
+              </code></pre>
+          </div>
+
+          <div id="node_replace" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">- find:
+    path: div
+    do:
+    - node_replace: 
+        path: span
+        with: ' some text '
+    - parse
+
+    # REGISTER VALUE: " some text some link some text "
+    # BECAUSE ALL `span` NODES WERE REPLACED WITH TEXT " some text "
+              </code></pre>
+          </div>
+
+          <div id="node_replace_content" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">- find:
+    path: div
+    do:
+    - node_replace: 
+        path: span
+        with: content
+    - parse
+
+    # REGISTER VALUE: some textsome linksome text
+    # BECAUSE ALL `span` NODES WERE REPLACED WITH THEIR CONTENTS
+              </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          In the next chapter, we learn how to manipulate the attributes of a node.
+        </p>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-methods-working-with-dom-attributes.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

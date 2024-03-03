@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Methods for Working with Register | Parse</title>
+  <meta name="description" content="Parsing block content to the register.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, register, parse">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-working-with-register-parse.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-working-with-register-parse.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-rabota-s-registrom-parse.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Methods for Working with Register | Parse">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Methods for Working with Register | Parse"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-working-with-register-parse.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="Parsing block content to the register."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Methods for Working with the Register</h1>
+
+      <div>
+        <h2>Parse</h2>
+
+        <p class="flow-text">
+          Using the <span class = "hlt2">parse</span> command, you can extract data from the current
+          block and write it to the register. Later these data can be changed, normalized and set to variables or to object fields.
+        </p>
+
+        <blockquote class="warning darken-1">
+          <p class="flow-text">
+            <strong> Please note:</strong><br/>
+            <span class = "hlt2">Parse</span> command always returns some value to the register
+            or an empty string if there is no content to extract in the block.
+            <span class = "spacer-10"></span>
+            The command can return text or HTML content of the block, as well as the value of the attribute of the current HTML element
+            (the root element of the block).
+          </p>
+        </blockquote>
+
+        <p class="flow-text">
+          Some examples of using the command:
+        </p>
+
+        <pre class="language-yaml">
+          <code class="language-yaml">- find:
+    path: a.somepath
+    do:
+    # PARSE TEXT CONTENT OF THE CURRENT BLOCK
+    - parse
+
+    # PARSE `href` ATTRIBUTE OF THE CURRENT ELEMENT `a`
+    - parse:
+        attr: href
+
+    # PARSE HTML CONTENT OF THE CURRENT BLOCK
+    - parse:
+        format: html
+          </code></pre>
+
+        <pre class="language-yaml">
+          <code class="language-yaml"># USING THE FILTERS (AS REGULAR EXPRESSIONS) TO EXTRACT ONLY REQUIRED PARTS OF DATA
+- find:
+    path: .somepath
+    do:
+    - parse:
+        filter:
+        - .+=(\d+)
+        - (.+)
+
+- find:
+    path: .somepath
+    do:
+    - parse:
+        attr: class
+        filter:
+        - .+=(\d+)
+        - (.+)
+          </code></pre>
+
+        <p class="flow-text">
+          The <span class = "hlt2">parse</span> command supports the following parameters:
+        </p>
+
+        <table class="responsive-table highlight">
+          <thead>
+          <tr>
+            <th data-field="parameter">Parameter</th>
+            <th data-field="description">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="centered">format</td>
+            <td>The format of the extracted data: <span class = "hlt2">text</span> or <span class = "hlt2">html</span>.
+              If the parameter is not provided, the text will be extracted by default.
+          </tr>
+          <tr>
+            <td>attr</td>
+            <td>If used, specific attribute's value of the root tag of the current block will be extracted. If omitted,
+              the entire block content will be extracted.</td>
+          </tr>
+          <tr>
+            <td>filter</td>
+            <td>One or more regular expressions to extract only certain data from the content.
+              The extracted data must be enclosed in parentheses inside the regular expression (defined as a group).
+              If more than one regular expression is specified, then they are used in order until filter has matches in the content.</td>
+          </tr>
+          <tr>
+            <td>joinby</td>
+            <td>The value of this parameter is used to join the groups found by the filter.
+              If the parameter is missing and the filter finds several groups, they will be joined by an empty string.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <p class="flow-text">
+          Now let's look at more detailed examples of using the <span class = "hlt2">parse</span> command.
+          As source, let's use the following fragment of an html document:
+        </p>
+
+        <pre class="language-markup">
+          <code class="language-markup">&lt;ul class="list" &gt;
+  &lt;li class="list-item" id="1"&gt;Some text&lt;/li&gt;
+  &lt;li class="list-item" id="item=2"&gt;&lt;a href="http://somesite.com/"&gt;Link&lt;/a&gt;&lt;/li&gt;
+  &lt;li class="list-item" id="item=3"&gt;Some other text&lt;/li&gt;
+&lt;/ul&gt;
+          </code></pre>
+
+        <p class="flow-text">
+          Usages:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s3"><a class="active" href="#parse_1">Extract text</a></li>
+              <li class="tab col s3"><a href="#parse_2">Extract attribute value</a></li>
+              <li class="tab col s3"><a href="#parse_3">Extract HTML</a></li>
+              <li class="tab col s3"><a href="#parse_4">Using filters</a></li>
+            </ul>
+          </div>
+          <div id="parse_1" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># FIND `ul` AND FILL REGISTER WITH ITS TEXT CONTENT
+- find:
+    path: .list
+    do:
+    - parse
+    # REGISTER CONTENT: "Some textLinkSome other text"
+              </code></pre>
+          </div>
+
+          <div id="parse_2" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># FIND `a` TAGS AND GET `href` ATTRIBUTE VALUE TO THE REGISTER
+- find:
+    path: .list-item > a
+    do:
+    - parse:
+        attr: href
+    # REGISTER CONTENT: "http://somesite.com/"</code>
+                            </pre>
+          </div>
+          <div id="parse_3" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># FIND `ul` AND USE ITS HTML CONTENT TO SET TO THE REGISTER
+- find:
+    path: ul
+    do:
+    - parse:
+        format: html
+    # REGISTER CONTENT:
+    # &lt;li class="list-item" id="1" &gt;Some text&lt;/li&gt;
+    # &lt;li class="list-item" id="2"&gt;&lt;a href="http://somesite.com/"&gt;Link&lt;/a&gt;&lt;/li&gt;
+    # &lt;li class="list-item" id="3" &gt;Some other text&lt;/li&gt;
+                </code></pre>
+          </div>
+
+          <div id="parse_4" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># SIMPLE TEXT FILTER
+- find:
+    path: .list-item
+    do:
+    - parse:
+        filter:
+        - Some\s*(\S+)\s*text
+    # FOR THE FIRST TWO `li` ELEMENTS FILTER FOUNDS NOTHINFG AND WILL RETURN EMPTY STRING TO THE REGISTER ("")
+    # BUT FOR THIRD ELEMENT FILTER WILL RETURN VALUE "other"
+
+# LET'S FIND `li` AND EXTRACT ONLY DIGITS FROM `id` ATTRIBUTE
+- find:
+    path: .list-item
+    do:
+    - parse:
+        # EXTRACTING DATA FROM ATTRIBUTE `id`
+        attr: id
+        filter:
+            # IF FIRST FILTER EXTRACT AT LEAST 1 GROUP, THEN
+            # FILTERING PROCESS IS STOPPING AND EXTRACTED DATA IS PLACED TO THE REGISTER
+            # PLEASE NOTE: IF MULTIPLE GROUPS ARE FOUND, THEY WILL BE JOINED TOGETHER
+            # IF THERE WAS FLLOWING IN OUR EXAMPLE:
+            # &lt;li class="list-item" id="item=2sub=3"&gt;&lt;a href="http://somesite.com/"&gt;Link&lt;/a&gt;&lt;/li&gt;
+            # YOU WOULD GET `23` IN THE REGISTER
+            - .+=(\d+)
+            # IF FIRST FILTER HAS NO MATCHES, SECOND FILTER USED AND SO ON..
+            - (.+)
+
+# FIND `li` AND FILL OUT THE REGISTER WITH LETTERS FROM ATRRIBUTE `class`
+- find:
+    path: .list-item
+    slice: 0
+    do:
+    - parse:
+        # EXTRACTING VALUE FROM ATTRIBUTE `class`
+        attr: class
+        # SELECT EACH LETTER FROM VALUE AND JOIN ALL GROUPS WITH COMMA
+        filter: ([A-Za-z]{1})
+        joinby: ','
+    # NOW WE HAVE "l,i,s,t,i,t,e,m" IN THE REGISTER
+              </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          Next, we'll tell you about another command that can be used to set the value of the register: register_set.
+        </p>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-methods-working-with-register-register-set.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Runtime Entities | Objects</title>
+  <meta name="description" content="Objects for storing collected data, how are they implemented.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, objects">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-runtime-entities-objects.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-runtime-entities-objects.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-obyekty-sredy-vypolneniya-obyekty.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Runtime Entities | Objects">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Runtime Entities | Objects"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-runtime-entities-objects.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="Objects for storing collected data, how are they implemented."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Runtime Entities</h1>
+
+      <div>
+        <h2>Objects</h2>
+
+        <p class="flow-text">
+          Objects are containers for storing collected data. <br/>
+          Diggernaut supports not only flat data structures,
+          but also nested, so objects can be nested in other objects.
+        </p>
+        <p class="flow-text">
+          The main points that you should know about objects:
+        </p>
+        <blockquote class="custom darken-1">
+          <ol class="flow-text">
+            <li>Objects serve to save the collected data</li>
+            <li>Objects exist in all contexts and are context-independent</li>
+            <li>Before writing fields to an object, you need to create this object</li>
+            <li>The entry in the object fields is possible from any block within the scope where the object is created</li>
+            <li>For correct operation, the objects must be stored in the same block where they were opened</li>
+            <li>An object can be stored to the field of another object or to the database</li>
+          </ol>
+        </blockquote>
+
+        <p class="flow-text">
+          Example of using a simple object:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s4"><a class="active" href="#config">Digger script</a></li>
+              <li class="tab col s4"><a href="#html">Source HTML</a></li>
+              <li class="tab col s4"><a href="#log">Execution log</a></li>
+              <li class="tab col s4"><a href="#data">Data in JSON format</a></li>
+            </ul>
+          </div>
+
+          <div id="config" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">---
+config:
+    debug: 2
+    agent: Firefox
+do:
+- walk:
+    to: https://www.diggernaut.com/sandbox/meta-lang-object-en.html
+    do:
+    # let's create new object with name `item`
+    - object_new: item
+    - find:
+        path: h1
+        do:
+        - parse
+        # store register value to the `title` field of the object `item`
+        - object_field_set:
+            object: item
+            field: title
+    - find:
+        path: p
+        do:
+        - parse
+        # store register value to the `description` field of the object `item`
+        - object_field_set:
+            object: item
+            field: description
+    # save object to the database
+    - object_save:
+          name: item
+              </code></pre>
+          </div>
+
+          <div id="log" class="col s12">
+            <table class="striped responsive-table debug-log">
+              <thead>
+              <tr role="row">
+                <th tabindex="0" rowspan="1" colspan="1" width="11%">Time</th>
+                <th tabindex="0" rowspan="1" colspan="1" width="6%">Level</th>
+                <th tabindex="0" rowspan="1" colspan="1">Message</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr role="row" class="odd">
+                <td>2017-10-21 03:20:43:412</td>
+                <td>info</td>
+                <td class=" word-wrapper">Scrape is done</td>
+              </tr>
+              <tr role="row" class="even">
+                <td>2017-10-21 03:20:42:687</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper"><span class="hlt2">Saving object with name: item</span></td>
+              </tr>
+              <tr role="row" class="odd">
+                <td>2017-10-21 03:20:42:679</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper"><span class="hlt2">Saved field description for object item: Lorem ipsum dolor sit amet.</span></td>
+              </tr>
+              <tr role="row" class="even">
+                <td>2017-10-21 03:20:42:671</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Parsed content: Lorem ipsum dolor sit amet.</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td>2017-10-21 03:20:42:663</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Parsing block with arguments: map[]</td>
+              </tr>
+              <tr role="row" class="even">
+                <td>2017-10-21 03:20:42:654</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Block content: Lorem ipsum dolor sit amet.</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td>2017-10-21 03:20:42:647</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Number of found blocks: 1</td>
+              </tr>
+              <tr role="row" class="even">
+                <td>2017-10-21 03:20:42:639</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Looking for: p</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td>2017-10-21 03:20:42:631</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper"><span class="hlt2">Saved field title for object item: Title-1</span></td>
+              </tr>
+              <tr role="row" class="even">
+                <td>2017-10-21 03:20:42:621</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Parsed content: Title-1</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td>2017-10-21 03:20:42:614</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Parsing block with arguments: map[]</td>
+              </tr>
+              <tr role="row" class="even">
+                <td>2017-10-21 03:20:42:606</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Block content: Title-1</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td>2017-10-21 03:20:42:598</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Number of found blocks: 1</td>
+              </tr>
+              <tr role="row" class="even">
+                <td>2017-10-21 03:20:42:590</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Looking for: h1</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td>2017-10-21 03:20:42:582</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Creating object with name: item</td>
+              </tr>
+              <tr role="row" class="even">
+                <td>2017-10-21 03:20:42:568</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Page content: &lt;html lang="en"&gt;<br/>
+                  &lt;head&gt;<br/>
+                  &lt;meta charset="UTF-8"/&gt;<br/>
+                  &lt;title&gt;Diggernaut | Meta-Language | Object sample&lt;/title&gt;<br/>
+                  &lt;/head&gt;<br/>
+                  &lt;body&gt;<br/>
+                  &lt;h1&gt;Title-1&lt;/h1&gt;<br/>
+                  &lt;p&gt;Lorem ipsum dolor sit amet.&lt;/p&gt;<br/>
+                  &lt;/body&gt;<br/>
+                  &lt;/html&gt;
+                </td>
+              </tr>
+              <tr role="row" class="odd">
+                <td>2017-10-21 03:20:42:269</td>
+                <td>info</td>
+                <td class=" word-wrapper">Retrieving page (GET): https://www.diggernaut.com/sandbox/meta-lang-object-en.html</td>
+              </tr>
+              <tr role="row" class="even">
+                <td>2017-10-21 03:20:42:263</td>
+                <td>info</td>
+                <td class=" word-wrapper">Starting scrape</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td>2017-10-21 03:20:42:250</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Setting up default proxy</td>
+              </tr>
+              <tr role="row" class="even">
+                <td>2017-10-21 03:20:42:235</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Setting up surf</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td>2017-10-21 03:20:42:208</td>
+                <td>info</td>
+                <td class=" word-wrapper">Starting digger: meta-lang-object [1853]</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="html" class="col s12">
+            <pre class="language-html">
+              <code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Diggernaut | Meta-Language | Object sample&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Title-1&lt;/h1&gt;
+&lt;p&gt;Lorem ipsum dolor sit amet.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+              </code></pre>
+          </div>
+
+          <div id="data" class="col s12">
+            <pre class="language-json">
+              <code class="language-json">{
+    item : {
+        title :  "Title-1",
+        description :  "Lorem ipsum dolor sit amet."
+    }
+}
+              </code></pre>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-runtime-entities-counters.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Diggernaut: Documentation for Meta-Language | News | Scraping news websites</title>
+    <meta name="description" content="Scraping news websites and extracting articles in automated mode.">
+    <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, news, articles">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Alternatives -->
+    <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-news.html" />
+    <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-news.html" />
+    <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-novosti.html" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@diggernautcom">
+    <meta name="twitter:site" content="@diggernautcom">
+    <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | News | Scraping news websites">
+    <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+    <!-- OG -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Diggernaut" />
+    <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | News | Scraping news websites" />
+    <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-files.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="Scraping news websites and extracting articles in automated mode." />
+    <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png" />
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <script>
+        (function () {
+            var cx = '017044341280497706869:5h7omjrjkqk';
+            var gcse = document.createElement('script');
+            gcse.type = 'text/javascript';
+            gcse.async = true;
+            gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(gcse, s);
+        })();
+    </script>
+</head>
+
+<body>
+    <header>
+        <nav class="teal darken-1" role="navigation" id="menu">
+            <div class="container-gcse">
+                <gcse:search></gcse:search>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="lessons-container" id="main">
+            <div class="container">
+                <h1>News</h1>
+
+                <div>
+                    <h2>Switching to the news context</h2>
+
+                    <p class="flow-text">
+                        Often, when it becomes necessary to collect news from many different websites, it is required to build web scrapers for every website. With Diggernaut you can develop one scraper that will work for almost every website you
+                        have to extract news articles from. How does it work? The web scraper loads the content of the page using the <span class="hlt">walk</span> command. Then it should switch to the news context, and after that you should be able
+                        to use special commands to extract links to news categories, RSS feeds, articles, as well as the articles themselves and analytical data obtained using varius NLP methods. Below we will see how each news context command works.
+                        To have article to be analyzed properly, you need to set the language news article is written in when switching to the news context. The default language is English. The following languages are supported:
+                    </p>
+                    <table class="responsive-table highlight">
+                        <thead>
+                            <tr>
+                                <th data-field="parameter">Language Code</th>
+                                <th data-field="description">Language</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="centered">en</td>
+                                <td>English.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">ru</td>
+                                <td>Russian.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">ar</td>
+                                <td>Arabic.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">da</td>
+                                <td>Danish.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">de</td>
+                                <td>German.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">es</td>
+                                <td>Spanish.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">el</td>
+                                <td>Greek.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">fa</td>
+                                <td>Persian.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">fi</td>
+                                <td>Finnish.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">fr</td>
+                                <td>French.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">he</td>
+                                <td>Hebrew.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">hu</td>
+                                <td>Hungarian.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">id</td>
+                                <td>Indonesian.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">it</td>
+                                <td>Italian.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">ko</td>
+                                <td>Korean.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">nl</td>
+                                <td>Dutch.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">no</td>
+                                <td>Norwegian.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">pl</td>
+                                <td>Polish.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">pt</td>
+                                <td>Portuguese.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">sv</td>
+                                <td>Swediah.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">sw</td>
+                                <td>Swahili.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">tr</td>
+                                <td>Turkish.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">uk</td>
+                                <td>Ukrainian.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">vi</td>
+                                <td>Vietnamese.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">zh</td>
+                                <td>Chinese.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2>Gathering links to news categories</h2>
+                    <p class="flow-text">
+                        The first command we'll look at is <span class="hlt">categories</span>. This command allows you to get links to news categories from a loaded page:
+                    </p>
+                    <div class="row">
+                        <div class="col s12">
+                          <ul class="tabs excdark">
+                            <li class="tab col s4 darken-1"><a href="#page_EC_config" class="active">Config Sample</a></li>
+                            <li class="tab col s4 darken-1"><a href="#page_EC_response">Response</a></li>
+                          </ul>
+                        </div>
+                        <div id="page_EC_config" class="col s12">
+                            <pre class="language-yaml">
+                            <code class="language-yaml"># OPEN MAIN PAGE OF THE NEWS WEBSITE
+- walk:
+    to: https://www.cnn.com
+    do:
+    # SWITCH TO THE NEWS CONTEXT AND SET LANGUAGE
+    - news:
+        language: "en"
+        do:
+        # EXTRACT NEWS CATEGORIES LINKS
+        - categories:
+            do:
+            # VISIT EACH NODE
+            - find:
+                path: categories
+                do:
+                # PARSE THE CONTENT AND ADD LINK TO THE POOL
+                - parse
+                - link_add
+                            </code>
+                            </pre>
+                        </div>
+                        <div id="page_EC_response" class="col s12">
+                            <pre class="language-html">
+                            <code class="language-html">
+&lt;body_safe&gt;
+    &lt;categories&gt;https://www.cnn.com&lt;/categories&gt;
+    &lt;categories&gt;http://us.cnn.com&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/accessibility&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/vr&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/world&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/specials&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/transcripts&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/europe&lt;/categories&gt;
+    &lt;categories&gt;http://cnnespanol.cnn.com&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/uk&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com&lt;/categories&gt;
+    &lt;categories&gt;http://edition.cnn.com&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/china&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/msa&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/style&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/business&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/sport&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/africa&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/live-tv&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/entertainment&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/middle-east&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/health&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/videos&lt;/categories&gt;
+    &lt;categories&gt;https://commercial.cnn.com&lt;/categories&gt;
+    &lt;categories&gt;http://arabic.cnn.com&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/audio&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/politics&lt;/categories&gt;
+    &lt;categories&gt;https://money.cnn.com&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/india&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/weather&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/asia&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/more&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/americas&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/australia&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/collection&lt;/categories&gt;
+    &lt;categories&gt;https://www.cnn.com/travel&lt;/categories&gt;
+&lt;/body_safe&gt;
+                            </code>
+                            </pre>
+                        </div>
+                    </div>
+
+                    <h2>Gathering RSS feed links</h2>
+                    <p class="flow-text">
+                        You can get link of RSS feed URLs by the <span class="hlt">feeds</span> command:
+                    </p>
+                    <div class="row">
+                        <div class="col s12">
+                          <ul class="tabs excdark">
+                            <li class="tab col s4 darken-1"><a href="#page_EF_config" class="active">Config sample</a></li>
+                            <li class="tab col s4 darken-1"><a href="#page_EF_response">Response</a></li>
+                          </ul>
+                        </div>
+                        <div id="page_EF_config" class="col s12">
+                            <pre class="language-yaml">
+                            <code class="language-yaml"># OPEN PAGE OF THE NEWS WEBSITE
+- walk:
+    to: https://edition.cnn.com/services/rss/
+    do:
+    # SWITCH TO THE NEWS CONTEXT AND SET LANGUAGE
+    - news:
+        language: "en"
+        do:
+        # EXTRACT LINKS TO RSS FEEDS
+        - feeds:
+            do:
+            # VISIT EACH NODE
+            - find:
+                path: feeds
+                do:
+                # PARSE THE CONTENT AND ADD LINK TO THE POOL
+                - parse
+                - link_add
+                            </code>
+                            </pre>
+                        </div>
+                        <div id="page_EF_response" class="col s12">
+                            <pre class="language-html">
+                            <code class="language-html">
+&lt;body_safe&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/edition.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/edition_asia.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/edition_europe.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/edition_us.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/edition_world.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/edition_africa.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/edition_americas.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/edition_meast.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/money_news_international.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/edition_technology.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/edition_space.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/edition_entertainment.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/edition_sport.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/edition_football.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/edition_travel.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/cnn_freevideo.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/cnn_latest.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/edition_connecttheworld.rss&lt;/feeds&gt;
+    &lt;feeds&gt;http://rss.cnn.com/rss/edition_worldsportblog.rss&lt;/feeds&gt;
+&lt;/body_safe&gt;
+                            </code>
+                            </pre>
+                        </div>
+                    </div>
+
+                    <h2>Getting links to the news articles</h2>
+                    <p class="flow-text">
+                        To gather link to the news articles we will use the <span class="hlt">articles</span> command:
+                    </p>
+                    <div class="row">
+                        <div class="col s12">
+                          <ul class="tabs excdark">
+                            <li class="tab col s4 darken-1"><a href="#page_EA_config" class="active">Config sample</a></li>
+                            <li class="tab col s4 darken-1"><a href="#page_EA_response">Response</a></li>
+                          </ul>
+                        </div>
+                        <div id="page_EA_config" class="col s12">
+                            <pre class="language-yaml">
+                            <code class="language-yaml"># OPEN PAGE OF THE NEWS WEBSITE
+- walk:
+    to: https://www.cnn.com/business
+    do:
+    # SWITCH TO THE NEWS CONTEXT AND SET LANGUAGE
+    - news:
+        language: "en"
+        do:
+        # EXTRACT LINKS TO THE ARTICLES
+        - articles:
+            do:
+            # VISIT EACH NODE
+            - find:
+                path: articles
+                do:
+                # PARSE THE CONTENT AND ADD LINK TO THE POOL
+                - parse
+                - link_add
+                            </code>
+                            </pre>
+                        </div>
+                        <div id="page_EA_response" class="col s12">
+                            <pre class="language-html">
+                            <code class="language-html">
+&lt;body_safe&gt;
+    &lt;articles&gt;https://www.cnn.com/2022/01/01/cnn-underscored/money/best-credit-cards/index.html?CID=CNNbusinesshomepagebin&lt;/articles&gt;
+    &lt;articles&gt;https://www.cnn.com/2022/01/05/cnn-underscored/money/should-i-refinance-my-mortgage/index.html?CID=CNNbusinesshomepagebin&lt;/articles&gt;
+    &lt;articles&gt;https://www.cnn.com/2022/01/06/cnn-underscored/money/best-balance-transfer-credit-cards/index.html?CID=CNNbusinesshomepagebin&lt;/articles&gt;
+    &lt;articles&gt;https://www.cnn.com/2022/02/10/cnn-underscored/money/pnc-virtual-wallet-review/index.html?CID=CNNbusinesshomepagebin&lt;/articles&gt;
+    &lt;articles&gt;https://www.cnn.com/2022/01/04/cnn-underscored/money/citi-double-cash-credit-card-review/index.html?CID=CNNbusinesshomepagebin&lt;/articles&gt;
+    &lt;articles&gt;https://www.cnn.com/2021/08/18/cnn-underscored/chase-sapphire-preferred-reasons-to-get/index.html?CID=CNNbusinesshomepagebin&lt;/articles&gt;
+    &lt;articles&gt;https://www.cnn.com/2022/01/11/cnn-underscored/money/citi-priority-checking-account-review/index.html?CID=CNNbusinesshomepagebin&lt;/articles&gt;
+    &lt;articles&gt;https://www.cnn.com/2021/01/20/cnn-underscored/american-express-gold-card-review/index.html?CID=CNNbusinesshomepagebin&lt;/articles&gt;
+    &lt;articles&gt;https://www.cnn.com/2021/10/20/cnn-underscored/southwest-companion-pass/index.html?CID=CNNbusinesshomepagebin&lt;/articles&gt;
+    &lt;articles&gt;https://www.cnn.com/2021/12/22/cnn-underscored/money/how-to-access-airport-lounges/index.html?CID=CNNbusinesshomepagebin&lt;/articles&gt;
+    &lt;articles&gt;https://www.cnn.com/2021/04/20/cnn-underscored/first-travel-credit-card-chase-sapphire-preferred/index.html?CID=CNNbusinesshomepagebin&lt;/articles&gt;
+    &lt;articles&gt;https://www.cnn.com/2022/01/27/cnn-underscored/money/best-travel-credit-cards/index.html?CID=CNNbusinesshomepagebin&lt;/articles&gt;
+&lt;/body_safe&gt;
+                            </code>
+                            </pre>
+                        </div>
+                    </div>
+
+                    <h2>Parse the news article</h2>
+                    <p class="flow-text">
+                        To parse and NLP the article there is a command <span class="hlt">article</span> used:
+                    </p>
+                    <div class="row">
+                        <div class="col s12">
+                          <ul class="tabs excdark">
+                            <li class="tab col s4 darken-1"><a href="#page_A_config" class="active">Config sample</a></li>
+                            <li class="tab col s4 darken-1"><a href="#page_A_response">Response</a></li>
+                          </ul>
+                        </div>
+                        <div id="page_A_config" class="col s12">
+                            <pre class="language-yaml">
+                            <code class="language-yaml"># OPEN A NEWS ARTICLE PAGE
+- walk:
+    to: https://us.cnn.com/cnn-underscored/travel/how-to-access-airport-lounges
+    do:
+    # SWITCH TO THE NEWS CONTEXT AND SET LANGUAGE
+    - news:
+        language: "en"
+        do:
+        # EXTRACT THE NEWS ARTICLE DATA
+        - article:
+            do:
+            # PARSE FIELDS WE NEED AND SAVE THEM TO THE OBJECT
+                            </code>
+                            </pre>
+                        </div>
+                        <div id="page_A_response" class="col s12">
+                            <pre class="language-html">
+                            <code class="language-html">
+&lt;body_safe&gt;
+    &lt;additional_data&gt;&lt;/additional_data&gt;
+    &lt;authors&gt;Emily Mcnutt&lt;/authors&gt;
+    &lt;canonical_link&gt;https://www.cnn.com/cnn-underscored/travel/how-to-access-airport-lounges&lt;/canonical_link&gt;
+    &lt;images&gt;https://media.cnn.com/api/v1/images/stellar/prod/211222131059-underscored-houston-iah-centurion.jpg?q=h_1800,w_3200,x_0,y_0&lt;/images&gt;
+    &lt;images&gt;https://media.cnn.com/api/v1/images/stellar/prod/211011203455-underscored-amex-centurion-lounge-lhr-london-heathrow.jpg?q=x_0,y_0,h_900,w_1599,c_fill/h_144,w_256&lt;/images&gt;
+    &lt;images&gt;https://media.cnn.com/api/v1/images/stellar/prod/211222131059-underscored-houston-iah-centurion.jpg?c=16x9&amp;amp;q=h_270,w_480,c_fill&lt;/images&gt;
+    &lt;images&gt;https://media.cnn.com/api/v1/images/stellar/prod/200207021127-underscored-plane-wing-at-sunset.jpg?q=x_3,y_0,h_1796,w_3193,c_crop/h_144,w_256&lt;/images&gt;
+    &lt;images&gt;https://media.cnn.com/api/v1/images/stellar/prod/211011094412-underscored-united-club-chicago-ord.jpg?q=x_0,y_0,h_900,w_1599,c_fill/h_270,w_480&lt;/images&gt;
+    &lt;images&gt;https://media.cnn.com/api/v1/images/stellar/prod/211222131017-underscored-capital-one-lounge-dfw.jpg?c=16x9&amp;amp;q=h_270,w_480,c_fill&lt;/images&gt;
+    &lt;images&gt;https://media.cnn.com/api/v1/images/stellar/prod/211011095522-underscored-emirates-first-lounge-dubai.jpg?q=x_0,y_0,h_900,w_1599,c_fill/h_270,w_480&lt;/images&gt;
+    &lt;images&gt;https://media.cnn.com/api/v1/images/stellar/prod/211011100328-underscored-air-france-la-premiere-lounge.jpg?q=x_0,y_0,h_900,w_1599,c_fill/h_270,w_480&lt;/images&gt;
+    &lt;images&gt;https://media.cnn.com/api/v1/images/stellar/prod/211011102518-underscored-admirals-club.jpg?q=x_0,y_0,h_900,w_1599,c_fill/h_270,w_480&lt;/images&gt;
+    &lt;images&gt;https://media.cnn.com/api/v1/images/stellar/prod/200217114332-underscored-delta-sky-club-atlanta-terminal-b.jpg?q=x_0,y_0,h_900,w_1599,c_fill/h_270,w_480&lt;/images&gt;
+    &lt;images&gt;https://media.cnn.com/api/v1/images/stellar/prod/211011094734-underscored-hong-kong-centurion-lounge.jpg?q=x_0,y_0,h_900,w_1599,c_fill/h_270,w_480&lt;/images&gt;
+    &lt;imgs&gt;https://media.cnn.com/api/v1/images/stellar/prod/211222131059-underscored-houston-iah-centurion.jpg?q=h_1800,w_3200,x_0,y_0&lt;/imgs&gt;
+    &lt;imgs&gt;https://media.cnn.com/api/v1/images/stellar/prod/211011203455-underscored-amex-centurion-lounge-lhr-london-heathrow.jpg?q=x_0,y_0,h_900,w_1599,c_fill/h_144,w_256&lt;/imgs&gt;
+    &lt;imgs&gt;https://media.cnn.com/api/v1/images/stellar/prod/211222131059-underscored-houston-iah-centurion.jpg?c=16x9&amp;amp;q=h_270,w_480,c_fill&lt;/imgs&gt;
+    &lt;imgs&gt;https://media.cnn.com/api/v1/images/stellar/prod/200207021127-underscored-plane-wing-at-sunset.jpg?q=x_3,y_0,h_1796,w_3193,c_crop/h_144,w_256&lt;/imgs&gt;
+    &lt;imgs&gt;https://media.cnn.com/api/v1/images/stellar/prod/211011094412-underscored-united-club-chicago-ord.jpg?q=x_0,y_0,h_900,w_1599,c_fill/h_270,w_480&lt;/imgs&gt;
+    &lt;imgs&gt;https://media.cnn.com/api/v1/images/stellar/prod/211222131017-underscored-capital-one-lounge-dfw.jpg?c=16x9&amp;amp;q=h_270,w_480,c_fill&lt;/imgs&gt;
+    &lt;imgs&gt;https://media.cnn.com/api/v1/images/stellar/prod/211011095522-underscored-emirates-first-lounge-dubai.jpg?q=x_0,y_0,h_900,w_1599,c_fill/h_270,w_480&lt;/imgs&gt;
+    &lt;imgs&gt;https://media.cnn.com/api/v1/images/stellar/prod/211011100328-underscored-air-france-la-premiere-lounge.jpg?q=x_0,y_0,h_900,w_1599,c_fill/h_270,w_480&lt;/imgs&gt;
+    &lt;imgs&gt;https://media.cnn.com/api/v1/images/stellar/prod/211011102518-underscored-admirals-club.jpg?q=x_0,y_0,h_900,w_1599,c_fill/h_270,w_480&lt;/imgs&gt;
+    &lt;imgs&gt;https://media.cnn.com/api/v1/images/stellar/prod/200217114332-underscored-delta-sky-club-atlanta-terminal-b.jpg?q=x_0,y_0,h_900,w_1599,c_fill/h_270,w_480&lt;/imgs&gt;
+    &lt;imgs&gt;https://media.cnn.com/api/v1/images/stellar/prod/211011094734-underscored-hong-kong-centurion-lounge.jpg?q=x_0,y_0,h_900,w_1599,c_fill/h_270,w_480&lt;/imgs&gt;
+    &lt;keywords&gt;airlines&lt;/keywords&gt;
+    &lt;keywords&gt;pass&lt;/keywords&gt;
+    &lt;keywords&gt;cards&lt;/keywords&gt;
+    &lt;keywords&gt;best&lt;/keywords&gt;
+    &lt;keywords&gt;lounge&lt;/keywords&gt;
+    &lt;keywords&gt;card&lt;/keywords&gt;
+    &lt;keywords&gt;worlds&lt;/keywords&gt;
+    &lt;keywords&gt;express&lt;/keywords&gt;
+    &lt;keywords&gt;american&lt;/keywords&gt;
+    &lt;keywords&gt;airport&lt;/keywords&gt;
+    &lt;keywords&gt;access&lt;/keywords&gt;
+    &lt;keywords&gt;lounges&lt;/keywords&gt;
+    &lt;meta_data&gt;
+        &lt;article&gt;
+            &lt;modified_time&gt;2022-03-15T17:01:46.330Z&lt;/modified_time&gt;
+            &lt;published_time&gt;2022-02-18T15:13:26.919Z&lt;/published_time&gt;
+            &lt;publisher&gt;https://www.facebook.com/CNN&lt;/publisher&gt;
+            &lt;tag&gt;underscored, underscored travel, underscored explore&lt;/tag&gt;
+        &lt;/article&gt;
+        &lt;author&gt;Emily McNutt&lt;/author&gt;
+        &lt;description&gt;The flying experience can be hectic. But, thankfully there are places to rest and relax in the airport to help take the stress out of flying — complete with food and drink. Here&amp;#39;s how you can get access to some of the world&amp;#39;s best lounges.&lt;/description&gt;
+        &lt;fb&gt;
+            &lt;app_id&gt;80401312489&lt;/app_id&gt;
+        &lt;/fb&gt;
+        &lt;keywords&gt;underscored, underscored travel, underscored explore&lt;/keywords&gt;
+        &lt;meta-section&gt;cnn-underscored&lt;/meta-section&gt;
+        &lt;og&gt;
+            &lt;description&gt;The flying experience can be hectic. But, thankfully there are places to rest and relax in the airport to help take the stress out of flying — complete with food and drink. Here&amp;#39;s how you can get access to some of the world&amp;#39;s best lounges.&lt;/description&gt;
+            &lt;safe_image&gt;https://media.cnn.com/api/v1/images/stellar/prod/211222131059-underscored-houston-iah-centurion.jpg?q=h_1800,w_3200,x_0,y_0&lt;/safe_image&gt;
+            &lt;site_name&gt;CNN Underscored&lt;/site_name&gt;
+            &lt;title&gt;How to access some of the world’s best airport lounges | CNN Underscored&lt;/title&gt;
+            &lt;type&gt;article&lt;/type&gt;
+            &lt;url&gt;https://www.cnn.com/cnn-underscored/travel/how-to-access-airport-lounges&lt;/url&gt;
+        &lt;/og&gt;
+        &lt;parsely-author&gt;Emily McNutt&lt;/parsely-author&gt;
+        &lt;parsely-image-url&gt;https://media.cnn.com/api/v1/images/stellar/prod/211222131059-underscored-houston-iah-centurion.jpg?q=h_1800,w_3200,x_0,y_0&lt;/parsely-image-url&gt;
+        &lt;parsely-link&gt;https://www.cnn.com/cnn-underscored/travel/how-to-access-airport-lounges&lt;/parsely-link&gt;
+        &lt;parsely-post-id&gt;ckzsg9o1v000047n0gpvrob4v&lt;/parsely-post-id&gt;
+        &lt;parsely-pub-date&gt;2022-02-18T15:13:26.919Z&lt;/parsely-pub-date&gt;
+        &lt;parsely-section&gt;cnn-underscored&lt;/parsely-section&gt;
+        &lt;parsely-tags&gt;underscored, underscored travel, underscored explore&lt;/parsely-tags&gt;
+        &lt;parsely-title&gt;How to access some of the world’s best airport lounges&lt;/parsely-title&gt;
+        &lt;parsely-type&gt;post&lt;/parsely-type&gt;
+        &lt;template_type&gt;article_leaf&lt;/template_type&gt;
+        &lt;theme&gt;underscored&lt;/theme&gt;
+        &lt;twitter&gt;
+            &lt;card&gt;summary_large_image&lt;/card&gt;
+            &lt;description&gt;The flying experience can be hectic. But, thankfully there are places to rest and relax in the airport to help take the stress out of flying — complete with food and drink. Here&amp;#39;s how you can get access to some of the world&amp;#39;s best lounges.&lt;/description&gt;
+            &lt;safe_image&gt;https://media.cnn.com/api/v1/images/stellar/prod/211222131059-underscored-houston-iah-centurion.jpg?q=h_1800,w_3200,x_0,y_0&lt;/safe_image&gt;
+            &lt;site&gt;@CNNUnderscored&lt;/site&gt;
+            &lt;title&gt;How to access some of the world’s best airport lounges | CNN Underscored&lt;/title&gt;
+        &lt;/twitter&gt;
+        &lt;type&gt;article&lt;/type&gt;
+        &lt;viewport&gt;width=device-width,initial-scale=1,shrink-to-fit=no&lt;/viewport&gt;
+    &lt;/meta_data&gt;
+    &lt;meta_description&gt;The flying experience can be hectic. But, thankfully there are places to rest and relax in the airport to help take the stress out of flying — complete with food and drink. Here&amp;#39;s how you can get access to some of the world&amp;#39;s best lounges.&lt;/meta_description&gt;
+    &lt;meta_img&gt;https://media.cnn.com/api/v1/images/stellar/prod/211222131059-underscored-houston-iah-centurion.jpg?q=h_1800,w_3200,x_0,y_0&lt;/meta_img&gt;
+    &lt;meta_keywords&gt;underscored&lt;/meta_keywords&gt;
+    &lt;meta_keywords&gt;underscored travel&lt;/meta_keywords&gt;
+    &lt;meta_keywords&gt;underscored explore&lt;/meta_keywords&gt;
+    &lt;meta_lang&gt;en&lt;/meta_lang&gt;
+    &lt;movies&gt;&lt;/movies&gt;
+    &lt;publish_date&gt;2022-02-18T15:13:26.919000+00:00&lt;/publish_date&gt;
+    &lt;summary&gt;Airport lounges are some of the most idyllic places to spend time before your flight.
+    Let’s take a look at some of the most common ways you can access airport lounges across the world.
+    In November, Capital One opened its first-ever airport lounge at Dallas-Fort Worth International Airport (DFW).
+    If you want access to these spaces, book yourself an eligible business-class ticket that grants you lounge access.
+    This could be a great option for military members, as not only will they be able to access the cards’ slew of benefits, but they’ll also get complimentary lounge access via the cards’ lounge access perks.&lt;/summary&gt;
+    &lt;tags&gt;&lt;/tags&gt;
+    &lt;text&gt;CNN Underscored reviews financial products such as credit cards and bank accounts based on their overall value. We may receive a commission through the LendingTree affiliate network if you apply and are approved for a card, but our reporting is always independent and objective. Terms apply to American Express benefits and offers. Enrollment may be required for select American Express benefits and offers. Visit americanexpress.com to learn more.
+
+    The feelings often associated with flying tend to be dreary. Between time spent waiting in line to check in and get through security, dodging other passengers in narrow corridors and waiting in a gate area that never seems to have enough seats, there’s plenty that makes the flying experience less than ideal.
+
+    But it doesn’t have to be that way.
+
+    There are places in the airport you can go to escape the manic nature of the terminal. They’re called airport lounges. Airport lounges are some of the most idyllic places to spend time before your flight. They often offer free food and drinks, ample seating, free Wi-Fi and additional amenities like showers and nap pods, and some even offer spas, barbershops and workout equipment.
+
+    The Emirates First Class Lounge in Dubai. Emily McNutt
+
+    Accessing these lounges can be easy too, as they’re often not just reserved for the most frequent flyers. Indeed, even if you only travel a couple of times per year, you can gain access to lounges all across the globe without paying a fortune.
+
+    Let’s take a look at some of the most common ways you can access airport lounges across the world.
+
+    Credit cards with VIP perks
+
+    By far the easiest way to ensure you can access an airport lounge is with a credit card. There are a number of credit cards that offer lounge access as a perk of simply having the card. The best example of this is The Platinum Card® from American Express, which is often considered one of the best overall credit cards for frequent travelers.
+
+    With the Amex Platinum Card, card members are allowed to access any of American Express’s own network of Centurion Lounges. Centurion Lounges are some of the nicest and most desirable airport lounges in the United States, given their comfy environments, business-related services and curated menus that offer free food and drinks for travelers.
+
+    Currently, there are 24 Centurion Lounges around the world at these domestic and international airports, with the most recent opening being London Heathrow.
+
+    Domestic: Charlotte, Dallas, Denver, Houston, Las Vegas, Los Angeles, Miami, New York/JFK, New York/LGA, Philadelphia, Phoenix, San Francisco, Seattle
+
+    International: Buenos Aires, Delhi, Hong Kong, London, Melbourne, Mexico City, Monterrey, Mumbai, Sao Paulo, Stockholm, Sydney
+
+    Additionally, American Express has announced plans to open new locations in Atlanta and Washington, DC.
+
+    The Centurion Lounge in Hong Kong. Emily McNutt
+
+    With the Amex Platinum card, members also have access to Delta Air Lines’s network of Sky Club lounges, so long as you’re flying on a Delta-operated flight on the same day.
+
+    It’s not just Amex that has its own set of lounges. In November, Capital One opened its first-ever airport lounge at Dallas-Fort Worth International Airport (DFW). The first lounge in the Capital One network has quickly become one of the best domestic lounges thanks to its premium food offerings, multiple relaxation areas, two Peloton bikes and bar with custom cocktails.
+
+    Emily McNutt
+
+    Capital One is also planning to open more lounges in the future, with Denver International Airport (DEN) and Washington, DC’s Dulles International Airport (IAD) set to open later in 2022. Access to Capital One Lounges is reserved for card holders of the new Capital One Venture X. Additionally, Venture and Spark Miles card holders get two free visits per year and then a fee of $45 per visit each time thereafter.
+
+    Chase is also planning to get in on the issuer-branded airport lounge trend. With its lounge network, called Chase Sapphire Lounge by The Club, the issuer is planning to open locations at Hong Kong International Airport (HKG), Boston Logan International Airport (BOS), New York LaGuardia (LGA), San Diego International Airport (SAN) and Phoenix Sky Harbor International Airport (PHX).
+
+    It’s unclear at this point who will be welcomed to visit the Chase lounges. However, it’s likely that Chase Sapphire Reserve® card holders will be permitted access.
+
+    A number of cards — including the Amex Platinum — also offer a Priority Pass membership as a benefit of having the card (enrollment required). Priority Pass is a network of more than 1,300 lounges available around the world, entitling members to a relaxing space and food and drink before their flight. Some Priority Pass benefits even extend beyond lounges to restaurants within the airport terminal, allowing members to save money on meals.
+
+    Personal credit cards that offer a Priority Pass membership with unlimited access to lounges include the Amex Platinum, the Chase Sapphire Reserve®, the Hilton Honors American Express Aspire Card and the Marriott Bonvoy Brilliant™ American Express® Card.
+
+    Some other credit cards, such as the Hilton Honors American Express Surpass® Card, offer some Priority Pass visits each year, but not unlimited access. Also, some cards allow card holders to take guests into Priority Pass lounges for free, while other memberships charge for guest access.
+
+    All information about the Hilton Honors American Express Surpass® Card has been collected independently by CNN. The Hilton Honors American Express Surpass® Card is not currently available through CNN.
+
+    American Airlines, Delta Air Lines and United Airlines all also have their own respective lounge networks as well, dubbed Admirals Clubs, Sky Clubs and United Clubs, respectively. Each airline typically allows select elite members, international premium-cabin flyers and people with the airline’s top-tier credit card to access their lounges.
+
+    Use your Platinum Card to visit the Delta Sky Club in Atlanta&amp;#39;s Terminal B. Delta Air Lines
+
+    For example, with the Citi® / AAdvantage® Executive World Elite Mastercard®, card members receive an Admirals Club membership, including access for up to two guests, while the Delta SkyMiles® Reserve American Express Card provides access to Delta Sky Clubs when you’re traveling Delta on a same-day ticket.
+
+    Membership service
+
+    If you don’t think you’ll get enough use out of a credit card to justify its annual fee, you can consider purchasing a lounge membership all on its own. Priority Pass, which offers a network of lounges across the globe, allows travelers to purchase a membership outright.
+
+    Priority Pass offers three levels of membership, which vary in price depending how much you plan to use the service:
+
+    Standard — $99 per year, which allows you to access lounges for $32 per visit. You can also pay $32 for each guest traveling with you to enter the lounge. Standard Plus — $299 per year, which grants you 10 free visits each year and then costs $32 for each visit thereafter. Additionally, each guest costs $32, even for the first 10 visits. Prestige — $429 per year, which grants you unlimited free visits each year. Each guest will cost $32.
+
+    Keep in mind that if you think you may use the service several times a year and plan to bring guests with you when you travel, you may get better value with one of the credit cards we mentioned above, since the annual fee on one of those cards may be less than what you’d pay for a membership plus guest passes.
+
+    If you live near a city that’s home to an airline — think Atlanta with Delta, Chicago with United or Dallas with American — you could consider purchasing a lounge membership to that airline’s lounge network. For example, you can pay $650 per year for a membership to gain access to American Airlines’ Admirals Club lounges, as well as those with Alaska Airlines and Qantas.
+
+    However, paying directly for a lounge membership typically doesn’t give you the best value — getting lounge access with a credit card can be both cheaper and come with additional perks when flying that airline.
+
+    Flying internationally in a premium cabin
+
+    Historically, the easiest way to guarantee access to an airport lounge comes via your boarding pass. Airlines around the world have spent large sums of money to create bespoke airport lounges for their premium flyers to enjoy before a flight.
+
+    Most legacy airlines — including Delta, American and United — have dedicated lounge spaces where business- and first-class flyers can relax. If you want access to these spaces, book yourself an eligible business-class ticket that grants you lounge access.
+
+    Now, it’s important to note that if you’re flying domestically, you typically won’t get access to an airline’s lounge just for having a business-class ticket. There are some exceptions, mainly centered around transcontinental flights, but to get lounge access with your boarding pass, you usually need to be traveling to an international destination.
+
+    Some airlines — especially in Europe, Asia and the Middle East — also have separate, dedicated spaces for their most premium first-class flyers. These spaces, which are the most exclusive in any airport, are often reserved entirely for customers flying in first class with an airline.
+
+    A meal in Air France&amp;#39;s La Première lounge. Emily McNutt
+
+    For example, Air France has a dedicated lounge for its first-class passengers, dubbed La Première. Tickets in La Première often cost in the thousands of dollars. So unless you’re willing to shell over the cash, don’t expect to get access to this exclusive space.
+
+    Airline elite status
+
+    Airlines reward their most loyal customers with elite status, and the benefits you get with elite status vary by airline and what level of status you attain. For example, if you fly enough with a single airline to earn its lowest level of elite status, you may be entitled to perks such as complimentary checked baggage, priority check-in and boarding and the ability to earn additional frequent flyer miles for each flight you take.
+
+    But if you fly enough with a single airline to earn its highest level of elite status, you might be entitled to additional, more lucrative benefits — including some lounge access.
+
+    For example, with United Airlines’ MileagePlus loyalty program, Gold, Platinum and 1K members — the top three levels of United elite status — are entitled to access United lounges with a same-day international United boarding pass, even if they’re flying on an economy ticket. Unfortunately, you still won’t get lounge access if you’re only flying domestically, even with elite status.
+
+    The United Club in Chicago&amp;#39;s O&amp;#39;Hare Airport. United Airlines
+
+    But because United is a member of the Star Alliance, which includes 25 other global airlines, Gold, Platinum and 1K members can also access Star Alliance partner lounges outside of the US, so long as they have a same-day Star Alliance boarding pass, even in economy.
+
+    Elite status benefits vary widely depending on the airline, so be sure to check the perks of the airline with which you have status to see if you’re entitled to lounge access.
+
+    Purchasing one-time access
+
+    Perhaps the easiest way to guarantee you have lounge access on any given day is to purchase it outright with a day pass or one-time-use pass. By buying your way into a lounge, you’re guaranteed access without having to worry about any extras. If you only travel once or twice a year but want lounge access, this could be the best way to go.
+
+    LoungeBuddy is a great service that allows you to preview which lounges in any given airport around the world offer travelers the ability to purchase one-time access. If you find a lounge that looks appealing, you can purchase your one-time access directly through LoungeBuddy’s app.
+
+    The service charges varying fees for access, depending on the lounge. But if you have the American Express® Green Card, you’ll get up to $100 in LoungeBuddy credits each year to spend on single-use lounge passes.
+
+    All information about the American Express® Green Card has been collected independently by CNN. The American Express® Green Card is not currently available through CNN.
+
+    Alternatively, LoungeBuddy can be useful for determining if you have complimentary lounge access via airline elite status, credit cards or your fare class. It’s otherwise free to use as long as you’re not buying access to a lounge.
+
+    American Airlines also recently began offering flyers the option to purchase one-time access to its Flagship Lounges, which are typically reserved for Flagship First and Flagship Business passengers only. Travelers flying on an American- or Oneworld-operated flight can purchase a single-visit pass for $150 — and you can be traveling in any cabin to take advantage.
+
+    As of February 2022, travelers can purchase one-time access to the Star Alliance Lounge at Los Angeles International Airport (LAX). Since November 2021, travelers could purchase access to the Star Alliance Lounge at Buenos Aires’ Ezeiza International Airport (EZE), and the alliance plans to roll the option out to more of its global network. You must pre-book your visit, and once you do so, you’ll receive a QR code to show on entry. Access costs $65 per person.
+
+    Free access as a member of the military
+
+    A few lounge providers allow active duty members of the military to access their lounges for free. In particular, United Airlines provides lounge access to active duty military members with a valid military ID and their families, so long as they have a boarding pass for travel within 24 hours on a United-operated flight. American Airlines also allows US military personnel traveling in uniform to access its Admirals Clubs if they’re traveling on a same-day flight operated by American.
+
+    An American Airlines Admirals Club. American Airlines
+
+    Keep in mind, too, that active duty members of the military are also eligible to have their annual fees waived on the Amex Platinum card (see rates and fees) and Chase Sapphire Reserve. This could be a great option for military members, as not only will they be able to access the cards’ slew of benefits, but they’ll also get complimentary lounge access via the cards’ lounge access perks.
+
+    Click here for rates and fees of the American Express Platinum card.
+
+    Find out which cards CNN Underscored chose as our best travel credit cards of 2022.&lt;/text&gt;
+    &lt;title&gt;How to access some of the world’s best airport lounges&lt;/title&gt;
+    &lt;top_image&gt;https://media.cnn.com/api/v1/images/stellar/prod/211222131059-underscored-houston-iah-centurion.jpg?q=h_1800,w_3200,x_0,y_0&lt;/top_image&gt;
+    &lt;top_img&gt;https://media.cnn.com/api/v1/images/stellar/prod/211222131059-underscored-houston-iah-centurion.jpg?q=h_1800,w_3200,x_0,y_0&lt;/top_img&gt;
+    &lt;url&gt;https://us.cnn.com/cnn-underscored/travel/how-to-access-airport-lounges&lt;/url&gt;
+&lt;/body_safe&gt;
+                            </code>
+                            </pre>
+                        </div>
+                    </div>
+
+                    <p class="flow-text">
+                        Attention! This functionality is available only for paid subscribers or those who is using the PAYG plan.
+                    </p>
+
+                    <span class="spacer"></span>
+
+                    <p class="flow-text">
+                        Now its time to learn more about geospatial data and how you can work with in on Diggernaut platform.
+                    </p>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+                            <div class="pagination">
+                                <a href="meta-language-methods-geospatial-data-working-with-geospatial-data.html" class="btn goto teal z-depth-2">Next</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="page-footer teal darken-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="social">
+                        <a class="btn btn-floating btn-flat" href="https://www.diggernaut.ru/blog/category/%D1%83%D1%87%D0%B8%D0%BC-%D0%BC%D0%B5%D1%82%D0%B0-%D1%8F%D0%B7%D1%8B%D0%BA/"
+                            target="_blank">
+                            <i class="fa fa-wordpress"></i>
+                        </a>
+                        <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank">
+                            <i class="fa fa-vk"></i>
+                        </a>
+                        <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                        <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautru" target="_blank">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!--  Scripts-->
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/prism.js"></script>
+    <script src="js/meta-language-init.js"></script>
+
+    <!-- Google analytics -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-80717561-7', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <!-- /Google analytics -->
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (d, w, c) {
+            (w[c] = w[c] || []).push(function () {
+                try {
+                    w.yaCounter46987602 = new Ya.Metrika({
+                        id: 46987602,
+                        clickmap: true,
+                        trackLinks: true,
+                        accurateTrackBounce: true
+                    });
+                } catch (e) {}
+            });
+
+            var n = d.getElementsByTagName("script")[0],
+                s = d.createElement("script"),
+                f = function () {
+                    n.parentNode.insertBefore(s, n);
+                };
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+            if (w.opera === "[object Opera]") {
+                d.addEventListener("DOMContentLoaded", f, false);
+            } else {
+                f();
+            }
+        })(document, window, "yandex_metrika_callbacks");
+    </script>
+    <noscript>
+        <div>
+            <img src="https://mc.yandex.ru/watch/46987602" style="position:absolute; left:-9999px;" alt="" />
+        </div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
+
+</body>
+
+</html>

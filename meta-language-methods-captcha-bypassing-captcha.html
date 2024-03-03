@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Diggernaut: Documentation for Meta-Language | Captcha | Bypassing Captcha</title>
+    <meta name="description" content="Learning how to bypass captcha using 3rd party services.">
+    <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, captcha, recaptcha">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Alternatives -->
+    <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-captcha-bypassing-captcha.html" />
+    <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-captcha-bypassing-captcha.html"
+    />
+    <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-kapcha-obhodim-kapchu.html" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@diggernautcom">
+    <meta name="twitter:site" content="@diggernautcom">
+    <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Captcha | Bypassing Captcha">
+    <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+    <!-- OG -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Diggernaut" />
+    <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Captcha | Bypassing Captcha" />
+    <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-captcha-bypassing-captcha.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="Learning how to bypass captcha using 3rd party services." />
+    <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png" />
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <script>
+        (function () {
+            var cx = '017044341280497706869:0g3mtgyp2is';
+            var gcse = document.createElement('script');
+            gcse.type = 'text/javascript';
+            gcse.async = true;
+            gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(gcse, s);
+        })();
+    </script>
+</head>
+
+<body>
+    <header>
+        <nav class="teal darken-1" role="navigation" id="menu">
+            <div class="container-gcse">
+                <gcse:search></gcse:search>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="lessons-container" id="main">
+            <div class="container">
+                <h1>Captcha</h1>
+
+                <div>
+                    <h2>Bypassing Captcha</h2>
+
+                    <p class="flow-text">
+                        In the process of web scraping you probably encountered restrictions imposed by webmasters on automated usage of website
+                        resources. One such method is the use of captcha. Capcha is an automated Turing test to determine
+                        if user is a human or a robot. Usually, the user is shown an image with letters and numbers and the
+                        system asks you to enter these characters to the field, or a series of images where user have to
+                        select only images with a predefined thematic. For example, only those that show cars or road signs.
+                    </p>
+                    <p class="flow-text">
+                        There are many services and software products that allow the webmaster to implement captcha on the site. The most famous
+                        are Google ReCaptcha and Funcaptcha services. If Captcha is complex and our OCR functionality does
+                        not help you to bypass it, then specialized services with manual CAPTCHA solution will come to your
+                        aid. We have implemented integration with two such services, and your diggers can easily pass captcha
+                        to resolve to these services and receive in response a special token or manually recognized letters
+                        and digits from the picture in automatic mode.
+                    </p>
+                    <p class="flow-text">
+                        To use this functionality, you will need to have an account with one of these services. Since they are paid, you pay their
+                        charges yourself using your own account.
+                    </p>
+                    <p class="flow-text">
+                        Diggernaut is our service for solving a graphic captcha on specific sites. This service is free for all our users and does not require
+                        the connection of additional services. This functionality is available for use only in the cloud. It doesn't work in compiled diggers.
+                        At the moment, the captcha solution works for the following websites: Amazon.
+                    </p>
+                    <p class="flow-text">
+                        <a href="https://2captcha.com?from=7106312" target="_blank">2Captcha</a> - service for solving the image and Google ReCaptcha v2 captcha.
+                        For Google ReCaptcha v2 the "proxyless" mode can be used (in normal mode you should use your own password protected proxy
+                        for scraping as 2Captcha workers will need to access website with captcha using your proxy server).
+                        This mode can be useful to those who do not have own proxy servers and does not want to use them,
+                        preferring to use our proxy network for scraping. Its only service so far for solving Google ReCaptcha v3.
+                    </p>
+                    <p class="flow-text">
+                        <a href="http://getcaptchasolution.com/djlpm4vcub" target="_blank">AntiCaptcha</a> - service for solving the image and Google ReCaptcha v2 captcha. For Google ReCaptcha
+                        v2 the "proxyless" mode can be used (in normal mode you should use your own password protected proxy
+                        for scraping as AntiCaptcha workers will need to access website with captcha using your proxy server).
+                        This mode can be useful to those who do not have own proxy servers and does not want to use them,
+                        preferring to use our proxy network for scraping.
+                    </p>
+                    <p class="flow-text">
+                        <a href="http://deathbycaptcha.com" target="_blank">DeathByCaptcha</a> - can do almost the same as AntiCaptcha, except for the "proxyless" mode. Also
+                        for this provider we have integrated only the service for the Google ReCaptcha v2. Therefore, if
+                        you want to use the "proxyless" mode or solve image captcha - use the AntiCaptcha service.
+                    </p>
+                    <p class="flow-text">
+                        Command for resolving captcha
+                        <span class="hlt2">captcha_resolve</span> may be used in the block or page contexts. The process is fully automated
+                        for you, but since this is a manual job (3rd party captcha resolving process), the process can last
+                        from 20 seconds to 2 minutes. By completion of the command, the result of recognition (or a token
+                        for ReCaptcha v2) will be saved to the
+                        <span class="hlt">captcha</span> variable.
+                    </p>
+                    <p class="flow-text">
+                        This variable can then be read into the register and sent with a form of validation, or with a request to the server. Below
+                        we give you an example of how to correctly code the logic of work to resolve the ReCaptcha v2 and
+                        the standard image captcha.
+                    </p>
+                    <p class="flow-text">
+                        The command uses the following parameters:
+                    </p>
+
+                    <table class="responsive-table highlight">
+                        <thead>
+                            <tr>
+                                <th data-field="parameter">Parameter</th>
+                                <th data-field="description">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="centered">provider</td>
+                                <td>Mandatory parameter. Indicates provider you are going to use for solving the captcha. At
+                                    this moment the following providers are supported:
+                                    <span class="hlt">deathbycaptcha.com</span>, <span class="hlt">anticaptcha</span> and <span class="hlt">2captcha</span>.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">type</td>
+                                <td>Type of captcha. At this moment the following options are supported:
+                                    <span class="hlt">image</span> to resolve image captcha (works only for AntiCaptcha provider),
+                                    <span class="hlt">recaptchav2</span> to resolve Google ReCaptcha v2,
+                                    <span class="hlt">proxyless_recaptchav2</span> to resolve Google ReCaptcha v2 in the "proxyless" mode (works only wuth AntiCaptcha and 2Captcha providers) and
+                                    <span class="hlt">recaptchav3</span> to resolve Google ReCaptcha v3 (works only with 2Captcha provider).<br>
+                                    When using the Diggernaut provider, you need to specify one of the supported website identifiers in this field: <span class="hlt">amazon</span>.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">image</td>
+                                <td>If captcha type is <span class="hlt">image</span> or <span class="hlt">amazon</span>, this parameter is used to pass an image with captcha, encoded to the base64
+                                    format.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">username</td>
+                                <td>If you are using Death By Captcha provider, this parameted should has username for your account
+                                    on deathbycaptcha.com platform.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">password</td>
+                                <td>If you are using Death By Captcha provider, this parameted should has password for your account
+                                    on deathbycaptcha.com platform.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">apikey</td>
+                                <td>If you are using AntiCaptcha or 2Captcha provider, this parameter should has your API key for the AntiCaptcha/2Captcha
+                                    platform.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">sitekey</td>
+                                <td>Site key is unique identifier of website where ReCaptcha v2 or v3 is used. Usually its retrieved automatically, but if it cannot be extracted 
+                                for some reason, you can set it manually as parameter.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="centered">action</td>
+                                <td>Special action parameter that used for ReCaptcha v3. Usually its retrieved automatically, but if it cannot be extracted 
+                                for some reason, you can set it manually as parameter.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="flow-text">
+                        Below you can see the sample on how to solve Amazon captcha easily:
+                    </p>
+
+                    <pre class="language-yaml">
+                        <code class="language-yaml"># SET VARIABLE TO USE IT IN THE WALK COMMAND
+- variable_set:
+    field: "repeat"
+    value: "yes"
+# OPEN PAGE IN REPEAT MODE (AS WE NEED TO RELOAD PAGE IF THERE IS CAPTCHA)
+- walk:
+    to: https://www.amazon.com
+    repeat: <%repeat%>
+    do:
+    # SWITCH THE THE BODY BLOCK
+    - find:
+        path: body
+        do:
+        - parse
+        # CHECK IF THERE IS A CAPTCHA
+        - if:
+            match: Type the characters you see in this image
+            do:
+            # THERE IS A CAPTCHA
+            - variable_set:
+                field: "repeat"
+                value: "yes"
+            # COLLECT ALL REQUIRED PARAMETERS FROM THE PAGE
+            # SAVE THEM TO VARIABLES
+            - find:
+                path: input[name="amzn"]
+                do:
+                - parse:
+                    attr: value
+                - normalize:
+                    routine: urlencode
+                - variable_set: amzn
+            - find:
+                path: input[name="amzn-r"]
+                do:
+                - parse:
+                    attr: value
+                - normalize:
+                    routine: urlencode
+                - variable_set: amznr
+            # SWITCH TO THE BLOCK WITH CAPTCHA IMAGE
+            - find:
+                path: div.a-row>img
+                do:
+                # PARSE URL TO THE IMAGE
+                - parse:
+                    attr: src
+                # LOAD THE IMAGE
+                - walk:
+                    to: value
+                    do:
+                    # SWITCH TO THE BLOCK WITH THE BASE64 ENCODED IMAGE
+                    - find:
+                        path: imgbase64
+                        do:
+                        # PARSE CONTENT AND SAVE IT TO THE VARIABLE
+                        - parse
+                        - variable_set: capimg
+                        # SOLVE CAPTCHA
+                        - captcha_resolve:
+                            provider: diggernaut
+                            type: amazon
+                            image: <%capimg%>
+                        # READ VARIABLE TO THE REGISTER
+                        - variable_get: captcha
+                        # IF CAPTCHA IS SOLVED
+                        - if:
+                            match: \S+
+                            do:
+                            # SEND IT TO THE AMAZON SERVER
+                            - walk:
+                                to: https://www.amazon.com/errors/validateCaptcha?amzn=<%amzn%>&amzn-r=<%amznr%>&field-keywords=<%captcha%>
+                                do:
+            else:
+            # THERE IS NO CAPTCHA, TURN OFF REPEAT MODE
+            - variable_set:
+                field: "repeat"
+                value: "no"
+            # PARSE PAGE AND GET DATA
+                        </code>
+                    </pre>
+
+                    <p class="flow-text">
+                        Lets review the case when some page uses Google ReCaptcha v2. We will use "proxyless" mode:
+                    </p>
+
+                    <pre class="language-yaml">
+            <code class="language-yaml"># LOADING THE PAGE WITH CAPTCHA
+- walk:
+    to: https://www.nebraska.gov/sos/corp/corpsearch.cgi
+    do:
+    # RESOLVING CAPTCHA
+    - captcha_resolve:
+        provider: anticaptcha
+        type: proxyless_recaptchav2
+        apikey: xxxxxxxxxxxxxxxxxxx
+    - find: 
+        path: body 
+        do: 
+        # CHECK IF WE HAVE A TOKEN IN THE captcha VARIABLE
+        - variable_get: captcha 
+        - if:
+            match: \S
+            do:
+            # TOKEN IS OK, SENDING FORM
+            - walk:
+                to:
+                    post: https://www.nebraska.gov/sos/corp/corpsearch.cgi
+                    data:
+                        search: 1
+                        keyword_type: all
+                        search_type: num_search
+                        corpname: 
+                        acct-num: 1000011010101
+                        g-recaptcha-response: <%captcha%>
+                        submit: submit
+                do:
+                # PARSE PAGE AND EXTRACT DATA
+                </code>
+        </pre>
+
+                    <p class="flow-text">
+                        Another example for image captcha:
+                    </p>
+
+                    <pre class="language-yaml">
+                <code class="language-yaml"># LOAD PAGE WITH CAPTCHA
+- walk:
+    to: https://eservices.cmcoh.org/eservices/home.page
+    headers:
+        Wicket-Focusedelementid: ''
+        Wicket-Ajax: ''
+    do:
+    # FIND ELEMENT WITH IMAGE CAPTCHA
+    - find:
+        path: img.captchaImg
+        do:
+        # PARSE URL TO THE IMAGE CAPTCHA
+        - parse:
+            attr: src
+        # LOAD IMAGE IN BASE64 ENCODING
+        - walk:
+            to: value
+            do:
+            - find:
+                path: imgbase64
+                do:
+                - parse
+                - variable_set: image
+                # RESOLVE CAPTCHA
+                - captcha_resolve:
+                    provider: anticaptcha
+                    type: image
+                    apikey: xxxxxxxxxxxxxxxxxxx
+                    image: <%image%>
+        - find:
+            path: a.anchorButton
+            do:
+            - variable_get: captcha
+            - if:
+                match: \w+
+                do:
+                # CAPTCHA SEEMS RESOLVED SO HERE WE CAN SEND IT TO THE SERVER WITH THE FORM
+            </code>
+        </pre>
+
+
+                    <p class="flow-text">
+                        In some cases, captcha may be recognized incorrectly. And if you determine it, you can send a report on the incorrectly solved
+                        Captcha using the
+                        <span class="hlt2">captcha_report</span> command. In such cases captcha resolving service usually reimburse cost you
+                        paid them for captcha resolve job. But you should be extremely careful and do not send such a report
+                        if captcha was correctly recognized, otherwise the service you are suing for captcha resolve jobs
+                        can impose sanctions and limitations on your account.
+                    </p>
+
+                    <pre class="language-yaml">
+                <code class="language-yaml"># OPEN PAGE WITH THE CAPTCHA
+- walk:
+    to: https://www.nebraska.gov/sos/corp/corpsearch.cgi
+    do:
+    # RESOLVE CAPTCHA
+    - captcha_resolve:
+        provider: anticaptcha
+        type: proxyless_recaptchav2
+        apikey: xxxxxxxxxxxxxxxxxxx
+    - find: 
+        path: body 
+        do: 
+        # CHECK IF captcha VARIABLE HAS A TOKEN
+        - variable_get: captcha 
+        - if:
+            match: \S
+            do:
+            # TOKEN IS THERE, SENDING FORM
+            - walk:
+                to:
+                    post: https://www.nebraska.gov/sos/corp/corpsearch.cgi
+                    data:
+                        search: 1
+                        keyword_type: all
+                        search_type: num_search
+                        corpname: 
+                        acct-num: 1000011010101
+                        g-recaptcha-response: <%captcha%>
+                        submit: submit
+                do:
+                - variable_clear: recap
+                - find: 
+                    path: body 
+                    do:
+                    # CHECK IF CAPTCHA TOKEN WAS ACCEPTED
+                    - find: 
+                        path: .g-recaptcha 
+                        do: 
+                        # IF THIS BLOCK IS EXIST, THE TOKEN IS INVALID
+                        - parse:
+                            attr: data-sitekey
+                        - variable_set: recap
+                    - variable_get: recap
+                    - if:
+                        match: \S
+                        do:
+                        # CAPTCHA WAS RESOLVED WRONGLY, REPORTING
+                        - captcha_report
+                        else:
+                        # CAPTCHA WAS SOLVED PROPERLY, EXTRACTING DATA
+            </code>
+        </pre>
+
+                    <span class="spacer"></span>
+
+                    <p class="flow-text">
+                        Next we are going to learn how to modify images and save them.
+                    </p>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+                            <div class="pagination">
+                                <a href="meta-language-methods-images.html" class="btn goto teal z-depth-2">Next</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="page-footer teal darken-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="social">
+                        <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/" target="_blank">
+                            <i class="fa fa-wordpress"></i>
+                        </a>
+                        <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank">
+                            <i class="fa fa-vk"></i>
+                        </a>
+                        <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                        <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!--  Scripts-->
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/prism.js"></script>
+    <script src="js/meta-language-init.js"></script>
+
+    <!-- Google analytics -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-80717561-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <!-- /Google analytics -->
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (d, w, c) {
+            (w[c] = w[c] || []).push(function () {
+                try {
+                    w.yaCounter47560513 = new Ya.Metrika({
+                        id: 47560513,
+                        clickmap: true,
+                        trackLinks: true,
+                        accurateTrackBounce: true
+                    });
+                } catch (e) {}
+            });
+
+            var n = d.getElementsByTagName("script")[0],
+                s = d.createElement("script"),
+                f = function () {
+                    n.parentNode.insertBefore(s, n);
+                };
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+            if (w.opera == "[object Opera]") {
+                d.addEventListener("DOMContentLoaded", f, false);
+            } else {
+                f();
+            }
+        })(document, window, "yandex_metrika_callbacks");
+    </script>
+    <noscript>
+        <div>
+            <img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" />
+        </div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
+
+</body>
+
+</html>

@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Iterators | Iterator by Date</title>
+  <meta name="description" content="How to generate an iterator by dates in a given period.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, iterators, date">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-iterators-iterator-by-date.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-iterators-iterator-by-date.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-iteratory-iterator-po-datam.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Iterators | Iterator by Date">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Iterators | Iterator by Date"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-iterators-iterator-by-date.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="How to generate an iterator by dates in a given period."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+  
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Iterators</h1>
+
+      <div>
+        <h2>Iterator by Dates</h2>
+
+        <p class="flow-text">
+          Iterators like <span class = "hlt2">date</span> are used in cases where you need to
+          create a set of ordered dates. For example, if you use the search form with date field on the source site to
+          retrieve data just for specific date (or period). When you set up such iterator, you can specify the start date, the interval in days between
+          each iteration, the period that sets the end date for the iterations, and a template that describes format of dates for arguments.
+        </p>
+
+        <table class="responsive-table highlight">
+          <thead>
+          <tr>
+            <th data-field="parameter">Parameter</th>
+            <th data-field="description">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="centered">type</td>
+            <td>The constant that defines the iterator type, has the value <span class="hlt2">date</span>.</td>
+          </tr>
+          <tr>
+            <td>start</td>
+            <td>Start date for iterations in YYYY-MM-DD format, if omitted, system will use current date as start date (optional).</td>
+          </tr>
+          <tr>
+            <td>end</td>
+            <td>End date for iterations in YYYY-MM-DD format, if omitted, system will use period parameter (optional).</td>
+          </tr>
+          <tr>
+            <td>period</td>
+            <td>Period duration in days between start and end dates, if omitted, defaulted to 60 days (optional).</td>
+          </tr>
+          <tr>
+            <td>interval</td>
+            <td>Interval in days between iterations. Eg if you want to have agruments for each date between start and end dates, set interval to 1.
+              If you need weekly intervals, set it to 7. If parameter is omitted, system will use default value 1.
+              (optional).
+            </td>
+          </tr>
+          <tr>
+            <td>template</td>
+            <td>Template, used to format values in argument fields start_date and end_date, formed by iterator (optional).</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <p class="flow-text">
+          In the table below, you can find all possible tags that can be used in the template and examples of usage:
+        </p>
+
+        <table class="responsive-table highlight">
+          <thead>
+          <tr>
+            <th data-field="tag">Tag</th>
+            <th data-field="description" width="60%">Description</th>
+            <th data-field="sample">Template Example</th>
+            <th data-field="value">Value Sample</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr>
+            <td class="centered">%a</td>
+            <td>abbreviation for weekdays, eg <span class="hlt">Mon</span> or <span class="hlt">Fri</span></td>
+            <td>%a, %d %B</td>
+            <td>Fri, 20 February</td>
+          </tr>
+          <tr>
+            <td class="centered">%A</td>
+            <td>weekday, eg <span class="hlt">Monday</span> or <span class="hlt">Friday</span></td>
+            <td>%A, %d %B</td>
+            <td>Friday, 20 February</td>
+          </tr>
+          <tr>
+            <td class="centered">%b</td>
+            <td>month abbreviation, eg <span class="hlt">Feb</span> or <span class="hlt">Sep</span></td>
+            <td>%A, %d %b</td>
+            <td>Friday, 20 Jun</td>
+          </tr>
+          <tr>
+            <td class="centered">%B</td>
+            <td>month name, eg <span class="hlt">February</span> or <span class="hlt">September</span></td>
+            <td>%A, %d %B</td>
+            <td>Friday, 20 June</td>
+          </tr>
+          <tr>
+            <td class="centered">%C</td>
+            <td>number of century, takes values from <span class="hlt">00</span> to <span class="hlt">99</span></td>
+            <td>%С/%y</td>
+            <td>20/17</td>
+          </tr>
+          <tr>
+            <td class="centered">%d</td>
+            <td>day of month, takes values from <span class="hlt">01</span> to <span class="hlt">31</span></td>
+            <td>%Y-%m-%d</td>
+            <td>2017-10-01</td>
+          </tr>
+          <tr>
+            <td class="centered">%D</td>
+            <td>preset template, same as <span class="hlt">%m/%d/%y</span></td>
+            <td>%D</td>
+            <td>05/08/17</td>
+          </tr>
+          <tr>
+            <td class="centered">%e</td>
+            <td>day of month, takes values from <span class="hlt">1</span> to <span class="hlt">31</span></td>
+            <td>%e %B</td>
+            <td>5 January</td>
+          </tr>
+          <tr>
+            <td class="centered">%F</td>
+            <td>preset template, same as <span class="hlt">%Y-%m-%d</span></td>
+            <td>%F</td>
+            <td>2017-10-01</td>
+          </tr>
+          <tr>
+            <td class="centered">%g</td>
+            <td>2-digit number of year according to <span class="hlt">ISO-8601:1988</span> standard</td>
+            <td>%g</td>
+            <td>17</td>
+          </tr>
+          <tr>
+            <td class="centered">%G</td>
+            <td>4-digit number of year according to <span class="hlt">ISO-8601:1988</span> standard</td>
+            <td>%G</td>
+            <td>2017</td>
+          </tr>
+          <tr>
+            <td class="centered">%h</td>
+            <td>same as <span class="hlt">%b%</span></td>
+            <td>%A, %d %h</td>
+            <td>Friday, 20 Jun</td>
+          </tr>
+          <tr>
+            <td class="centered">%H</td>
+            <td>hour in 24-hours system, takes values from <span class="hlt">00</span> to <span class="hlt">23</span></td>
+            <td>%H:%M:%S</td>
+            <td>08:35:26</td>
+          </tr>
+          <tr>
+            <td class="centered">%I</td>
+            <td>hour in 12-hours system, takes values from <span class="hlt">01</span> to <span class="hlt">12</span></td>
+            <td>%H:%M:%S</td>
+            <td>08:35:26</td>
+          </tr>
+          <tr>
+            <td class="centered">%j</td>
+            <td>number of day of year, takes values from <span class="hlt">1</span> to <span class="hlt">366</span></td>
+            <td>Today is %j day of year</td>
+            <td>Today is 183 day of year</td>
+          </tr>
+          <tr>
+            <td class="centered">%k</td>
+            <td>hour in 24-hours system, takes values from <span class="hlt">0</span> to <span class="hlt">23</span></td>
+            <td>%k hrs %M mnt</td>
+            <td>8 hrs 35 mnt</td>
+          </tr>
+          <tr>
+            <td class="centered">%l</td>
+            <td>hour in 12-hours system, takes values from <span class="hlt">1</span> to <span class="hlt">12</span></td>
+            <td>%l hrs %M mnt</td>
+            <td>8 hrs 35 mnt</td>
+          </tr>
+          <tr>
+            <td class="centered">%m</td>
+            <td>number of month, takes values from <span class="hlt">01</span> to <span class="hlt">12</span></td>
+            <td>%Y-%m-%d</td>
+            <td>2017-10-01</td>
+          </tr>
+          <tr>
+            <td class="centered">%l</td>
+            <td>minutes, takes values from <span class="hlt">00</span> to <span class="hlt">59</span></td>
+            <td>%l hrs %M mnt</td>
+            <td>8 hrs 35 mnt</td>
+          </tr>
+          <tr>
+            <td class="centered">%n</td>
+            <td>new line symbol</td>
+            <td>%Y%n%m</td>
+            <td>2017\n10</td>
+          </tr>
+          <tr>
+            <td class="centered">%p</td>
+            <td>value <span class="hlt">AM</span> or <span class="hlt">PM</span> depending on time, used with 12-hours time system</td>
+            <td>%I%p</td>
+            <td>8AM</td>
+          </tr>
+          <tr>
+            <td class="centered">%P</td>
+            <td>value <span class="hlt">am</span> or <span class="hlt">pm</span> depending on time, used with 12-hours time system</td>
+            <td>%I%P</td>
+            <td>8am</td>
+          </tr>
+          <tr>
+            <td class="centered">%r</td>
+            <td>same as <span class="hlt">%I:%M:%S %p</span></td>
+            <td>%r</td>
+            <td>04:12:37 PM</td>
+          </tr>
+          <tr>
+            <td class="centered">%R</td>
+            <td>same as <span class="hlt">%H:%M</span></td>
+            <td>%R</td>
+            <td>22:35</td>
+          </tr>
+          <tr>
+            <td class="centered">%s</td>
+            <td>Unix timestamp, shows number of seconds since start of epoch (1 january 1970)</td>
+            <td>%s</td>
+            <td>1506867213</td>
+          </tr>
+          <tr>
+            <td class="centered">%S</td>
+            <td>seconds, takes values from <span class="hlt">00</span> to <span class="hlt">59</span></td>
+            <td>%H:%M:%S</td>
+            <td>08:35:26</td>
+          </tr>
+          <tr>
+            <td class="centered">%t</td>
+            <td>tabulation symbol</td>
+            <td>%Y%t%m</td>
+            <td>2017\t10</td>
+          </tr>
+          <tr>
+            <td class="centered">%T</td>
+            <td>same as <span class="hlt">%H:%M:%S</span></td>
+            <td>%T</td>
+            <td>08:35:26</td>
+          </tr>
+          <tr>
+            <td class="centered">%u</td>
+            <td>number of weekday from <span class="hlt">1</span> (monday) to <span class="hlt">7</span> (sunday)</td>
+            <td>Today is %u week day</td>
+            <td>Today is 5 week day</td>
+          </tr>
+          <tr>
+            <td class="centered">%U</td>
+            <td>number of week of year, if week starts with Sunday, takes values from <span class="hlt">00</span> to <span class="hlt">53</span></td>
+            <td>It was %U week</td>
+            <td>It was 23 week</td>
+          </tr>
+          <tr>
+            <td class="centered">%V</td>
+            <td>number of week of year by ISO standard, if week starts with Monday, takes values from <span class="hlt">01</span> to <span class="hlt">53</span>.
+              If week with 1 Jan has 4 or more days in new year, this week is counted as first week of new year, in other case its counted as last week of previous year.
+            </td>
+            <td>It was %V week</td>
+            <td>It was 23 week</td>
+          </tr>
+          <tr>
+            <td class="centered">%w</td>
+            <td>number of day of week from <span class="hlt">0</span> (sunday) to <span class="hlt">6</span> (saturday)</td>
+            <td>Today is %w day of week</td>
+            <td>Today is 5 day of week</td>
+          </tr>
+          <tr>
+            <td class="centered">%W</td>
+            <td>number of week of year, if week starts with monday, takes values from <span class="hlt">00</span> to <span class="hlt">53</span></td>
+            <td>It was %W week</td>
+            <td>It was 23 week</td>
+          </tr>
+          <tr>
+            <td class="centered">%y</td>
+            <td>2-digits number of year</td>
+            <td>%m/%d/%y</td>
+            <td>10/01/17</td>
+          </tr>
+          <tr>
+            <td class="centered">%Y</td>
+            <td>4-digits number of year</td>
+            <td>%Y-%m-%d</td>
+            <td>2017-10-01</td>
+          </tr>
+          <tr>
+            <td class="centered">%z</td>
+            <td>time correction value to UTC time. Showing in format like <span class="hlt">+HHMM</span>
+              or <span class="hlt">-HHMM</span>, where <span class="hlt">+</span> means east from GMT,
+              <span class="hlt">-</span> means west from GMT, HH - number of hours, MM - number of minutes.
+            </td>
+            <td>%z</td>
+            <td>+0300</td>
+          </tr>
+          <tr>
+            <td class="centered">%Z</td>
+            <td>abbreviation fo timezone</td>
+            <td>%Z</td>
+            <td>PST</td>
+          </tr>
+          <tr>
+            <td class="centered">%+</td>
+            <td>same as <span class="hlt">%a %b %e %H:%M:%S %Z %Y</span></td>
+            <td>%+</td>
+            <td>Mon Sep 20 13:24:55 PST 2017</td>
+          </tr>
+          <tr>
+            <td class="centered">%%</td>
+            <td>symbol %</td>
+            <td>%Y%%%m</td>
+            <td>2017%10</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <p class="flow-text">
+          If you dont use template, start_date and end_date will be using ISO standard when formatted.
+          In addition to these two arguments, there are some other agruments in the set that can be very useful in many cases:
+        </p>
+
+        <table class="responsive-table highlight">
+          <thead>
+          <tr>
+            <th data-field="argument">Argument</th>
+            <th data-field="description">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="centered">start_date</td>
+            <td>date of the interval start, in the format described by template or ISO standard</td>
+          </tr>
+          <tr>
+            <td class="centered">end_date</td>
+            <td>date of the interval end, in the format described by template or ISO standard</td>
+          </tr>
+          <tr>
+            <td class="centered">start_year</td>
+            <td>year of the interval start, in <span class="hlt2">%Y</span> (YYYY) format</td>
+          </tr>
+          <tr>
+            <td class="centered">end_year</td>
+            <td>year of the interval end, in <span class="hlt2">%Y</span> (YYYY) format</td>
+          </tr>
+          <tr>
+            <td class="centered">start_yr</td>
+            <td>year of the interval start, in <span class="hlt2">%y</span> (YY) format</td>
+          </tr>
+          <tr>
+            <td class="centered">end_yr</td>
+            <td>year of the interval end, in <span class="hlt2">%y</span> (YY) format</td>
+          </tr>
+          <tr>
+            <td class="centered">start_month</td>
+            <td>month of the interval start, in <span class="hlt2">%m</span> (MM) format</td>
+          </tr>
+          <tr>
+            <td class="centered">end_month</td>
+            <td>month of the interval end, in <span class="hlt2">%m</span> (MM) format</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <p class="flow-text">Example of iterator by dates:</p>
+
+        <div class="row">
+          <div class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">iterator:
+- type: date
+  # SET INTERVAL FOR EVERY 2 DAYS
+  interval: 2
+  # PERIOD BETWEEN START DATE (IN THIS CASE CURRENT DATE, BECAUSE START DATE PARAMENTER IS OMITTED) AND END DATE IS SET TO 10 DAYS
+  period: 10
+  # TEMPLATE FOR `start_date` AND `end_date`
+  template: '%B %d %Y'
+              </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          As a result, we get the following list of fieldsets ​for each of which the digger will execute the main logic block:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <pre class="language-json">
+              <code class="language-json">[
+    {
+      "start_date": "October 01 2017", "end_date": "October 02 2017",
+      "start_year": "2017", "end_year": "2017",
+      "start_yr": "17", "end_yr": "17",
+      "start_month": "10", "end_month": "10"
+    },
+    {
+      "start_date": "October 03 2017", "end_date": "October 04 2017",
+      "start_year": "2017", "end_year": "2017",
+      "start_yr": "17", "end_yr": "17",
+      "start_month": "10", "end_month": "10"
+    },
+    {
+      "start_date": "October 05 2017", "end_date": "October 06 2017",
+      "start_year": "2017", "end_year": "2017",
+      "start_yr": "17", "end_yr": "17",
+      "start_month": "10", "end_month": "10"
+    },
+    {
+      "start_date": "October 07 2017", "end_date": "October 08 2017",
+      "start_year": "2017", "end_year": "2017",
+      "start_yr": "17", "end_yr": "17",
+      "start_month": "10", "end_month": "10"
+    },
+    {
+      "start_date": "October 09 2017", "end_date": "October 10 2017",
+      "start_year": "2017", "end_year": "2017",
+      "start_yr": "17", "end_yr": "17",
+      "start_month": "10", "end_month": "10"
+    }
+]
+              </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          Iterators by date are very often used to organize incremental data collection,
+          which allows you to save resources and perform the task faster.
+        </p>
+
+        <p class="flow-text">
+          Example of using date iterator in the digger:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s4"><a class="active" href="#config">Digger configuration</a></li>
+              <li class="tab col s4"><a href="#log">Execution log</a></li>
+            </ul>
+          </div>
+
+          <div id="config" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">---
+config:
+    debug: 2
+    agent: Firefox
+iterator:
+    type: date
+    start: '2017-10-01'
+    period: 4
+    interval: 2
+    template: '%Y-%m-%d'
+do:
+- walk:
+    to: https://www.diggernaut.com/sandbox/meta-lang-object-en.html?from=<%start_date%>&to=<%end_date%>
+    do:
+              </code></pre>
+          </div>
+
+          <div id="log" class="col s12">
+            <table id="datatable_logs" class="striped responsive-table debug-log" role="grid" aria-describedby="datatable_logs_info">
+              <thead>
+              <tr role="row">
+                <th class="sorting_desc" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending" aria-sort="descending" width="11%">Time</th>
+                <th class="sorting" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Level: activate to sort column ascending" width="4%">Level</th>
+                <th class="word-wrapper sorting_disabled" rowspan="1" colspan="1" aria-label="Message">Message</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-23 14:23:41:335</td>
+                <td>info</td>
+                <td class=" word-wrapper">Scrape is done</td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-23 14:23:41:321</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Page content: &lt;!DOCTYPE html&gt;&lt;html lang="en"&gt;&lt;head&gt;
+                  &lt;meta charset="UTF-8"/&gt;
+                  &lt;title&gt;Diggernaut | Meta-language | Object sample&lt;/title&gt;
+                  &lt;/head&gt;
+                  &lt;body&gt;
+                  &lt;h1&gt;Title-1&lt;/h1&gt;
+                  &lt;p&gt;Lorem ipsum dolor sit amet.&lt;/p&gt;
+                  &lt;/body&gt;&lt;/html&gt;
+                </td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-23 14:23:41:166</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Referers: Referer: https://www.diggernaut.com/sandbox/meta-lang-object-en.html?from=2017-10-01&amp;to=2017-10-02
+                </td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-23 14:23:41:158</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Referer: https://www.diggernaut.com/sandbox/meta-lang-object-en.html?from=2017-10-01&amp;to=2017-10-02</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-23 14:23:41:150</td>
+                <td>info</td>
+                <td class=" word-wrapper">Retrieving page (GET): https://www.diggernaut.com/sandbox/meta-lang-object-en.html?from=<span class="hlt2">2017-10-03</span>&amp;to=<span class="hlt2">2017-10-04</span></td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-23 14:23:41:138</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Page content: &lt;!DOCTYPE html&gt;&lt;html lang="en"&gt;&lt;head&gt;
+                  &lt;meta charset="UTF-8"/&gt;
+                  &lt;title&gt;Diggernaut | Meta-language | Object sample&lt;/title&gt;
+                  &lt;/head&gt;
+                  &lt;body&gt;
+                  &lt;h1&gt;Title-1&lt;/h1&gt;
+                  &lt;p&gt;Lorem ipsum dolor sit amet.&lt;/p&gt;
+                  &lt;/body&gt;&lt;/html&gt;
+                </td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-23 14:23:40:185</td>
+                <td>info</td>
+                <td class=" word-wrapper">Retrieving page (GET): https://www.diggernaut.com/sandbox/meta-lang-object-en.html?from=<span class="hlt2">2017-10-01</span>&amp;to=<span class="hlt2">2017-10-02</span></td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-23 14:23:40:178</td>
+                <td>info</td>
+                <td class=" word-wrapper">Starting scrape</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-23 14:23:40:166</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Setting up default proxy</td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-23 14:23:40:153</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Setting up surf</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-23 14:23:40:125</td>
+                <td>info</td>
+                <td class=" word-wrapper">Starting digger: meta-lang-iterator [1859]</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          Next we will learn more about <span class="hlt2">csv</span> iterators.
+        </p>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-iterators-csv-iterator.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

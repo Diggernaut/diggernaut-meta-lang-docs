@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Runtime Entities | Link Pool</title>
+  <meta name="description" content="What is an advantage when you are using link pool and how can you work more effectively with it?">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, link pool">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-runtime-entities-link-pool.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-runtime-entities-link-pool.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-obyekty-sredy-vypolneniya-pul-ssylok.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Runtime Entities | Link Pool">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Runtime Entities | Link Pool"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-runtime-entities-link-pool.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="What is an advantage when you are using link pool and how can you work more effectively with it?"/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+  
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Runtime Entities</h1>
+
+      <div>
+        <h2>Link Pool</h2>
+
+        <p class="flow-text">
+          A link pool is a list that contains the URLs.<br/>
+          It can be used, for example, to form a list with catalog pages and further iterate over this list. 
+          Or, using the fact that all URLs in a list are unique and caanot be duplicated, it is very convenient to collect URLs of product pages
+          in a single pool from all pages of the catalog, and then iterating over the pool, collect all the goods. This will allow you to avoid duplicate of goods,
+          because in most stores the same goods can be in different categories. It saves your resources, makes your data set cleaner and reduces the loading
+          on the source site.
+        </p>
+        <p class="flow-text">
+          The five most important points about link pools:
+        </p>
+
+        <blockquote class="custom darken-1">
+          <ol class="flow-text">
+            <li>The command to add URLs to the pool can take the value from the register, a string value, or a compound value with arguments or variables</li>
+            <li>Pools exist in all contexts, are context-independent and can be used in any context</li>
+            <li>There can be an infinite number of pools</li>
+            <li>URLs added to the pool will be automatically normalized</li>
+            <li>All values (URLs) in the pool are unique, so there can not be two identical addresses in the list</li>
+          </ol>
+        </blockquote>
+
+        <p class="flow-text">
+          Example of using link pool:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s4"><a class="active" href="#config">Scraper script</a></li>
+              <li class="tab col s4"><a href="#html">Source HTML</a></li>
+              <li class="tab col s4"><a href="#log">Execution log</a></li>
+            </ul>
+          </div>
+
+          <div id="config" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml">---
+config:
+    debug: 2
+    agent: Firefox
+do:
+- walk:
+    to: https://www.diggernaut.com/sandbox/meta-lang-pool-en.html
+    do:
+    - find:
+        path: body > a
+        do:
+        - parse:
+            attr: href
+        - normalize:
+            routine: url
+        - link_add:
+            pool: main
+              </code></pre>
+          </div>
+
+          <div id="html" class="col s12">
+            <pre class="language-html">
+              <code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Diggernaut | Meta-Language | Pool of links sample&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;a href=&quot;https://www.diggernaut.com/sandbox/table-nested-data-en.html&quot;&gt;Link N1&lt;/a&gt;
+&lt;br/&gt;
+&lt;a href=&quot;https://www.diggernaut.com/sandbox/meta-lang-object-en.html&quot;&gt;Link N2&lt;/a&gt;
+&lt;br/&gt;
+&lt;a href=&quot;https://www.diggernaut.com/sandbox/meta-lang-register-en.html&quot;&gt;Link N3&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+              </code></pre>
+          </div>
+
+          <div id="log" class="col s12">
+            <table id="datatable_logs" class="striped responsive-table debug-log" role="grid" aria-describedby="datatable_logs_info">
+              <thead>
+              <tr role="row">
+                <th class="sorting_desc" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending" aria-sort="descending" width="11%">Time</th>
+                <th class="sorting" tabindex="0" aria-controls="datatable_logs" rowspan="1" colspan="1" aria-label="Level: activate to sort column ascending" width="4%">Level</th>
+                <th class="word-wrapper sorting_disabled" rowspan="1" colspan="1" aria-label="Message">Message</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:56:111</td>
+                <td>info</td>
+                <td class=" word-wrapper">Scrape is done</td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-22 00:02:56:104</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Link added</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:56:097</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper"><span class="hlt2">Adding link to the pool main: https://www.diggernaut.com/sandbox/meta-lang-register-en.html</span></td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-22 00:02:56:089</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Results: https://www.diggernaut.com/sandbox/meta-lang-register-en.html</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:56:082</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Applying normalization: url</td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-22 00:02:56:074</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Parsed content: https://www.diggernaut.com/sandbox/meta-lang-register-en.html</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:56:067</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Parsing attribute: href</td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-22 00:02:56:060</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Parsing block with arguments: map[attr:href]</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:56:053</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Block content: Link N3</td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-22 00:02:56:045</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Link added</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:56:038</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper"><span class="hlt2">Adding link to the pool main: https://www.diggernaut.com/sandbox/meta-lang-object-en.html</span></td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-22 00:02:56:028</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Results: https://www.diggernaut.com/sandbox/meta-lang-object-en.html</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:56:018</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Applying normalization: url</td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-22 00:02:56:010</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Parsed content: https://www.diggernaut.com/sandbox/meta-lang-object-en.html</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:56:002</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Parsing attribute: href</td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-22 00:02:55:994</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Parsing block with arguments: map[attr:href]</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:55:987</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Block content: Link N2</td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-22 00:02:55:979</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Link added</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:55:972</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper"><span class="hlt2">Adding link to the pool main: https://www.diggernaut.com/sandbox/table-nested-data-en.html</span></td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-22 00:02:55:965</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Results: https://www.diggernaut.com/sandbox/table-nested-data-en.html</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:55:957</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Applying normalization: url</td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-22 00:02:55:949</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Parsed content: https://www.diggernaut.com/sandbox/table-nested-data-en.html</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:55:941</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Parsing attribute: href</td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-22 00:02:55:933</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Parsing block with arguments: map[attr:href]</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:55:925</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Block content: Link N1</td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-22 00:02:55:917</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Number of found blocks: 3</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:55:910</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Looking for: body &gt; a</td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-22 00:02:55:898</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Page content: &lt;html lang="en"&gt;<br/>
+                  &lt;head&gt;<br/>
+                  &lt;meta charset="UTF-8"/&gt;<br/>
+                  &lt;title&gt;Diggernaut | Meta-Language | Pool of links sample&lt;/title&gt;<br/>
+                  &lt;/head&gt;<br/>
+                  &lt;body&gt;﻿<br/>
+                  &lt;a href="https://www.diggernaut.com/sandbox/table-nested-data-en.html"&gt;Link N1&lt;/a&gt;<br/>
+                  &lt;br/&gt;<br/>
+                  &lt;a href="https://www.diggernaut.com/sandbox/meta-lang-object-en.html"&gt;Link N2&lt;/a&gt;<br/>
+                  &lt;br/&gt;<br/>
+                  &lt;a href="https://www.diggernaut.com/sandbox/meta-lang-register-en.html"&gt;Link N3&lt;/a&gt;<br/>
+                  &lt;/body&gt;<br/>
+                  &lt;/html&gt;
+                </td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:55:642</td>
+                <td>info</td>
+                <td class=" word-wrapper">Retrieving page (GET): https://www.diggernaut.com/sandbox/meta-lang-pool-en.html</td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-22 00:02:55:635</td>
+                <td>info</td>
+                <td class=" word-wrapper">Starting scrape</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:55:621</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Setting up default proxy</td>
+              </tr>
+              <tr role="row" class="even">
+                <td class="sorting_1">2017-10-22 00:02:55:608</td>
+                <td><span class="log-debug">debug</span></td>
+                <td class=" word-wrapper">Setting up surf</td>
+              </tr>
+              <tr role="row" class="odd">
+                <td class="sorting_1">2017-10-22 00:02:55:581</td>
+                <td>info</td>
+                <td class=" word-wrapper">Starting digger: meta-lang-pool [1855]</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-basic-settings-setting-up-digger.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

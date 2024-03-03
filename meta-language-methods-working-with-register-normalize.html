@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Diggernaut: Documentation for Meta-Language | Methods for Working with Register | Normalize</title>
+  <meta name="description" content="Special command for normalization will help you normalize and clear the collected data.">
+  <meta name="keywords" content="Diggernaut, scraping, web scraping, scraper, web scraper, meta-language, make scraper, scraper for websites, learning to scrape, data acquisition, create scraper, online scraper, content scraper, scraper for shop, scraper for classifieds, coding scraper, register, normalize">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Alternatives -->
+  <link rel="canonical" href="https://www.diggernaut.com/dev/meta-language-methods-working-with-register-normalize.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.diggernaut.com/dev/meta-language-methods-working-with-register-normalize.html"/>
+  <link rel="alternate" hreflang="ru" href="https://www.diggernaut.ru/dev/meta-yazyk-metody-rabota-s-registrom-normalize.html"/>
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@diggernautcom">
+  <meta name="twitter:site" content="@diggernautcom">
+  <meta name="twitter:title" content="Diggernaut: Documentation for Meta-Language | Methods for Working with Register | Normalize">
+  <meta name="twitter:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png">
+
+  <!-- OG -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Diggernaut"/>
+  <meta property="og:title" content="Diggernaut: Documentation for Meta-Language | Methods for Working with Register | Normalize"/>
+  <meta property="og:url" content="https://www.diggernaut.com/dev/meta-language-methods-working-with-register-normalize.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:description" content="Special command for normalization will help you normalize and clear the collected data."/>
+  <meta property="og:image" content="https://www.diggernaut.com/static/dev/images/og_img_devml_en.png"/>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/flexboxgrid.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/ml-style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/prism.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/gsce.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    (function () {
+      var cx = '017044341280497706869:0g3mtgyp2is';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+  </script>
+</head>
+
+<body>
+<header>
+  <nav class="teal darken-1" role="navigation" id="menu">
+    <div class="container-gcse">
+      <gcse:search></gcse:search>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="lessons-container" id="main">
+    <div class="container">
+      <h1>Methods for Working with the Register</h1>
+
+      <div>
+        <h2>Normalize</h2>
+
+        <p class="flow-text">
+          The <span class = "hlt2">normalize</span> command is used to manipulate data in the register.
+        </p>
+
+        <blockquote class="warning darken-1">
+          <p class="flow-text">
+            <strong>Please note:</strong> <br/>
+            The <span class = "hlt2">normalize</span> command works only with the register. <br/>
+            It gets data from the register as input and returns results of manipulations back to the register.
+            <span class = "spacer-10"></span>
+            Some normalization modes requires additional arguments to be supplied. For example <span class = "hlt">replace_substring</span> 
+            mode requires a list of regular expressions to search and corresponding values for replacement.
+          </p>
+        </blockquote>
+
+        <p class="flow-text">
+          Example of usage:
+        </p>
+
+        <pre class="language-yaml">
+          <code class="language-yaml">- normalize:
+    # SPECIFYING MODE WE ARE GOING TO USE
+    routine: replace_substring
+    # SUPPLY ADDITIONAL PARAMETERS IF REQUIRED
+    args:
+        - ^\s+|\s+$: ''
+          </code></pre>
+
+        <p class="flow-text">
+          Currently the following modes (routines) are supported:
+        </p>
+
+        <table class="responsive-table highlight">
+          <thead>
+          <tr>
+            <th data-field="parameter">Mode</th>
+            <th data-field="description">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="centered">replace_substring</td>
+            <td>Searches in the register all occurrences of the given substring and replace all matches with given value. The required substring can be
+              given in the form of a regular expression. The format for the single pair: <span class = "hlt">substring_to_change: replacement_value</span>.
+              Pairs are passed in the <span class = "hlt2">args</span> parameter. You can send more than one pair, in this case its better to use list of pairs
+              instead of dictionary, as using dictionary doesnt guarantee the order how they will be processed opposite to the list - there order of element always
+              will be static. Search and replace in this case will occur <strong>sequentially</strong> for each pair sent.
+            </td>
+          </tr>
+          <tr>
+            <td>replace_matched</td>
+            <td>Searches in the register at least one occurrence of the required substring and if it is found - changes the whole value of the register to the specified one.
+              The desired substring can be specified as a regular expression. The format for the single pair: <span class = "hlt">substring_to_change: replacement_value</span>.
+              Pairs are passed in the <span class = "hlt2">args</span> parameter. You can send more than one pair, in this case its better to use list of pairs
+              instead of dictionary, as using dictionary doesnt guarantee the order how they will be processed opposite to the list - there order of element always
+              will be static. Search and replace in this case will occur <strong>sequentially</strong> until first match. If no matches found,
+              register value will stay unchanged.
+            </td>
+          </tr>
+          <tr>
+            <td>increment</td>
+            <td>Increases the value of the register by 1, the register must have an integer value.</td>
+          </tr>
+          <tr>
+            <td>decrement</td>
+            <td>Decreases the value of the register by 1, the register must have an integer value.</td>
+          </tr>
+          <tr>
+            <td>capitalize</td>
+            <td>Changes the first letter of each word in the contents of the register to the capital letter. The exception is short connecting words (or, and, of, etc.).</td>
+          </tr>
+          <tr>
+            <td>upper_first</td>
+            <td>Changes the first letter of the contents of the register to the capital letter.</td>
+          </tr>
+          <tr>
+            <td>upper</td>
+            <td>Changes all the letters of the contents of the register to capital letters.</td>
+          </tr>
+          <tr>
+            <td>lower</td>
+            <td>Changes all letters of the contents of the register to lowercase.</td>
+          </tr>
+          <tr>
+            <td>url</td>
+            <td>If URL is relative, it will normalize the URL and make it absolute.</td>
+          </tr>
+          <tr>
+            <td>escape_html</td>
+            <td>Converts a sequences of characters that are not valid in HTML to HTML entities.</td>
+          </tr>
+          <tr>
+            <td>unescape_html</td>
+            <td>Converts all HTML entities to the corresponding characters.</td>
+          </tr>
+          <tr>
+            <td>urlencode</td>
+            <td>Encodes the contents of the register to be used as a parameter for the GET request in the URL.</td>
+          </tr>
+          <tr>
+            <td>urldecode</td>
+            <td>Decodes the contents of the register. Its a reverse mode for the previous one.</td>
+          </tr>
+          <tr>
+            <td>json2xml</td>
+            <td>Converts register content in <a href="http://www.json.org/" target="_blank">JSON</a> format to XML format.</td>
+          </tr>
+          <tr>
+            <td>transit2xml</td>
+            <td>Converts register content in <a href="https://github.com/cognitect/transit-format" target="_blank">Transit+JSON</a> format to XML format.
+              Works similar to previous mode.
+            </td>
+          </tr>
+          <tr>
+            <td>base64</td>
+            <td>Encodes register content to <a href="https://en.wikipedia.org/wiki/Base64" target="_blank">Base64</a>.</td>
+          </tr>
+          <tr>
+            <td>base64_decode</td>
+            <td>Decodes register content from <a href="http://html5.by/blog/wtf-base64/" target="_blank">Base64</a>.</td>
+          </tr>
+          <tr>
+            <td>base64gzip_decode</td>
+            <td>Decodes register content from Base64GZIP format.</td>
+          </tr>
+          <tr>
+            <td>base64zip_decode</td>
+            <td>Decodes register content from Base64ZIP format.</td>
+          </tr>
+          <tr>
+            <td>base64deflate_decode</td>
+            <td>Decodes register content from Base64Deflate format.</td>
+          </tr>
+          <tr>
+            <td>base64zlib_decode</td>
+            <td>Decodes register content from Base64ZLIB format.</td>
+          </tr>
+          <tr>
+            <td>md5</td>
+            <td>Calculates MD5 hash of the register content.</td>
+          </tr>
+          <tr>
+            <td>signature</td>
+            <td>Calculates signature of the register content, using given algorythm and cypher, and then encode to the given encoding format.</td>
+          </tr>
+          <tr>
+            <td>date_format</td>
+            <td>Manipulates with date and time.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <span class="spacer"></span>
+        <p class="flow-text">
+          Let's overview all modes. Let's imagine that we have the following HTML source:
+        </p>
+
+        <pre class="language-markup">
+          <code class="language-markup">&lt;div class=&quot;container&quot;&gt;
+    &lt;ul class=&quot;list&quot;&gt;
+        &lt;li class=&quot;item&quot; id=&quot;li1&quot;&gt;Text and text&lt;/li&gt;
+        &lt;li class=&quot;item&quot; id=&quot;li2&quot;&gt;text and text&lt;/li&gt;
+        &lt;li class=&quot;item&quot; id=&quot;li3&quot;&gt;01/21/2017&lt;/li&gt;
+        &lt;script&gt;
+          var items = {&quot;items&quot;:[{&quot;item&quot;: {&quot;somefield1&quot;: &quot;text&quot;, &quot;somefield2&quot;: &quot;another text&quot;}}]};
+        &lt;/script&gt;
+    &lt;/ul&gt;
+    &lt;a href=&quot;sandbox.html&quot;&gt;Link&lt;/a&gt;
+&lt;/div&gt;
+          </code></pre>
+
+        <span class="spacer"></span>
+
+        <p class="flow-text">
+          Modes <span class="hlt">replace_substring</span> and <span class="hlt">replace_matched</span> works following way:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s2"><a class="active" href="#normalize_subsring">Substring</a></li>
+              <li class="tab col s2"><a href="#normalize_matched">Matched</a></li>
+            </ul>
+          </div>
+
+          <div id="normalize_subsring" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># FINDS FIRST `li`
+- find:
+    path: "li#li1"
+    do:
+    # USE `parse` TO FILL THE REGISTER WITH TEXT CONTENT OF CURRENT BLOCK, REGISTER VALUE: "Text and text"
+    - parse
+
+    # DO SOME NORMALIZATION
+    - normalize:
+        routine: replace_substring
+        args:
+            # REPLACE WORD "text" TO "some another text"
+            - text: 'some another text'
+            # REGISTER VALUE: "Text and some another text"
+
+            # REPLACE WORD "and" TO "or"
+            - and: or
+            # REGISTER VALUE: "Text or some another text"
+
+            # REPLACE WORD "another" TO "other"
+            - another: other
+
+    # REGISTER VALUE: "Text or some other text"
+              </code></pre>
+          </div>
+
+          <div id="normalize_matched" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># PLEASE NOTE:
+# `replace_matched`, OPPOSITE TO `replace_substring`, WORKS UNTIL FIRST MATCH
+
+# FINDS FIRST `li`
+- find:
+    path: "li#li1"
+    do:
+    # PARSE TEXT TO THE REGISTER
+    - parse
+
+    # NORMALIZE DATA
+    - normalize:
+        routine: replace_matched
+        args:
+            # LETS REPLACE VALUE OF THE REGISTER TO "some another text"
+            # IF THERE IS WORD "text" IN THE REGISTER VALUE
+            - text: 'some another text'
+            # REGISTER VALUE: "some another text"
+
+            # SINCE MATCH HAPPENED, ALL ARGUMENTS BELOW WILL BE IGNORED
+            - and: or
+            - another: other
+
+    # REGISTER VALUE: "some another text"
+              </code></pre>
+          </div>
+        </div>
+
+        <span class="spacer"></span>
+
+        <p class="flow-text">
+          Examples for modes <span class="hlt">increment</span>,
+          <span class="hlt">decrement</span>,
+          <span class="hlt">capitalize</span>,
+          <span class="hlt">upper_first</span>,
+          <span class="hlt">upper</span> and <span class="hlt">lower</span>:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s2"><a class="active" href="#normalize_increment">increment</a></li>
+              <li class="tab col s2"><a href="#normalize_decrement">decrement</a></li>
+              <li class="tab col s2"><a href="#normalize_capitalize">capitalize</a></li>
+              <li class="tab col s2"><a href="#normalize_upper_first">upper_first</a></li>
+              <li class="tab col s2"><a href="#normalize_upper">upper</a></li>
+              <li class="tab col s2"><a href="#normalize_lower">lower</a></li>
+            </ul>
+          </div>
+
+          <div id="normalize_increment" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># TO USE THIS MODE YOU NEED TO HAVE INTEGER VALUE IN THE REGISTER (1,2,158,203040523421 AND SO ON)
+# FINDS FIRST `li`
+- find:
+    path: "li#li1"
+    do:
+    # GET ATTRIBUTE `id` VALUE AND EXTRACT JUST DIGITS
+    - parse:
+        attr: id
+        filter: (\d+)
+    # REGISTER VALUE: "1"
+
+    # USE NORMALIZATION
+    - normalize:
+        routine: increment
+
+    # REGISTER VALUE: "2"
+              </code></pre>
+          </div>
+
+          <div id="normalize_decrement" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># TO USE THIS MODE YOU NEED TO HAVE INTEGER VALUE IN THE REGISTER (1,2,158,203040523421 AND SO ON)
+# FINDS SECOND `li`
+- find:
+    path: "li#li2"
+    do:
+    # GET ATTRIBUTE `id` VALUE AND EXTRACT JUST DIGITS
+    - parse:
+        attr: id
+        filter: (\d+)
+    # REGISTER VALUE: "2"
+
+    # DOING DECREMENT
+    - normalize:
+        routine: decrement
+
+    # REGISTER VALUE: "1"
+              </code></pre>
+          </div>
+
+          <div id="normalize_capitalize" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># LETS CAPITALIZE STRING IN THE REGISTER
+# FINDS FIRST `li`
+- find:
+    path: "li#li1"
+    do:
+    # PARSE TEXT TO THE REGISTER
+    - parse
+    # REGISTER VALUE: "Text and text"
+
+    # APPLY CAPITALIZE ROUTINE
+    - normalize:
+        routine: capitalize
+
+    # REGISTER VALUE: "Text and Text"
+              </code></pre>
+          </div>
+
+          <div id="normalize_upper_first" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># CHANGE ONLY FIRST LETTER OF STRING IN THE REGISTER TO UPPERCASE
+# FINDS SECOND `li`
+- find:
+    path: "li#li2"
+    do:
+    # PARSE TEXT CONTENT TO THE REGISTER
+    - parse
+    # REGISTER VALUE: "text and text"
+
+    # NORMALIZE CONTENT OF THE REGISTER
+    - normalize:
+        routine: upper_first
+
+    # REGISTER VALUE: "Text and text"
+              </code></pre>
+          </div>
+
+          <div id="normalize_upper" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># BRING ALL LETTERS OF REGISTER CONTENT TO UPPER CASE
+# FINDS SECOND `li`
+- find:
+    path: "li#li2"
+    do:
+    # PARSE TEXT TO THE REGISTER
+    - parse
+    # REGISTER VALUE: "text and text"
+
+    # APPLY NORMALIZATION
+    - normalize:
+        routine: upper
+
+    # REGISTER VALUE: "TEXT AND TEXT"
+              </code></pre>
+          </div>
+
+          <div id="normalize_lower" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># BRING ALL LETTERS OF REGISTER CONTENT TO LOWER CASE
+# FINDS FIRST `li`
+- find:
+    path: "li#li1"
+    do:
+    # PARSE TEXT
+    - parse
+    # REGISTER VALUE: "Text and text"
+
+    # NORMALIZE REGISTER
+    - normalize:
+        routine: lower
+
+    # REGISTER VALUE: "text and text"
+              </code></pre>
+          </div>
+        </div>
+
+        <span class="spacer"></span>
+
+        <p class="flow-text">
+          Modes <span class="hlt">url</span>, <span class="hlt">escape_html</span> and <span class="hlt">unescape_html</span>:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s4"><a class="active" href="#normalize_url">url</a></li>
+              <li class="tab col s4"><a href="#normalize_escape_html">escape_html</a></li>
+              <li class="tab col s4"><a href="#normalize_unescape_html">unescape_html</a></li>
+            </ul>
+          </div>
+
+          <div id="normalize_url" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># CHANGING RELATIVE LINKS TO ABSOLUTE
+# FINDS `a`
+- find:
+    path: a
+    do:
+    # EXTRACT VALUE OF ATTRIBUTE `href`
+    - parse:
+        attr: href
+    # REGISTER VALUE: sandbox.html
+
+    # LETS NORMALIZE URL
+    - normalize:
+        routine: url
+
+    # REGISTER VALUE: https://www.diggernaut.com/sandbox.html
+              </code></pre>
+          </div>
+
+          <div id="normalize_escape_html" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># CONVERTING SYMBOLS LIKE &lt;, &gt;, &quot; TO HTML ENTITIES
+# FINDS FIRST `li`
+- find:
+    path: "li#li1"
+    do:
+    # PARSE HTML CONTENT FROM CURRENT BLOCK
+    - parse:
+        format: html
+    # REGISTER VALUE: &lt;li class=&quot;item&quot; id=&quot;1&quot;&gt;Text and text&lt;/li&gt;
+
+    # APPLY NORMALIZATION
+    - normalize:
+        routine: escape_html
+
+    # REGISTER VALUE:: <script type="text/plain">&lt;li class=&quot;item&quot; id=&quot;1&quot;&gt;Text and text&lt;/li&gt;</script>
+                </code></pre>
+          </div>
+
+          <div id="normalize_unescape_html" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># REPLACE ALL HTML ENTITIES TO CORRSPONDING CHARACTERS LIKE &lt;, &gt;, &quot; ETC
+# FINDS FIRST `li`
+- find:
+    path: "li#li1"
+    do:
+    # LETS PUT LITERAL VALUE TO THE REGISTER
+    - register_set:<script type="text/plain"> &lt;li class=&quot;item&quot; id=&quot;1&quot;&gt;Text and text&lt;/li&gt;</script>
+
+    # NORMALIZE REGISTER VALUE
+    - normalize:
+        routine: unescape_html
+
+    # REGISTER VALUE: &lt;li class=&quot;item&quot; id=&quot;1&quot;&gt;Text and text&lt;/li&gt;
+              </code></pre>
+          </div>
+        </div>
+
+        <span class="spacer"></span>
+
+        <p class="flow-text">
+          Mode <span class="hlt">json2xml</span>:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s12"><a class="active" href="#normalize_json2xml">JSON2XML</a></li>
+            </ul>
+          </div>
+
+          <div id="normalize_json2xml" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># CONVERTING JSON DOCUMENT TO THE XML BLOCK
+# FINDS FIRST `script`
+- find:
+    path: script
+    slice: 0
+    do:
+    # PARSE TEXT
+    - parse
+    # REGISTER VALUE: var items = {&quot;items&quot;:[{&quot;item&quot;: {&quot;somefield1&quot;: &quot;text&quot;, &quot;somefield2&quot;: &quot;another text&quot;}}]};
+
+    # REMOVING STUFF WE DONT NEED
+    - normalize:
+        routine: replace_substring
+        args:
+            - \s*var\s*items\s*=\s*: ''
+            - \s*;\s*$: '' 
+    # REGISTER NOW HAS JSON CONTENT: {&quot;items&quot;:[{&quot;item&quot;: {&quot;somefield1&quot;: &quot;text&quot;, &quot;somefield2&quot;: &quot;another text&quot;}}]}
+
+    # CONVERT IT TO XML
+    - normalize:
+        routine: json2xml
+    # REGISTER NOW HAS:
+    # &lt;body_safe&gt;
+    #   &lt;items&gt;
+    #     &lt;item&gt;
+    #       &lt;somefield1&gt;text&lt;/somefield1&gt;
+    #       &lt;somefield2&gt;another text&lt;/somefield2&gt;
+    #     &lt;/item&gt;
+    #   &lt;/items&gt;
+    # &lt;/body_safe&gt;
+
+    # PARSE XML CONTENT, CONVERT IT TO THE BLOCK AND SWITCH TO THIS NEW BLOCK CONTEXT
+    - to_block
+
+    # NOW WE ARE IN THE NEW BLOCK AND CAN TRAVERSE OVER ITS DOM STRUCTURE
+    - find:
+        path: item > somefield1
+        do:
+        - parse
+        # REGISTER VALUE: "text"
+              </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          In example above we used the <span class = "hlt">to_block</span> command, which creates a new block from the contents of the register.
+          For more information about this command, see <a href="meta-language-methods-working-with-dom-creating-new-block.html">Creating a new block</a>.
+        </p>
+
+        <span class="spacer"></span>
+
+        <p class="flow-text">
+          To work with <span class = "hlt2">normalize</span> command in <span class = "hlt">date_format</span> mode, you need to pass additional arguments:
+        </p>
+
+        <table class="responsive-table highlight">
+          <thead>
+          <tr>
+            <th data-field="parameter">Argument</th>
+            <th data-field="description">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="centered">format_in</td>
+            <td>The template for the input data (value ​​in the register), so digger could parse provided date. The table below shows all the tags that you can use in the template.</td>
+          </tr>
+          <tr>
+            <td>format_out</td>
+            <td>The template for the output data (how the modified data will be written to the register). The table below shows all the tags that you can use in the template.</td>
+          </tr>
+          <tr>
+            <td>add_years</td>
+            <td>Adds the specified number of years to the value in the register. You can specify both positive and negative integer values.</td>
+          </tr>
+          <tr>
+            <td>add_months</td>
+            <td>Adds the specified number of months to the value in the register. You can specify both positive and negative integer values.</td>
+          </tr>
+          <tr>
+            <td>add_days</td>
+            <td>Adds the specified number of days to the value in the register. You can specify both positive and negative integer values.</td>
+          </tr>
+          <tr>
+            <td>add_hours</td>
+            <td>Adds the specified number of hours to the value in the register. You can specify both positive and negative integer values.</td>
+          </tr>
+          <tr>
+            <td>add_minutes</td>
+            <td>Adds the specified number of minutes to the value in the register. You can specify both positive and negative integer values.</td>
+          </tr>
+          <tr>
+            <td>add_seconds</td>
+            <td>Adds the specified number of seconds to the value in the register. You can specify both positive and negative integer values.</td>
+          </tr>
+          <tr>
+            <td>timezone</td>
+            <td>Converts the date and time into the specified time zone (TZ). For example: America / New_York</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <p class="flow-text">
+          The table below shows all possible tags that can be used in templates
+          (<span class = "hlt">format_in</span>, <span class = "hlt">format_out</span>) and examples of usage:
+        </p>
+
+        <table class="responsive-table highlight">
+          <thead>
+          <tr>
+            <th data-field="tag">Tag</th>
+            <th data-field="description" width="60%">Description</th>
+            <th data-field="sample">Template Example</th>
+            <th data-field="value">Value Sample</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr>
+            <td class="centered">%a</td>
+            <td>abbreviation for weekdays, eg <span class="hlt">Mon</span> or <span class="hlt">Fri</span></td>
+            <td>%a, %d %B</td>
+            <td>Fri, 20 February</td>
+          </tr>
+          <tr>
+            <td class="centered">%A</td>
+            <td>weekday, eg <span class="hlt">Monday</span> or <span class="hlt">Friday</span></td>
+            <td>%A, %d %B</td>
+            <td>Friday, 20 February</td>
+          </tr>
+          <tr>
+            <td class="centered">%b</td>
+            <td>month abbreviation, eg <span class="hlt">Feb</span> or <span class="hlt">Sep</span></td>
+            <td>%A, %d %b</td>
+            <td>Friday, 20 Jun</td>
+          </tr>
+          <tr>
+            <td class="centered">%B</td>
+            <td>month name, eg <span class="hlt">February</span> or <span class="hlt">September</span></td>
+            <td>%A, %d %B</td>
+            <td>Friday, 20 June</td>
+          </tr>
+          <tr>
+            <td class="centered">%C</td>
+            <td>number of century, takes values from <span class="hlt">00</span> to <span class="hlt">99</span></td>
+            <td>%С/%y</td>
+            <td>20/17</td>
+          </tr>
+          <tr>
+            <td class="centered">%d</td>
+            <td>day of month, takes values from <span class="hlt">01</span> to <span class="hlt">31</span></td>
+            <td>%Y-%m-%d</td>
+            <td>2017-10-01</td>
+          </tr>
+          <tr>
+            <td class="centered">%-d</td>
+            <td>day of month, takes values from <span class="hlt">1</span> to <span class="hlt">31</span></td>
+            <td>%Y-%m-%-d</td>
+            <td>2017-10-1</td>
+          </tr>
+          <tr>
+            <td class="centered">%_d</td>
+            <td>day of month, takes values from <span class="hlt">1 or 01</span> to <span class="hlt">31</span></td>
+            <td>%Y-%m-%_d</td>
+            <td>2017-10-1 or 2017-10-01</td>
+          </tr>
+          <tr>
+            <td class="centered">%D</td>
+            <td>preset template, same as <span class="hlt">%m/%d/%y</span></td>
+            <td>%D</td>
+            <td>05/08/17</td>
+          </tr>
+          <tr>
+            <td class="centered">%e</td>
+            <td>day of month, takes values from <span class="hlt">1</span> to <span class="hlt">31</span></td>
+            <td>%e %B</td>
+            <td>5 January</td>
+          </tr>
+          <tr>
+            <td class="centered">%F</td>
+            <td>preset template, same as <span class="hlt">%Y-%m-%d</span></td>
+            <td>%F</td>
+            <td>2017-10-01</td>
+          </tr>
+          <tr>
+            <td class="centered">%g</td>
+            <td>2-digit number of year according to <span class="hlt">ISO-8601:1988</span> standard</td>
+            <td>%g</td>
+            <td>17</td>
+          </tr>
+          <tr>
+            <td class="centered">%G</td>
+            <td>4-digit number of year according to <span class="hlt">ISO-8601:1988</span> standard</td>
+            <td>%G</td>
+            <td>2017</td>
+          </tr>
+          <tr>
+            <td class="centered">%h</td>
+            <td>same as <span class="hlt">%b%</span></td>
+            <td>%A, %d %h</td>
+            <td>Friday, 20 Jun</td>
+          </tr>
+          <tr>
+            <td class="centered">%H</td>
+            <td>hour in 24-hours system, takes values from <span class="hlt">00</span> to <span class="hlt">23</span></td>
+            <td>%H:%M:%S</td>
+            <td>08:35:26</td>
+          </tr>
+          <tr>
+            <td class="centered">%I</td>
+            <td>hour in 12-hours system, takes values from <span class="hlt">01</span> to <span class="hlt">12</span></td>
+            <td>%I:%M:%S</td>
+            <td>08:35:26</td>
+          </tr>
+          <tr>
+            <td class="centered">%-I</td>
+            <td>hour in 12-hours system, takes values from <span class="hlt">1</span> to <span class="hlt">12</span></td>
+            <td>%-I:%M:%S</td>
+            <td>8:35:26</td>
+          </tr>
+          <tr>
+            <td class="centered">%_I</td>
+            <td>hour in 12-hours system, takes values from <span class="hlt">1 or 01</span> to <span class="hlt">12</span></td>
+            <td>%_I:%M:%S</td>
+            <td>8:35:26 or 08:35:26</td>
+          </tr>
+          <tr>
+            <td class="centered">%j</td>
+            <td>number of day of year, takes values from <span class="hlt">1</span> to <span class="hlt">366</span></td>
+            <td>Today is %j day of year</td>
+            <td>Today is 183 day of year</td>
+          </tr>
+          <tr>
+            <td class="centered">%k</td>
+            <td>hour in 24-hours system, takes values from <span class="hlt">0</span> to <span class="hlt">23</span></td>
+            <td>%k hrs %M mnt</td>
+            <td>8 hrs 35 mnt</td>
+          </tr>
+          <tr>
+            <td class="centered">%l</td>
+            <td>hour in 12-hours system, takes values from <span class="hlt">1</span> to <span class="hlt">12</span></td>
+            <td>%l hrs %M mnt</td>
+            <td>8 hrs 35 mnt</td>
+          </tr>
+          <tr>
+            <td class="centered">%m</td>
+            <td>number of month, takes values from <span class="hlt">01</span> to <span class="hlt">12</span></td>
+            <td>%Y-%m-%d</td>
+            <td>2017-10-01</td>
+          </tr>
+          <tr>
+            <td class="centered">%-m</td>
+            <td>number of month, takes values from <span class="hlt">1</span> to <span class="hlt">12</span></td>
+            <td>%Y-%-m-%d</td>
+            <td>2017-1-01</td>
+          </tr>
+          <tr>
+            <td class="centered">%_m</td>
+            <td>number of month, takes values from <span class="hlt">1 or 01</span> to <span class="hlt">12</span></td>
+            <td>%Y-%_m-%d</td>
+            <td>2017-1-01 or 2017-01-01</td>
+          </tr>
+          <tr>
+            <td class="centered">%l</td>
+            <td>minutes, takes values from <span class="hlt">00</span> to <span class="hlt">59</span></td>
+            <td>%l hrs %M mnt</td>
+            <td>8 hrs 35 mnt</td>
+          </tr>
+          <tr>
+            <td class="centered">%n</td>
+            <td>new line symbol</td>
+            <td>%Y%n%m</td>
+            <td>2017\n10</td>
+          </tr>
+          <tr>
+            <td class="centered">%p</td>
+            <td>value <span class="hlt">AM</span> or <span class="hlt">PM</span> depending on time, used with 12-hours time system</td>
+            <td>%I%p</td>
+            <td>8AM</td>
+          </tr>
+          <tr>
+            <td class="centered">%P</td>
+            <td>value <span class="hlt">am</span> or <span class="hlt">pm</span> depending on time, used with 12-hours time system</td>
+            <td>%I%P</td>
+            <td>8am</td>
+          </tr>
+          <tr>
+            <td class="centered">%r</td>
+            <td>same as <span class="hlt">%I:%M:%S %p</span></td>
+            <td>%r</td>
+            <td>04:12:37 PM</td>
+          </tr>
+          <tr>
+            <td class="centered">%R</td>
+            <td>same as <span class="hlt">%H:%M</span></td>
+            <td>%R</td>
+            <td>22:35</td>
+          </tr>
+          <tr>
+            <td class="centered">%s</td>
+            <td>Unix timestamp, shows number of seconds since start of epoch (1 january 1970)</td>
+            <td>%s</td>
+            <td>1506867213</td>
+          </tr>
+          <tr>
+            <td class="centered">%S</td>
+            <td>seconds, takes values from <span class="hlt">00</span> to <span class="hlt">59</span></td>
+            <td>%H:%M:%S</td>
+            <td>08:35:26</td>
+          </tr>
+          <tr>
+            <td class="centered">%t</td>
+            <td>tabulation symbol</td>
+            <td>%Y%t%m</td>
+            <td>2017\t10</td>
+          </tr>
+          <tr>
+            <td class="centered">%T</td>
+            <td>same as <span class="hlt">%H:%M:%S</span></td>
+            <td>%T</td>
+            <td>08:35:26</td>
+          </tr>
+          <tr>
+            <td class="centered">%u</td>
+            <td>number of weekday from <span class="hlt">1</span> (monday) to <span class="hlt">7</span> (sunday)</td>
+            <td>Today is %u week day</td>
+            <td>Today is 5 week day</td>
+          </tr>
+          <tr>
+            <td class="centered">%U</td>
+            <td>number of week of year, if week starts with Sunday, takes values from <span class="hlt">00</span> to <span class="hlt">53</span></td>
+            <td>It was %U week</td>
+            <td>It was 23 week</td>
+          </tr>
+          <tr>
+            <td class="centered">%V</td>
+            <td>number of week of year by ISO standard, if week starts with Monday, takes values from <span class="hlt">01</span> to <span class="hlt">53</span>.
+              If week with 1 Jan has 4 or more days in new year, this week is counted as first week of new year, in other case its counted as last week of previous year.
+            </td>
+            <td>It was %V week</td>
+            <td>It was 23 week</td>
+          </tr>
+          <tr>
+            <td class="centered">%w</td>
+            <td>number of day of week from <span class="hlt">0</span> (sunday) to <span class="hlt">6</span> (saturday)</td>
+            <td>Today is %w day of week</td>
+            <td>Today is 5 day of week</td>
+          </tr>
+          <tr>
+            <td class="centered">%W</td>
+            <td>number of week of year, if week starts with monday, takes values from <span class="hlt">00</span> to <span class="hlt">53</span></td>
+            <td>It was %W week</td>
+            <td>It was 23 week</td>
+          </tr>
+          <tr>
+            <td class="centered">%y</td>
+            <td>2-digits number of year</td>
+            <td>%m/%d/%y</td>
+            <td>10/01/17</td>
+          </tr>
+          <tr>
+            <td class="centered">%Y</td>
+            <td>4-digits number of year</td>
+            <td>%Y-%m-%d</td>
+            <td>2017-10-01</td>
+          </tr>
+          <tr>
+            <td class="centered">%z</td>
+            <td>time correction value to UTC time. Showing in format like <span class="hlt">+HHMM</span>
+              or <span class="hlt">-HHMM</span>, where <span class="hlt">+</span> means east from GMT,
+              <span class="hlt">-</span> means west from GMT, HH - number of hours, MM - number of minutes.
+            </td>
+            <td>%z</td>
+            <td>+0300</td>
+          </tr>
+          <tr>
+            <td class="centered">%Z</td>
+            <td>abbreviation fo timezone</td>
+            <td>%Z</td>
+            <td>PST</td>
+          </tr>
+          <tr>
+            <td class="centered">%+</td>
+            <td>same as <span class="hlt">%a %b %e %H:%M:%S %Z %Y</span></td>
+            <td>%+</td>
+            <td>Mon Sep 20 13:24:55 PST 2017</td>
+          </tr>
+          <tr>
+            <td class="centered">%%</td>
+            <td>symbol %</td>
+            <td>%Y%%%m</td>
+            <td>2017%10</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <p class="flow-text">
+          Example of usage:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s6"><a class="active" href="#normalize_date">date_format</a></li>
+            </ul>
+          </div>
+
+          <div id="normalize_date" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># DATES MANIPULATIONS
+# FINDS THIRD `li`
+- find:
+    path: 'li#li3'
+    do:
+    # PARSE TEXT
+    - parse
+    # REGISTER VALUE: 01/21/2017
+
+    # CONVERT DATE TO UNIT TIMESTAMP
+    - normalize:
+        routine: date_format
+        args:
+            format_in: "%m/%d/%Y"
+            format_out: "%s"
+    # REGISTER VALUE: 1484956800
+
+    # -----------------------------------------------------
+    # LETS PARSE TEXT AGAIN
+    - parse
+    # REGISTER VALUE: 01/21/2017
+
+    # ADD 2 YEARS TO THE DATE
+    - normalize:
+        routine: date_format
+        args:
+            format_in: "%m/%d/%Y"
+            add_years: 2
+            format_out: "%m/%d/%Y"
+    # REGISTER VALUE: 01/21/2019
+
+    # -----------------------------------------------------
+    # PARSE TEXT ONE MORE TIME
+    - parse
+
+    # SUBSTRACT 1 YEAR AND CHANGE OUTPUT FORMAT
+    - normalize:
+        routine: date_format
+        args:
+            format_in: "%m/%d/%Y"
+            add_years: -1
+            format_out: "%B,%d %Y"
+    # REGISTER VALUE: January,21 2016
+
+    # -----------------------------------------------------
+    # NOW LETS SET LITERAL VALUE TO THE REGISTER
+    - register_set: '01/21/2017 00:00:00 +0400 UTC'
+
+    # CONVERT IT TO THE TIMEZONE: America/New_York
+    - normalize:
+        routine: date_format
+        args:
+            format_in: "%m/%d/%Y %T %z %Z"
+            timezone: 'America/New_York'
+            format_out: "%m/%d/%Y %T %z %Z"
+    # REGISTER VALUE: 01/20/2017 19:00:00 -0500 EST
+
+    # -----------------------------------------------------
+    # AS WE KNOW add_* HAS VARIATIONS:
+    # add_years   - YEARS
+    # add_months  - MONTHES
+    # add_days    - DAYS
+    # add_hours   - HOURS
+    # add_minutes - MINUTES
+    # add_seconds - SECONDS
+    # YOU CAN USE THEM ALL TOGETHER
+    - register_set: '01/21/2017 00:00:00 +0400 UTC'
+    - normalize:
+        routine: date_format
+        args:
+            format_in: "%m/%d/%Y %T %z %Z"
+            add_years: 10
+            add_months: 5
+            add_days: 1
+            add_hours: 6
+            add_minutes: 15
+            add_seconds: 50
+            format_out: "%m/%d/%Y %T %z %Z"
+    # REGISTER VALUE: 06/22/2027 06:15:50 +0000 UTC
+                </code></pre>
+          </div>
+        </div>
+
+        <span class="spacer"></span>
+
+        <p class="flow-text">
+          To work with <span class="hlt2">normalize</span> command in <span class="hlt">signature</span> mode, you need to pass following arguments:
+        </p>
+
+        <table class="responsive-table highlight">
+          <thead>
+          <tr>
+            <th data-field="parameter">Argument</th>
+            <th data-field="description">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="centered">algo</td>
+            <td>Used algorythm. Currently supported only <span class="hlt">HMAC</span>.</td>
+          </tr>
+          <tr>
+            <td>cypher</td>
+            <td>Used cypher. Currently supported only <span class="hlt">SHA256</span>.</td>
+          </tr>
+          <tr>
+            <td>encode</td>
+            <td>Used encoder. Currently supported only <span class="hlt">Base64</span>.</td>
+          </tr>
+          <tr>
+            <td>secret</td>
+            <td>Secret key.</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <p class="flow-text">
+          Usage example:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s4"><a class="active" href="#signature">signature</a></li>
+            </ul>
+          </div>
+          <div id="signature" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># CREATE SIGNATURE
+# FINDS FIRST `li`
+- find:
+    path: 'li#li1'
+    do:
+    # PARSE TEXT
+    - parse
+
+    # REGISTER VALUE: "Text and text"
+    - normalize:
+        routine: signature
+        args:
+            algo: HMAC
+            cypher: SHA256
+            encode: Base64
+            secret: A6A7A8A9
+
+    # REGISTER VALUE: eQZxtV7Ae/wu3Enx8C2po9L7j3cefePEwoFZiTmkb7M=
+              </code></pre>
+          </div>
+        </div>
+
+        <span class="spacer"></span>
+
+        <p class="flow-text">
+          <span class="hlt">base64</span>, <span class="hlt">md5</span> modes:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s4"><a class="active" href="#base64">base64</a></li>
+              <li class="tab col s4"><a href="#md5">md5</a></li>
+            </ul>
+          </div>
+
+          <div id="base64" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># FINDS FIRST `li`
+- find:
+    path: 'li#li1'
+    do:
+    # PARSE TEXT
+    - parse
+    # REGISTER VALUE: "Text and text"
+
+    - normalize:
+        routine: base64
+    # REGISTER VALUE: VGV4dCBhbmQgdGV4dA==
+              </code></pre>
+          </div>
+
+          <div id="md5" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># FINDS FIRST `li`
+- find:
+    path: 'li#li1'
+    do:
+    # PARSE TEXT
+    - parse
+    # REGISTER VALUE: "Text and text"
+
+    - normalize:
+        routine: md5
+    # REGISTER VALUE: be8bde1051516b04402f02e00b4687b7
+              </code></pre>
+          </div>
+        </div>
+
+        <span class="spacer"></span>
+
+        <p class="flow-text">
+          <span class="hlt">base64zlib_decode</span> mode:
+        </p>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs excdark">
+              <li class="tab col s4"><a class="active" href="#base64zlib">base64zlib_decode</a></li>
+            </ul>
+          </div>
+
+          <div id="base64zlib" class="col s12">
+            <pre class="language-yaml">
+              <code class="language-yaml"># LETS SET ENCODED VALUE DIRECTLY TO THE REGISTER
+# ITS ENCODED STRING `some text`
+- register_set: eJwrzs9NVShJrSgBABHoA5o=
+
+# DECODE VALUE
+- normalize:
+    routine: Base64ZLIBDecode
+
+# REGISTER VALUE: some text
+              </code></pre>
+          </div>
+        </div>
+
+        <p class="flow-text">
+          In the next section, we'll discuss how to work with variables, arguments, and objects.
+        </p>
+
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="pagination">
+              <a href="meta-language-methods-entity-manipulations-working-with-variables.html" class="btn goto teal z-depth-2">Next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="social">
+          <a class="btn btn-floating btn-flat" href="https://www.diggernaut.com/blog/category/learning-meta-language/"
+            target="_blank"><i class="fa fa-wordpress"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://vk.com/diggernaut" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.facebook.com/diggernaut/" target="_blank"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://www.linkedin.com/company/10908957/" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <a class="btn btn-floating btn-flat" href="https://twitter.com/diggernautcom" target="_blank"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--  Scripts-->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/prism.js"></script>
+<script src="js/meta-language-init.js"></script>
+
+<!-- Google analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-80717561-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- /Google analytics -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter47560513 = new Ya.Metrika({
+                  id:47560513,
+                  clickmap:true,
+                  trackLinks:true,
+                  accurateTrackBounce:true
+              });
+          } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+  })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47560513" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>
